@@ -1,17 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
-    const Usuario = sequelize.define("usuarios", {
-      usuario: {
+    const Usuario = sequelize.define("Usuario", {
+      username: {
         type: Sequelize.STRING,
-        allowNull: false // no permite valores nulos
+        allowNull: false, // no permite valores nulos
+        unique: true
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false // no permite valores nulos
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false, // no permite valores nulos
-        unique: true //  permite un solo email, no permite email duplicados
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
