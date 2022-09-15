@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
-const init = require("./app/config/init.config");
+const init = require("./config/init.config");
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(
 );
 
 // database
-const db = require("./app/models/");
+const db = require("./models/");
 db.sequelize.sync();
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: true}).then(() => {
@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 // routes
-require("./app/routes/user.routes")(app);
+require("./routes/user.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
