@@ -4,7 +4,6 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
-const user = db.user;
 
 // controlador para el inicio de sesion
 const login = async (req, res) => {
@@ -68,7 +67,7 @@ const login = async (req, res) => {
 // controlador para crear un usuario
   const newUser = async(req,res) => { 
     try{
-      user.create({
+      User.create({
         username : req.body.username,
         password : req.body.password
         })

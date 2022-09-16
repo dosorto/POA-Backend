@@ -2,6 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const init = require("./config/init.config");
+const bcrypt = require('bcrypt');
+
+
+// importar route de usuario
+const user_routes = require("./routes/user.routes")
+
 
 const app = express();
 
@@ -11,6 +17,10 @@ app.use(cors());
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/auth",user_routes); // permite usar las rutas de usuarios
+require("./routes/rol.routes")(app)
+
 
 app.use(
   cookieSession({
@@ -24,10 +34,13 @@ app.use(
 // database
 const db = require("./models/");
 db.sequelize.sync();
+
+/*
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: true}).then(() => {
   init.initial();
 });
+*/
 
 
 // simple route
@@ -44,7 +57,9 @@ app.get("/saludo",(req,res) => {
 
    // --------------------------------
 // routes
-require("./routes/user.routes")(app);
+//require("./routes/user.routes")(app);
+
+
 //require("./routes/users")(app);
 
 // set port, listen for requests
