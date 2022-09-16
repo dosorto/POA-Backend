@@ -5,7 +5,7 @@ const { Op, DataTypes, Model } = require("sequelize");
 
 const new_rol = async (req,res) =>{
     try{
-        db.sequelize.authenticate();
+        //db.sequelize.authenticate();
         db.role.create({
             rol: req.body.rol,
             descripcion: req.body.descripcion,

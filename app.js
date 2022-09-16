@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 //app.use("/auth",user_routes); // permite usar las rutas de usuarios
 require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
+require("./routes/empleado.routes")(app);
 
 
 app.use(
