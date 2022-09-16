@@ -11,7 +11,7 @@ const login = async (req, res) => {
     try {
       const user = await User.findOne({
         where: {
-          usuario: req.body.username,
+          username: req.body.username,
           isDelete: false
         },
         include: [{
@@ -26,18 +26,22 @@ const login = async (req, res) => {
           message: "User Not found."
         });
       }
-  
+      // desabilitado temporalmente
+      /*
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
+      */
+      const passwordIsValid = user.password === req.body.password;
   
       if (!passwordIsValid) {
         return res.status(401).send({
           message: "Warning! Invalid Password!",
         });
       }
-     
+     // jwt no incluido todavia
+     /*
       const token = jwt.sign({
         idUsuario: user.id,
         idEmpleado:user.empleado.id,
@@ -46,13 +50,14 @@ const login = async (req, res) => {
       config.secret, {
         expiresIn: 86400, // 24 horas de ducración de tokens
       });
+      */
       const resp = {
         id: user.id,
-        usuario: user.usuario,
+        usuario: user.username,
         empleado: user.empleado,
-        rol: user.role,
-        sesion:ses,
-        token: token
+        rol: user.role//,
+        //sesion:ses,
+        //token: token
       }
       return res.status(200).send(resp);
     } catch (error) {
@@ -67,9 +72,11 @@ const login = async (req, res) => {
 // controlador para crear un usuario
   const newUser = async(req,res) => { 
     try{
-      User.create({
+      db.user.create({
         username : req.body.username,
-        password : req.body.password
+        password : bcrypt.hashSync(req.body.password, 8),
+        idEmpleado: req.body.idEmpleado,
+        idRol : req.body.idRol
         })
         res.status(200).json({
           message:'usuario creado con exito'
@@ -84,16 +91,22 @@ const login = async (req, res) => {
 
 // controlador para obtener todos los usuarios
   const allUser = async(req,res) => { 
-    try{ Cliente.findAll({
-    where: {
-        isDelete: false,
-    }})
-    return res.status(200).send({ todoslosClientes });
+    try{ 
+      const  allusers =  await db.user.findAll({
+      where: {
+          isDelete: false,
+      }})
+      return res.status(200).send({ allusers });
   } catch(error){
-    res.status(400).json({
-      message:'error al ingresar' + error
-    })
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
   }
   };
   
+  module.exports = {
+    allUser,
+    newUser,
+    login
+  }
 

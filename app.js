@@ -5,8 +5,6 @@ const init = require("./config/init.config");
 const bcrypt = require('bcrypt');
 
 
-// importar route de usuario
-const user_routes = require("./routes/user.routes")
 
 
 const app = express();
@@ -18,8 +16,9 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/auth",user_routes); // permite usar las rutas de usuarios
-require("./routes/rol.routes")(app)
+//app.use("/auth",user_routes); // permite usar las rutas de usuarios
+require("./routes/rol.routes")(app);
+require("./routes/user.routes")(app);
 
 
 app.use(

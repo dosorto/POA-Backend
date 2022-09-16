@@ -10,9 +10,9 @@ module.exports = function(app) {
     );
     next();
   })
-  app.post("/user/login",(req,res) => controller.login);
-  app.get("/user/get-all",(req,res) => controller.getAll);
-  app.post("/user/create-user",(req,res) => controller.newUser);
+  app.post("/auth/login",controller.login);
+  app.get("/auth/get-all",controller.allUser);
+  app.post("/auth/create-user",controller.newUser);
 };
 
 
