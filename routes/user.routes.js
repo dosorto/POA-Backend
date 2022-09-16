@@ -9,7 +9,10 @@ module.exports = function(app) {
       "Origin, Content-Type, Accept"
     );
     next();
-  });
-
-  //app.post("/api/user/login", controller.login);
+  })
+  app.post("/user/login",(req,res) => controller.login);
+  app.get("/user/get-all",(req,res) => controller.getAll);
+  app.post("/user/create-user",(req,res) => controller.newUser);
 };
+
+

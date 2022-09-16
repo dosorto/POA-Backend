@@ -4,8 +4,11 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
+const user = db.user;
 
+// controlador para el inicio de sesion
 const login = async (req, res) => {
+    //return res.status(200);
     try {
       const user = await User.findOne({
         where: {
@@ -59,6 +62,39 @@ const login = async (req, res) => {
         message: error.message
       });
     }
+
   };
 
+// controlador para crear un usuario
+  const newUser = async(req,res) => { 
+    try{
+      user.create({
+        username : req.body.username,
+        password : req.body.password
+        })
+        res.status(200).json({
+          message:'usuario creado con exito'
+        })
+        
+      } catch (error){
+        res.status(400).json({
+          message:'error al ingresar' + error
+        })
+      }
+     };
+
+// controlador para obtener todos los usuarios
+  const allUser = async(req,res) => { 
+    try{ Cliente.findAll({
+    where: {
+        isDelete: false,
+    }})
+    return res.status(200).send({ todoslosClientes });
+  } catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+  }
+  };
+  
 
