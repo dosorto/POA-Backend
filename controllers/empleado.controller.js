@@ -2,7 +2,7 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-
+/*
 const new_empleado = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
@@ -21,7 +21,7 @@ const new_empleado = async (req,res) =>{
         return res.status(400).json({status:"error", error : error});
     }
 }
-
+*/
 const get_empleado_by_id = async (req,res) =>{
     try{
         const empleado = await db.empleado.findByPk(req.params.id);
