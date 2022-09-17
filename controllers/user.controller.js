@@ -68,7 +68,7 @@ const login = async (req, res) => {
     }
 
   };
-
+/*
 // controlador para crear un usuario
   const newUser = async(req,res) => { 
     try{
@@ -103,10 +103,25 @@ const login = async (req, res) => {
       })
   }
   };
-  
+  */
+  // Controlador para obetener usuario por medio de un id
+  const getUserById = async (req,res) =>{
+    try{
+        const usuario = await db.user.findByPk(req.params.id);
+        if(!usuario){
+            return res.status(400).json({status: "No existe el usuario"});
+        }
+        return res.status(200).json({usuario});
+    }catch(error){
+        return res.status(400).json({status:"Bad Request", error:error});
+    }
+}
+
+
   module.exports = {
-    allUser,
-    newUser,
-    login
+    /*allUser,
+    newUser,*/
+    login,
+    getUserById
   }
 
