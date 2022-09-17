@@ -89,6 +89,15 @@ const login = async (req, res) => {
       }
      };
 
+     const getEmpleadoById= async (req,res) =>{
+      try{
+         const usuarios = await db.user.findByPk(req.params.id);
+         return res.status(200).json({usuarios})
+      }catch(error){
+          console.log("error: " + error);
+          return res.status(400).json({status:"error", error : error});
+      }
+  }    
 // controlador para obtener todos los usuarios
   const allUser = async(req,res) => { 
     try{ 
@@ -107,6 +116,7 @@ const login = async (req, res) => {
   module.exports = {
     allUser,
     newUser,
-    login
+    login,
+    getEmpleadoById
   }
 

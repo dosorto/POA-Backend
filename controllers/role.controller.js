@@ -31,7 +31,7 @@ const get_roles = async (req,res) =>{
 
 const get_rol_by_id = async (req,res) =>{
     try{
-       const rol = await db.roles.findByPk(req.params.id);
+       const rol = await db.role.findByPk(req.params.id);
        return res.status(200).json({rol})
     }catch(error){
         console.log("error: " + error);
