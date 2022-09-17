@@ -5,6 +5,7 @@ const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
 
+/*
 // controlador para el inicio de sesion
 const login = async (req, res) => {
     //return res.status(200);
@@ -33,6 +34,7 @@ const login = async (req, res) => {
         user.password
       );
       */
+    /*
       const passwordIsValid = user.password === req.body.password;
   
       if (!passwordIsValid) {
@@ -51,6 +53,8 @@ const login = async (req, res) => {
         expiresIn: 86400, // 24 horas de ducración de tokens
       });
       */
+
+    /*
       const resp = {
         id: user.id,
         usuario: user.username,
@@ -68,6 +72,8 @@ const login = async (req, res) => {
     }
 
   };
+
+  */
 
 // controlador para crear un usuario
   const newUser = async(req,res) => { 
@@ -89,6 +95,8 @@ const login = async (req, res) => {
       }
      };
 
+
+/*
 // controlador para obtener todos los usuarios
   const allUser = async(req,res) => { 
     try{ 
@@ -103,10 +111,10 @@ const login = async (req, res) => {
       })
   }
   };
-  
+*/
   module.exports = {
-    allUser,
+    //allUser,
     newUser,
-    login
+    //login
   }
 
