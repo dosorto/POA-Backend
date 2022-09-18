@@ -27,13 +27,12 @@ const login = async (req, res) => {
         });
       }
       // desabilitado temporalmente
-      /*
+      
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
-      */
-      const passwordIsValid = user.password === req.body.password;
+      
   
       if (!passwordIsValid) {
         return res.status(401).send({
