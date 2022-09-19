@@ -47,7 +47,7 @@ const get_empleados = async (req,res) =>{
 
 
 module.exports = {
-    new_empleado,
+    
     get_empleado_by_id,
     get_empleados
   }
