@@ -4,7 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
-
+const jwt = require("jsonwebtoken");
 // controlador para el inicio de sesion
 const login = async (req, res) => {
     //return res.status(200);
@@ -40,7 +40,7 @@ const login = async (req, res) => {
         });
       }
      // jwt no incluido todavia
-     /*
+     
       const token = jwt.sign({
         idUsuario: user.id,
         idEmpleado:user.empleado.id,
@@ -49,14 +49,14 @@ const login = async (req, res) => {
       config.secret, {
         expiresIn: 86400, // 24 horas de ducración de tokens
       });
-      */
+      
       const resp = {
         id: user.id,
         usuario: user.username,
         empleado: user.empleado,
-        rol: user.role//,
+        rol: user.role,//,
         //sesion:ses,
-        //token: token
+        token: token
       }
       return res.status(200).send(resp);
     } catch (error) {
