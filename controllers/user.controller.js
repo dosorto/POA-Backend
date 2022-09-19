@@ -104,7 +104,13 @@ const login = async (req, res) => {
       const  allusers =  await db.user.findAll({
       where: {
           isDelete: false,
-      }})
+      },
+      include:[{
+        model: db.role,
+      },{
+         model: db.empleado
+      }]
+    })
       return res.status(200).send({ allusers });
   } catch(error){
       res.status(400).json({
