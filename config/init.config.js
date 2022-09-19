@@ -1,11 +1,13 @@
-const db = require("../models/puntoDeVentas");
+const empleadoModel = require("../models/empleado.model");
+const roleModelb = require("../models/role.model");
+const userModel = require("../models/usuario.model");
 const bcrypt = require("bcryptjs");
-const config = require("../config/auth.config.js");
+const config = require("./auth.config.js");
 const { DB } = require("./db.config");
-const Role = db.role;
-const User = db.user;
-const Empleado = db.empleado;
-const Sesion = db.sesion;
+const Role = roleModelb.role;
+const User = userModel.user;
+const Empleado = empleadoModel.empleado;
+//const Sesion = db.sesion;
 
 
 

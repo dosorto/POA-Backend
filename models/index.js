@@ -1,4 +1,4 @@
-const config = require("../../config/db.config.js");
+const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
@@ -15,7 +15,8 @@ const sequelize = new Sequelize(
       min: config.pool.min,
       acquire: config.pool.acquire,
       idle: config.pool.idle
-    }
+    },
+    operatorsAliases: 0
   }
 );
 
@@ -24,9 +25,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../../models/role.model.js")(sequelize, Sequelize);
-db.empleado = require("../../models/empleado.model.js")(sequelize, Sequelize);
+db.user = require("./usuario.model.js")(sequelize, Sequelize);
+db.role = require("./role.model.js")(sequelize, Sequelize);
+db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -59,3 +60,5 @@ db.user.belongsTo(db.role, {
 db.sesion.belongsTo(db.user, {
   foreignKey: { name: 'idUsuario', allowNull: false }
 });*/
+
+module.exports = db;
