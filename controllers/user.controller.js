@@ -88,6 +88,25 @@ const login = async (req, res) => {
       }
      };
 
+// Controlador para la validacion de username
+const userValidation = async(req,res) => {
+  try{
+    const user = await User.findOne({username}) || null;
+
+    if (user != null) {
+      res.status.json({
+        message: 'Usuario ya existe'
+      })
+    }
+    return req.newUser;
+
+    } catch (error){
+      res.status(404).json({
+        message:'error al validar' + error
+      })
+    }
+   };
+
 // controlador para obtener todos los usuarios
   const allUser = async(req,res) => { 
     try{ 
@@ -106,6 +125,7 @@ const login = async (req, res) => {
   module.exports = {
     allUser,
     newUser,
-    login
+    login,
+    userValidation
   }
 
