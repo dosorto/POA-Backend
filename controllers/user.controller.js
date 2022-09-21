@@ -103,9 +103,38 @@ const login = async (req, res) => {
   }
   };
   
+  const get_rol_by_username = async (req,res) =>{
+    try{
+       const rol = await db.role.findOne({
+        attributes: ['rol'],
+        include:{
+          model: db.user,
+          attributes: [],
+          where:{
+            username: req.body.username
+          },
+        },
+
+        });
+       if (!rol){
+        return res.status(404).send({
+          message: "El usuario no existe"
+        })
+
+       }else{
+         return res.status(200).json({rol})
+       }
+    }catch(error){
+        console.log("error: " + error);
+        return res.status(400).json({status:"error", error : error});
+    }
+  }
+
+
+  
   module.exports = {
     allUser,
     newUser,
-    login
+    login,
+    get_rol_by_username
   }
-
