@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const Permiso = sequelize.define("permisos", {
       Permiso: {
         type: Sequelize.STRING,
-        allowNull: false 
+        allowNull: false,
       },
       Descripcion: {
         type: Sequelize.STRING,

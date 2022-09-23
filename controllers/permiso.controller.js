@@ -5,7 +5,6 @@ const { Op, DataTypes, Model } = require("sequelize");
 
 const newPermiso = async (req,res) =>{
     try{
-        //db.sequelize.authenticate();
         db.permiso.create({
             Permiso: req.body.Permiso,
             Descripcion: req.body.Descripcion,
@@ -20,7 +19,7 @@ const newPermiso = async (req,res) =>{
 const get_permiso_by_id = async (req,res) =>{
     try{
        const permiso = await db.permiso.findByPk(req.params.id);
-       return res.status(200).json({rol})
+       return res.status(200).json({permiso})
     }catch(error){
         console.log("error: " + error);
         return res.status(400).json({status:"error", error : error});

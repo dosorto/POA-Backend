@@ -43,7 +43,7 @@ exports.initial = async () => {
         });
         //Agregue tabla catalogo de permisos de permisos
         await Permiso.create({
-            idPermiso: 1,
+            id: 1,
             Permiso: "Edicion de documentos",
             Descripcion: "Le permite a este usuario editar documentos"
         })

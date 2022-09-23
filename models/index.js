@@ -64,7 +64,7 @@ db.sesion.belongsTo(db.user, {
 
 // Relacion de muchos a muchos Roles y Permisos -- Letty
 db.permiso.hasMany(db.permiso, {
-  foreignKey: { name: 'idPermiso', allowNull: false }
+  primaryKey: { name: 'idPermiso', allowNull: false }
 });
 db.role.belongsTo(db.role, {
   foreignKey: { name: 'idPermiso', allowNull: false }
