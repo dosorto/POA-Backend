@@ -28,6 +28,7 @@ db.sequelize = sequelize;
 db.user = require("./usuario.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
+db.permiso = require("./permiso.model.js")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -60,5 +61,14 @@ db.user.belongsTo(db.role, {
 db.sesion.belongsTo(db.user, {
   foreignKey: { name: 'idUsuario', allowNull: false }
 });*/
+
+// Relacion de muchos a muchos Roles y Permisos -- Letty
+db.permiso.hasMany(db.permiso, {
+  foreignKey: { name: 'idPermiso', allowNull: false }
+});
+db.role.belongsTo(db.role, {
+  foreignKey: { name: 'idPermiso', allowNull: false }
+});
+
 
 module.exports = db;

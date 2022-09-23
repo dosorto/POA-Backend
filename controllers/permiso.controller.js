@@ -3,13 +3,12 @@ const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 
-const new_rol = async (req,res) =>{
+const newPermiso = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
-        db.role.create({
-            rol: req.body.rol,
-            descripcion: req.body.descripcion,
-            permiso: req.body.permiso // Letty Agregue requerimientos de permiso
+        db.permiso.create({
+            Permiso: req.body.Permiso,
+            Descripcion: req.body.Descripcion,
         });
         return res.status(200).json({status:"ok"});
     } catch(error){
@@ -18,9 +17,9 @@ const new_rol = async (req,res) =>{
     }
 }
 
-const get_rol_by_id = async (req,res) =>{
+const get_permiso_by_id = async (req,res) =>{
     try{
-       const rol = await db.role.findByPk(req.params.id);
+       const permiso = await db.permiso.findByPk(req.params.id);
        return res.status(200).json({rol})
     }catch(error){
         console.log("error: " + error);
@@ -29,14 +28,6 @@ const get_rol_by_id = async (req,res) =>{
 }
 
 module.exports = {
-    new_rol,
-    get_rol_by_id
+    newPermiso,
+    get_permiso_by_id
   }
-
-
-
-
-
-
-
-
