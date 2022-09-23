@@ -1,3 +1,4 @@
+const pass = require("./auth.config")
 module.exports = {
     HOST: "localhost",
     USER: "root",

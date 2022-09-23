@@ -1,13 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
-    const Usuario = sequelize.define("Usuario", {
-      username: {
-        type: Sequelize.STRING,
-        allowNull: false, // no permite valores nulos
-        unique: true
-      },
-      password: {
+    const Sesion = sequelize.define("Sesion", {
+      token: {
         type: Sequelize.STRING,
         allowNull: false // no permite valores nulos
+      },
+      FechaInicio: {
+        type: Sequelize.STRING,
+        allowNull: false // no permite valores nulos
+      },
+      FechaFin: {
+        type: Sequelize.STRING,
+        allowNull: false // no permite valores nulos 
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
@@ -15,6 +18,5 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false // establece el valor por defecto en false
       }
     });
-    return Usuario;
+    return Sesion;
   };
-  
