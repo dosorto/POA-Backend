@@ -98,7 +98,7 @@ const login = async (req, res) => {
           return res.status(400).json({status:"error", error : error});
       }
   }    
-// controlador para obtener todos los usuarios
+// Obtener todos los Usuarios
   const allUser = async(req,res) => { 
     try{ 
       const  allusers =  await db.user.findAll({
