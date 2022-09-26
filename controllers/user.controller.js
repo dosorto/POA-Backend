@@ -133,6 +133,7 @@ const changePassword = async (req, res) => {
       }
     )
 
+    
     return res.status(200).send({ usuario: user.username, isuser: user.id });
   } catch (error) {
     return res.status(500).send(error);
