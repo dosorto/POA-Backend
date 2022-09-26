@@ -13,4 +13,5 @@ module.exports = function(app) {
   });
   app.post("/rol/create_rol",controller.new_rol);
   app.get("/rol/get_rol/:id",controller.get_rol_by_id)
+  app.get("/rol/allrol", controller.get_roles)
 };
