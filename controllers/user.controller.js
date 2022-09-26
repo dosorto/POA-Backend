@@ -68,7 +68,7 @@ const login = async (req, res) => {
     }
 
   };
-/*
+
 // controlador para crear un usuario
   const newUser = async(req,res) => { 
     try{
@@ -89,25 +89,39 @@ const login = async (req, res) => {
       }
      };
 
+
 // controlador para obtener todos los usuarios
-  const allUser = async(req,res) => { 
-    try{ 
-      const  allusers =  await db.user.findAll({
-      where: {
-          isDelete: false,
-      }})
-      return res.status(200).send({ allusers });
-  } catch(error){
-      res.status(400).json({
-        message:'error al ingresar' + error
-      })
-  }
-  };
-  */
+/* const allUser = async(req,res) => { 
+  try{ 
+    const  allusers =  await db.user.findAll({
+    where: {
+        isDelete: false,
+    },
+    include:[{
+      model: db.role,
+    },{
+       model: db.empleado
+    }]
+  })
+    return res.status(200).send({ allusers });
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+*/
+
   // Controlador para obetener usuario por medio de un id
   const getUserById = async (req,res) =>{
     try{
-        const usuario = await db.user.findByPk(req.params.id);
+        const usuario = await db.user.findByPk(req.params.id,{
+          include:[{
+            model: db.role,
+          },{
+             model: db.empleado
+          }]
+        });
         if(!usuario){
             return res.status(400).json({status: "No existe el usuario"});
         }
@@ -115,12 +129,33 @@ const login = async (req, res) => {
     }catch(error){
         return res.status(400).json({status:"Bad Request", error:error});
     }
+};
+
+/*const updateUser = async(req, res) => {
+  try {
+
+    const user = await db.user.findByPk(req.body.id);
+    if(!user){
+      return res.status(404).send({message:'user not found'})
+    }
+    await db.user.update({username:req.body.username,
+                          password:req.body.password,
+                          idEmpleado:req.body.idEmpleado,
+                          idRol:req.body.idRol},{where:{id:req.body.id}})
+    return res.status(200).send(user);
+
+  } catch(error){
+    res.status(500).json({
+      message:'error al ingresar ' + error
+    })
+  }
 }
 
-
+*/
   module.exports = {
-    /*allUser,
-    newUser,*/
+   // allUser,
+  // updateUser,
+    newUser,
     login,
     getUserById
   }
