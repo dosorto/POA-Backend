@@ -103,9 +103,27 @@ const login = async (req, res) => {
   }
   };
   
+  const updateUser = async(req, res) => {
+    try {
+
+      const user = await db.user.findByPk(req.body.id);
+      if(!user){
+        return res.status(404).send({message:'user not found'})
+      }
+      await db.user.update({username:req.body.username},{where:{id:req.body.id}})
+      return res.status(200).send(user);
+
+    } catch(error){
+      res.status(500).json({
+        message:'error al ingresar ' + error
+      })
+    }
+  }
+
   module.exports = {
     allUser,
     newUser,
-    login
+    login,
+    updateUser
   }
 
