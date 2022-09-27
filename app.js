@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
+require("./routes/PEI.routes")(app);
+
 
 
 app.use(
@@ -35,7 +37,7 @@ app.use(
 const db = require("./models/");
 db.sequelize.sync();
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
   init.initial();
 });
 
