@@ -121,7 +121,7 @@ const changePassword = async (req, res) => {
 
 module.exports = {
   allUser,
-  newUser,
+  //newUser,
   login,
   changePassword
 }
