@@ -34,28 +34,17 @@ app.use(
 // database
 const db = require("./models/");
 db.sequelize.sync();
-
-
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: true}).then(() => {
   init.initial();
 });
 
 
-
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "POA SYSTEM!" });
+  res.json({ message: "¡Bienvenido!" });
 });
 
-app.get("/saludo",(req,res) => {
-  res.json({
-    saludo:"hola"
-  })
-});
-
-
-   // --------------------------------
 // routes
 //require("./routes/user.routes")(app);
 

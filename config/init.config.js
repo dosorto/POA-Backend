@@ -8,7 +8,7 @@ const { DB } = require("./db.config");
 const Role = db.role;
 const User = db.user;
 const Empleado = db.empleado;
-//const Sesion = db.sesion;
+const Sesion = db.sesion;
 
 
 
