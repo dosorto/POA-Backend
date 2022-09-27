@@ -2,7 +2,7 @@ const pass = require("./auth.config")
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: pass.pass,
+    PASSWORD: "ANFAalejandra192000",
     DB: "db_poa",
     dialect: "mysql",
     pool: {
