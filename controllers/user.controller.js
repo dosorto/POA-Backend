@@ -89,23 +89,29 @@ const login = async (req, res) => {
      };
 
 // Controlador para la validacion de username
-const userValidation = async(req,res) => {
-  try{
-    const user = await User.findOne({username}) || null;
+const userValidation = async(req, res) => {
+  try {
 
-    if (user != null) {
-      res.status.json({
-        message: 'Usuario ya existe'
-      })
-    }
-    return req.newUser;
+    const user = await db.user.findOne({
+      where: {
+        username: req.body.username
+      },
+    });
 
-    } catch (error){
-      res.status(404).json({
-        message:'error al validar' + error
-      })
+    if (!user) {
+      return res.status(404).send({
+        message: "usuario no existe"
+      });
     }
-   };
+
+    return res.status(200).send({ user });
+
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message
+    });
+  }
+};
 
 // controlador para obtener todos los usuarios
   const allUser = async(req,res) => { 
