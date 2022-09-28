@@ -25,6 +25,32 @@ const allObjetivo = async(req,res) => {
   }
   };
 
-  module.exports = {
-    allObjetivo
+   
+
+const eliminarObjetivo = async (req, res) => {
+  try {
+    const objetivoUpdate = await objetivo.update({
+        isDelete: true
+  },{
+    where: {
+      id: req.params.id
+    }
+  });
+  if (objetivoUpdate){
+      res.status(200).send({
+        message: "Usuario baja en el backend"
+    });
   }
+} catch (error) {
+  console.log(error);
+  res.status(401).send({
+    message: "Error al elimiar el usuario " + error.message
+  });
+}
+
+}
+
+module.exports = {
+  allObjetivo,
+  eliminarObjetivo
+}
