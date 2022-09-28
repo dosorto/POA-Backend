@@ -6,10 +6,12 @@ const permisoModel = require("../models/permiso.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
+const { roles_permiso } = require("../models/");
 const Role = db.role;
 const User = db.user;
 const Empleado = db.empleado;
 const Permiso = db.permiso;
+const permiso_role = db.roles_permiso;
 //const Sesion = db.sesion;
 
 
@@ -46,7 +48,13 @@ exports.initial = async () => {
             id: 1,
             Permiso: "Edicion de documentos",
             Descripcion: "Le permite a este usuario editar documentos"
+        });
+
+        await roles_permiso.create({
+            idRol:1,
+            idPermiso: 1
         })
+
         } catch (error) {
             console.log(error);
         }

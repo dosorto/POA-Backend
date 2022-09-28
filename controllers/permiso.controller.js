@@ -2,6 +2,7 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
+const {  user,  roles_permiso, role } = require("../models/");
 
 const newPermiso = async (req,res) =>{
     try{
@@ -18,8 +19,33 @@ const newPermiso = async (req,res) =>{
 
 const get_permiso_by_id = async (req,res) =>{
     try{
-       const permiso = await db.permiso.findByPk(req.params.id);
-       return res.status(200).json({permiso})
+       const idRol = await db.role.findOne({
+        attributes:['id'],
+        include:{
+            model:user,
+            attributes:['username'],
+            where:{
+                id: req.body.id 
+            }
+        },
+        });
+
+    const idPermiso = await db.roles_permiso.findAll({
+        attributes:['idPermiso'],
+        where:{
+        idRol: idRol.id
+    }});
+
+    const permisos = await db.permiso.findAll({
+        attributes:['Permiso','Descripcion'],
+        idPermiso: idPermiso.id = 'idPermiso'
+    }/*,{where:{ [Op.in]:[{
+        idRol: idRol.id
+    },{idPermiso: idPermiso.id}] 
+    }*/)
+
+
+       return res.status(200).json({idRol,idPermiso,permisos})
     }catch(error){
         console.log("error: " + error);
         return res.status(400).json({status:"error", error : error});

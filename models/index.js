@@ -29,6 +29,7 @@ db.user = require("./usuario.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 db.permiso = require("./permiso.model.js")(sequelize, Sequelize);
+db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -63,12 +64,26 @@ db.sesion.belongsTo(db.user, {
 });*/
 
 // Relacion de muchos a muchos Roles y Permisos -- Letty
+/*
 db.permiso.hasMany(db.permiso, {
   primaryKey: { name: 'idPermiso', allowNull: false }
 });
 db.role.belongsTo(db.role, {
   foreignKey: { name: 'idPermiso', allowNull: false }
+});*/
+
+db.permiso.belongsToMany(db.role, {
+  through: db.roles_permiso,
+  foreignKey: "idRol",
+  otherKey: "idPermiso"
 });
+db.role.belongsToMany(db.permiso, {
+  through: db.roles_permiso,
+  foreignKey: "idRol",
+  otherKey: "idPermiso"
+});
+
+
 
 
 module.exports = db;

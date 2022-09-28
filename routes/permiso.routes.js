@@ -12,5 +12,5 @@ module.exports = function(app) {
     next();
   });
   app.post("/permiso/create_permiso",controller.newPermiso);
-  app.get("/permiso/get_permiso/:id",controller.get_permiso_by_id)
+  app.get("/permiso/get_permiso/",controller.get_permiso_by_id)
 };
