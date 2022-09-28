@@ -68,6 +68,51 @@ const login = async (req, res) => {
 
   };
 
+// controlador para crear un usuario
+  const newUser = async(req,res) => { 
+    try{
+      db.user.create({
+        username : req.body.username,
+        password : bcrypt.hashSync(req.body.password, 8),
+        idEmpleado: req.body.idEmpleado,
+        idRol : req.body.idRol
+        })
+        res.status(200).json({
+          message:'usuario creado con exito'
+        })
+        
+      } catch (error){
+        res.status(400).json({
+          message:'error al ingresar' + error
+        })
+      }
+     };
+
+// Controlador para la validacion de username
+const userValidation = async(req, res) => {
+  try {
+
+    const user = await db.user.findOne({
+      where: {
+        username: req.body.username
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send({
+        message: "usuario no existe"
+      });
+    }
+
+    return res.status(200).send({ user });
+
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message
+    });
+  }
+};
+
 // controlador para obtener todos los usuarios
 const allUser = async (req, res) => {
   try {
@@ -116,5 +161,6 @@ const allUser = async (req, res) => {
     allUser,
     newUser,
     login,
+    userValidation,
     get_rol_by_username
   }
