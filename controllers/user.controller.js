@@ -16,10 +16,15 @@ const bcrypt = require("bcryptjs");
           }]
         });
         if(!usuario){
-            return res.status(404).json({status: "No existe el usuario"});
+              res.status(404).send({
+              message:'usuario no encontrado'
+            });
+        }else{
+          return res.status(200).json({usuario});
         }
-        return res.status(200).json({usuario});
+        
     }catch(error){
+      console.log("error" + error);
         return res.status(500).json({status:"Internal Server Error", error:error});
     }
 };
