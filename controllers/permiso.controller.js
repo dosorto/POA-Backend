@@ -19,7 +19,23 @@ const newPermiso = async (req,res) =>{
 
 const get_permiso_by_id = async (req,res) =>{
     try{
-       const idRol = await db.role.findOne({
+
+        
+        const user = await db.user.findOne({
+            where: {
+              IsDelete: false,
+              id: req.body.id
+            }, include: [{
+              model: db.role,
+              include:[
+                {
+                    model: db.permiso,
+                }
+              ]
+            },{model: db.empleado },]
+          });
+        return res.status(200).json({user})
+       /*const idRol = await db.role.findOne({
         attributes:['id'],
         include:{
             model:user,
@@ -42,10 +58,10 @@ const get_permiso_by_id = async (req,res) =>{
     }/*,{where:{ [Op.in]:[{
         idRol: idRol.id
     },{idPermiso: idPermiso.id}] 
-    }*/)
+    })
 
 
-       return res.status(200).json({idRol,idPermiso,permisos})
+       return res.status(200).json({idRol,idPermiso,permisos})*/
     }catch(error){
         console.log("error: " + error);
         return res.status(400).json({status:"error", error : error});
