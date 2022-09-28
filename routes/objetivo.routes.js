@@ -1,5 +1,5 @@
 //const { authJwt } = require("../middleware");
-const controller = require("../controllers/role.controller");
+const controller = require("../controllers/objetivo.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
 
@@ -11,9 +11,7 @@ module.exports = function(app) {
     );
     next();
   });
-  app.post("/rol/create_rol",controller.new_rol);
-  app.get("/rol/get_rol/:id",controller.get_rol_by_id);
-  app.get("/rol/get_roles",controller.get_roles)
 
+  app.get("/objetivos/get_all", controller.allObjetivo);
+  app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
 };
-
