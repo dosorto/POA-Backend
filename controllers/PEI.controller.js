@@ -20,6 +20,22 @@ const updatePEI = async(req, res) => {
     }
   }
 
+//Controlador para crear un nuevo PEI
+const new_PEI = async (req,res) =>{
+    try{
+        //db.sequelize.authenticate();
+        db.PEI.create({
+            name: req.body.name,
+            initialYear: req.body.initialYear,
+            finalYear: req.body.finalYear
+        });
+        return res.status(200).json({status:"Ok"});
+    } catch(error){
+        console.log("error: " + error);
+        return res.status(400).json({status:"error", error : error});
+    }
+}
+//Controlador para obtener todos los PEI
 const get_PEI = async (req,res) =>{
     try{
         const PEI = await db.PEI.findAll();
@@ -35,5 +51,34 @@ const get_PEI = async (req,res) =>{
 
 module.exports = {
     updatePEI,
-    get_PEI
-  }
+    get_PEI}
+
+//Eliminar PEI
+/*
+const disable_PEI = async (req, res) => {
+    try {
+        const temporally = await db.PEI.update({
+            isDelete : true
+        }, {
+            where: {
+                name: req.body.name
+            }
+        });
+        if (temporally) {
+            res.status(200).send({
+                message: "PEI is disable"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(401).send({
+            message: "Error: PEI can't be disable " + error.message
+        });
+    }
+}
+
+module.exports = {
+    new_PEI,
+    get_PEI,
+    disable_PEI
+  }*/

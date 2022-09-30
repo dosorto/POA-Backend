@@ -12,10 +12,11 @@ const User = db.user;
 const Empleado = db.empleado;
 const Permiso = db.permiso;
 const permiso_role = db.roles_permiso;
+const PEI = db.pei;
 //const Sesion = db.sesion;
 
 
-
+/*
 exports.initial = async () => {
     try {
         
@@ -26,6 +27,7 @@ exports.initial = async () => {
             descripcion: "super usuario",
             idPermiso: 1,
         });
+
         
         await Empleado.create({
             id: 1,
@@ -37,6 +39,7 @@ exports.initial = async () => {
             fechaNacimiento:'1995-08-07',
             sexo: "M",
         });
+        
         await User.create({
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
@@ -60,4 +63,4 @@ exports.initial = async () => {
         }
 
 
-    };
+    };*/

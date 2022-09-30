@@ -11,6 +11,6 @@ module.exports = function(app) {
     );
     next();
   });
-  app.post("/permiso/create_permiso",controller.newPermiso);
-  app.get("/permiso/get_PEI/:id",controller.get_PEI)
+  app.post("/auth/new_PEI",controller.new_PEI);
+  app.get("/auth/get_PEI/:id",controller.get_PEI)
 };

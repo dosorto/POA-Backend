@@ -88,13 +88,44 @@ const login = async (req, res) => {
       }
      };
 
+// Controlador para la validacion de username
+const userValidation = async(req, res) => {
+  try {
+
+    const user = await db.user.findOne({
+      where: {
+        username: req.body.username
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send({
+        message: "usuario no existe"
+      });
+    }
+
+    return res.status(200).send({ user });
+
+  } catch (error) {
+    return res.status(500).send({
+      message: error.message
+    });
+  }
+};
+
 // controlador para obtener todos los usuarios
-  const allUser = async(req,res) => { 
-    try{ 
-      const  allusers =  await db.user.findAll({
+const allUser = async (req, res) => {
+  try {
+    const allusers = await db.user.findAll({
       where: {
           isDelete: false,
-      }})
+      },
+      include:[{
+        model: db.role,
+      },{
+         model: db.empleado
+      }]
+    })
       return res.status(200).send({ allusers });
   } catch(error){
       res.status(400).json({
@@ -103,27 +134,38 @@ const login = async (req, res) => {
   }
   };
   
-  const updateUser = async(req, res) => {
-    try {
+  const get_rol_by_username = async (req,res) =>{
+    try{
+       const rol = await db.role.findOne({
+        attributes: ['rol'],
+        include:{
+          model: db.user,
+          attributes: [],
+          where:{
+            username: req.body.username
+          },
+        },
 
-      const user = await db.user.findByPk(req.body.id);
-      if(!user){
-        return res.status(404).send({message:'user not found'})
-      }
-      await db.user.update({username:req.body.username},{where:{id:req.body.id}})
-      return res.status(200).send(user);
+        });
+       if (!rol){
+        return res.status(404).send({
+          message: "El usuario no existe"
+        })
 
-    } catch(error){
-      res.status(500).json({
-        message:'error al ingresar ' + error
-      })
+       }else{
+         return res.status(200).json({rol})
+       }
+    }catch(error){
+        console.log("error: " + error);
+        return res.status(400).json({status:"error", error : error});
     }
   }
 
+
+  
   module.exports = {
     allUser,
-    newUser,
     login,
-    updateUser
+    userValidation,
+    get_rol_by_username
   }
-
