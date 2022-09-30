@@ -21,7 +21,7 @@ require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
 require("./routes/objetivo.routes")(app);
-
+require("./routes/AreaPEI.routes")(app);
 
 app.use(
   cookieSession({
@@ -42,6 +42,7 @@ db.sequelize.sync({force: true}).then(() => {
   init.initial();
 });
 */
+
 
 
 // simple route

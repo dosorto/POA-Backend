@@ -31,6 +31,7 @@ db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.areas = require("./areas.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -91,6 +92,38 @@ db.pei.hasMany(db.objetivos, {
 });
 db.objetivos.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false }
+});
+
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNA AREA TIENE UNA DIMENSION, UNA DIMENSION TIENE MUCHAS AREAS(1:N)////
+db.dimension.hasMany(db.areas, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+db.areas.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNa area TIENE UN PEI, UN PEI TIENE MUCHOS AREAS(1:N)////
+db.pei.hasMany(db.areas, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+
+db.areas.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNa area TIENE UN PEI, UN PEI TIENE MUCHOS AREAS(1:N)////
+db.objetivos.hasMany(db.areas, {
+  foreignKey: { name: 'idObjetivo', allowNull: false }
+});
+
+db.areas.belongsTo(db.areas, {
+  foreignKey: { name: 'idObjetivo', allowNull: false }
 });
 /*
 db.role.hasMany(db.user, {

@@ -1,12 +1,10 @@
+const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
-    const Rol = sequelize.define("roles", {
-      rol: {
+    const Areas = sequelize.define("areas", {
+      
+      nombre: {
         type: Sequelize.STRING,
-        allowNull: false 
-      },
-      descripcion: {
-        type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false, 
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
@@ -14,6 +12,6 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false
       },
     });
-  
-    return Rol;
+    return Areas;
   };
+ 
