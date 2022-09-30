@@ -19,17 +19,19 @@ const new_PEI = async (req,res) =>{
     }
 }
 //Controlador para obtener todos los PEI
-const get_PEI = async (req,res) =>{
-    try{
-        const PEI = await db.PEI.findAll();
-        if(!PEI){
-            return res.status(400).send("<h1>No existe ningún PEI creado</h1>");
-        }
-        return res.status(200).json({PEI});
-    }catch(error){
-        return res.status(400).json({status:"Bad Request", error:error});
-    }
-}
+const get_PEI = async(req,res) => { 
+    try{ 
+      const  get_pei =  await db.PEI.findAll({
+      where: {
+          isDelete: false,
+      }})
+      return res.status(200).send({get_pei });
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
 
 
 
