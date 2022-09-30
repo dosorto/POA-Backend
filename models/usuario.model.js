@@ -18,3 +18,4 @@ module.exports = (sequelize, Sequelize) => {
     return Usuario;
   };
   
+  

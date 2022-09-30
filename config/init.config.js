@@ -1,10 +1,12 @@
 const empleadoModel = require("../models/empleado.model");
 const roleModelb = require("../models/role.model");
 const userModel = require("../models/usuario.model");
+const areasModel = require("../models/usuario.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
 const Role = roleModelb.role;
+const Areas= areasModel.areas;
 const User = userModel.user;
 const Empleado = empleadoModel.empleado;
 //const Sesion = db.sesion;
@@ -39,12 +41,11 @@ exports.initial = async () => {
             fechaNacimiento: Date("2002-20-2"),
             sexo: "M",
         });
-        await User.create({
-            usuario: "root",
-            password: bcrypt.hashSync(config.secret, 8),
-            email: "root@soft.com",
-            idEmpleado: 1,
-            idRol: 1
+        await Areas.create({
+            nombre: "root",
+            idObjeto: "1",
+            idDimension: "1",
+            idEI: "123"
         });
         } catch (error) {
             console.log(error);

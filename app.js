@@ -20,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
+require("./routes/AreaPEI.routes")(app);
 
 
 app.use(
