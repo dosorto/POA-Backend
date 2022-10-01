@@ -3,6 +3,7 @@ const empleadoModel = require("../models/empleado.model");
 const roleModelb = require("../models/role.model");
 const userModel = require("../models/usuario.model");
 const permisoModel = require("../models/permiso.model");
+const PEIModel = require("../models/PEI.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
@@ -28,6 +29,11 @@ exports.initial = async () => {
             idPermiso: 1,
         });
 
+        await PEI.create({
+            name: "Mantenimiento general",
+            initialYear:'2020-08-07',
+            finalYear:'2020-09-08',
+        });
         
         await Empleado.create({
             id: 1,
@@ -46,6 +52,7 @@ exports.initial = async () => {
             idEmpleado: 1,
             idRol: 1
         });
+
         //Agregue tabla catalogo de permisos de permisos
         await Permiso.create({
             id: 1,

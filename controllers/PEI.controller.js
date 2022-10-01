@@ -55,6 +55,24 @@ module.exports = {
 
 //Eliminar PEI
 /*
+const get_PEI = async(req,res) => { 
+    try{ 
+      const  get_pei =  await db.PEI.findAll({
+      where: {
+          isDelete: false,
+      }})
+      return res.status(200).send({get_pei });
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
+
+
+
+//Eliminar PEI
+
 const disable_PEI = async (req, res) => {
     try {
         const temporally = await db.PEI.update({
@@ -82,3 +100,4 @@ module.exports = {
     get_PEI,
     disable_PEI
   }*/
+
