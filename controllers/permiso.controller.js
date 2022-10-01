@@ -19,8 +19,6 @@ const newPermiso = async (req, res) => {
 
 const get_permiso_by_id = async (req, res) => {
     try {
-
-
         const user = await db.user.findOne({
             where: {
                 IsDelete: false,
@@ -64,7 +62,18 @@ const get_permiso_by_id = async (req, res) => {
     }
 }
 
+const all_Permises = async ( req, res) => {
+    try {
+        const permisos = await db.permiso.findAll()
+        return res.status(200).json({permisos})    
+    }catch (error) {
+        console.log("error: " + error);
+        return res.status(400).json({ status: "error", error: error });
+}
+}
+
 module.exports = {
     newPermiso,
-    get_permiso_by_id
+    get_permiso_by_id,
+    all_Permises
 }
