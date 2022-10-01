@@ -9,7 +9,6 @@ const new_rol = async (req,res) =>{
         db.role.create({
             rol: req.body.rol,
             descripcion: req.body.descripcion,
-            idPermiso: req.body.idPermiso // Letty Agregue requerimientos de permiso
         });
         return res.status(200).json({status:"ok"});
     } catch(error){

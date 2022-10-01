@@ -2,7 +2,7 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const {  user,  roles_permiso, role } = require("../models/");
+///const {  user,  roles_permiso, role } = require("../models/");
 
 const newPermiso = async (req,res) =>{
     try{

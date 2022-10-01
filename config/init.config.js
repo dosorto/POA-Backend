@@ -17,7 +17,7 @@ const PEI = db.pei;
 //const Sesion = db.sesion;
 
 
-/*
+
 exports.initial = async () => {
     try {
         
@@ -26,7 +26,6 @@ exports.initial = async () => {
             id: 1,
             rol: "admin",
             descripcion: "super usuario",
-            idPermiso: 1,
         });
 
         await PEI.create({
@@ -34,6 +33,7 @@ exports.initial = async () => {
             initialYear:'2020-08-07',
             finalYear:'2020-09-08',
         });
+
         
         await Empleado.create({
             id: 1,
@@ -54,20 +54,43 @@ exports.initial = async () => {
         });
 
         //Agregue tabla catalogo de permisos de permisos
-        await Permiso.create({
+        /*await Permiso.create({
             id: 1,
             Permiso: "Edicion de documentos",
             Descripcion: "Le permite a este usuario editar documentos"
-        });
+        });*/
+        const Permiso = await Permiso.bulkCreate([{
+            Permiso: "All_User",
+            Descripcion: "Permite acceder al usuario a todo el sistema."
+        },
+        {
+            Permiso: "Create_User",
+            Descripcion: "Permite crear usuarios."
+        },
+        {
+            Permiso: "Update_User",
+            Descripcion: "Permite actualizar al usuario a todo el sistema"
+        },{
+            Permiso: "Delete_User",
+            Descripcion: "Permite eliminar al usuario a todo el sistema"
+        },{
+            Permiso: "Editar_User",
+            Descripcion: "Permite al usuario editar documentos en el sistema"
+        },])
 
-        await roles_permiso.create({
+        await Role.addPermisos(Permiso[0]);
+        await Role.addPermisos(Permiso[1]);
+        await Role.addPermisos(Permiso[2]);
+        await Role.addPermisos(Permiso[3]);
+        await Role.addPermisos(Permiso[4]);
+        /*await roles_permiso.create({
             idRol:1,
             idPermiso: 1
-        })
+        })*/
 
         } catch (error) {
             console.log(error);
         }
 
 
-    };*/
+    };

@@ -1,29 +1,28 @@
-const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
-    const PEI = sequelize.define("PEI", {
-        name: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        initialYear: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-        },
-        finalYear: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-        },
-        isActive:{
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
-        isDelete: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
+    const PEI = sequelize.define("pei", {
+      nombre: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fechaInicio: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+      },
+      fechaFin: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+      },
+      isDelete: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     });
+  
     return PEI;
-};
+  };

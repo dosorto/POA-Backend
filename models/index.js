@@ -35,6 +35,8 @@ db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
+db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
+db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
