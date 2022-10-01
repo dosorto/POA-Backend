@@ -17,16 +17,6 @@ const new_rol = async (req,res) =>{
     }
 }
 
-const get_rol_by_id = async (req,res) =>{
-    try{
-       const rol = await db.role.findByPk(req.params.id);
-       return res.status(200).json({rol})
-    }catch(error){
-        console.log("error: " + error);
-        return res.status(400).json({status:"error", error : error});
-    }
-}
-
 const get_roles = async (req,res) =>{
     try{
         const roles = await db.role.findAll();
@@ -39,10 +29,21 @@ const get_roles = async (req,res) =>{
     }
 }
 
+const get_rol_by_id = async (req,res) =>{
+    try{
+       const rol = await db.role.findByPk(req.params.id);
+       return res.status(200).json({rol})
+    }catch(error){
+        console.log("error: " + error);
+        return res.status(400).json({status:"error", error : error});
+    }
+}
+
 module.exports = {
     get_roles,
     new_rol,
-    get_rol_by_id
+    get_rol_by_id,
+    get_roles
   }
 
 

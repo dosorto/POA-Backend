@@ -28,8 +28,9 @@ db.sequelize = sequelize;
 db.user = require("./usuario.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
-
-
+db.pei = require("./pei.model.js")(sequelize, Sequelize);
+db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
+db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -64,5 +65,41 @@ db.sesion.belongsTo(db.user, {
   foreignKey: { name: 'idUsuario', allowNull: false }
 });*/
 
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNA DIMENSION TIENE UN PEI, UN PEI TIENE MUCHAS DIMENSIONES(1:N)////
+db.pei.hasMany(db.dimension, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.dimension.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
 
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN Objetivo TIENE UNA DIMENSION, UNA DIMENSION TIENE MUCHOS OBJETIVOS(1:N)////
+db.dimension.hasMany(db.objetivos, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+db.objetivos.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+
+////////////////////////////////////////////
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN Objetivo TIENE UN PEI, UN PEI TIENE MUCHOS OBJETIVOS(1:N)////
+db.pei.hasMany(db.objetivos, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.objetivos.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+/*
+db.role.hasMany(db.user, {
+  foreignKey: { name: 'idRol', allowNull: false }
+});
+db.user.belongsTo(db.role, {
+  foreignKey: { name: 'idRol', allowNull: false }
+});
+*/
 module.exports = db;

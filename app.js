@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
-//const init = require("./config/init.config");
+const init = require("./config/init.config");
 const bcrypt = require('bcrypt');
 
 
@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
+require("./routes/PEI.routes")(app);
+
 
 
 app.use(
@@ -34,13 +36,10 @@ app.use(
 // database
 const db = require("./models/");
 db.sequelize.sync();
-
-/*
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
-  init.initial();
+db.sequelize.sync({force: false}).then(() => {
+  //init.initial();
 });
-*/
 
 
 // simple route
@@ -48,14 +47,6 @@ app.get("/", (req, res) => {
   res.json({ message: "¡Bienvenido!" });
 });
 
-app.get("/saludo",(req,res) => {
-  res.json({
-    saludo:"hola"
-  })
-});
-
-
-   // --------------------------------
 // routes
 //require("./routes/user.routes")(app);
 
