@@ -19,7 +19,7 @@
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20",
-    "sequelize": "^6.23.0"
+    "sequelize": "^6.23.2"
   },
   "main": "app.js",
   "repository": {
@@ -34,6 +34,6 @@
   "homepage": "https://github.com/dosorto/POA-Backend#readme",
   "description": "",
   "devDependencies": {
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.5.1"
   }
 }

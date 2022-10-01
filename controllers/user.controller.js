@@ -16,19 +16,18 @@ const bcrypt = require("bcryptjs");
           }]
         });
         if(!usuario){
-              res.status(404).send({
-              message:'usuario no encontrado'
-            });
+          return res.status(404).send({message:'usuario no encontrado'});
+            
         }else{
-          return res.status(200).json({usuario});
+          return res.status(200).send({usuario});
         }
         
     }catch(error){
-      console.log("error" + error);
-        return res.status(500).json({status:"Internal Server Error", error:error});
+      
+     console.log("error" + error);
+       return res.status(500).send({status:"Internal Server Error", error:error});
     }
 };
-
 
   module.exports = {
     getUserById
