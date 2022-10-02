@@ -40,6 +40,7 @@ const get_rol_by_id = async (req,res) =>{
 }
 
 module.exports = {
+    get_roles,
     new_rol,
     get_rol_by_id,
     get_roles
