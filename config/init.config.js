@@ -54,12 +54,12 @@ exports.initial = async () => {
         });
 
         //Agregue tabla catalogo de permisos de permisos
-        /*await Permiso.create({
+        await Permiso.create({
             id: 1,
             Permiso: "Edicion de documentos",
             Descripcion: "Le permite a este usuario editar documentos"
-        });*/
-        const Permiso = await Permiso.bulkCreate([{
+        });
+        /*const Permiso = await Permiso.bulkCreate([{
             Permiso: "All_User",
             Descripcion: "Permite acceder al usuario a todo el sistema."
         },
@@ -82,11 +82,11 @@ exports.initial = async () => {
         await Role.addPermisos(Permiso[1]);
         await Role.addPermisos(Permiso[2]);
         await Role.addPermisos(Permiso[3]);
-        await Role.addPermisos(Permiso[4]);
-        /*await roles_permiso.create({
+        await Role.addPermisos(Permiso[4]);*/
+        await roles_permiso.create({
             idRol:1,
             idPermiso: 1
-        })*/
+        })
 
         } catch (error) {
             console.log(error);
