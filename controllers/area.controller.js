@@ -1,5 +1,5 @@
 
-const db = require("../models/");
+const db = require("../models");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
@@ -132,7 +132,29 @@ const allAreasByidPEI = async (req, res) => {
       })
     }
   };
-
+// todas la areas
+  const allAreas = async(req,res) => { 
+    try{ 
+      const allareas =  await db.areas.findAll({
+      where: {
+          isDelete: false,
+      },
+      include:[{
+        model: db.pei,
+      },{
+         model: db.dimension,
+      },{
+        model: db.objetivos
+     }
+    ]
+    })
+      return res.status(200).send({ allareas });
+  } catch(error){
+      res.status(400).json({
+        message:'mostrar' + error
+      })
+  }
+  };
 
 module.exports = {
     delete_area,
@@ -140,4 +162,7 @@ module.exports = {
     updateArea,
     allAreasByidPEI,
     allAreasByidDimension,
-    allAreasByidObjetivos}
+    allAreasByidObjetivos,
+    allAreas
+  
+  }

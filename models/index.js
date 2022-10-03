@@ -122,7 +122,7 @@ db.objetivos.hasMany(db.areas, {
   foreignKey: { name: 'idObjetivo', allowNull: false }
 });
 
-db.areas.belongsTo(db.areas, {
+db.areas.belongsTo(db.objetivos, {
   foreignKey: { name: 'idObjetivo', allowNull: false }
 });
 /*

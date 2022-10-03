@@ -14,6 +14,7 @@ module.exports = function(app) {
   app.get("/peiArea/allByPEI",controller.allAreasByidPEI);
   app.post("/peiArea/allByObjetivos",controller.allAreasByidObjetivos);
   app.post("/peiArea/allByDimension",controller.allAreasByidDimension);
+  app.get("/Area/AllAreas",controller.allAreas);
 };
 
 
