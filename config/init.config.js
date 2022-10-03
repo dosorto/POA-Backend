@@ -11,8 +11,6 @@ const Empleado = db.empleado;
 const PEI = db.pei;
 //const Sesion = db.sesion;
 
-
-/*
 exports.initial = async () => {
     try {
         
@@ -23,6 +21,23 @@ exports.initial = async () => {
             descripcion: "super usuario",
         });
 
+        await db.institucion.create({
+            nombre:'CURLP',
+            descripcion:'Centro regional'
+        })
+
+        await db.pei.create({
+            name:'UNAH1',
+            initialYear:'2020-01-01',
+            finalYear:'2022-01-01',
+            isActive:1,
+        })
+
+        await db.dimension.create({
+            nombre:'Dimension 1',
+            descripcion:'descripcion 1',
+            idPei:1
+        })
         
         await Empleado.create({
             id: 1,
@@ -33,6 +48,7 @@ exports.initial = async () => {
             telefono: "123",
             fechaNacimiento:'1995-08-07',
             sexo: "M",
+            idInstitucion:1
         });
         
         await User.create({
@@ -46,4 +62,4 @@ exports.initial = async () => {
         }
 
 
-    };*/
+    };
