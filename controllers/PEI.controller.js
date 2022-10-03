@@ -7,7 +7,7 @@ const { Op, DataTypes, Model } = require("sequelize");
 const new_PEI = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
-        db.PEI.create({
+        db.pei.create({
             name: req.body.name,
             initialYear: req.body.initialYear,
             finalYear: req.body.finalYear
@@ -21,7 +21,7 @@ const new_PEI = async (req,res) =>{
 //Controlador para obtener todos los PEI
 const get_PEI = async (req,res) =>{
     try{
-        const PEI = await db.PEI.findAll();
+        const PEI = await db.pei.findAll();
         if(!PEI){
             return res.status(400).send("<h1>No existe ningún PEI creado</h1>");
         }
@@ -37,7 +37,7 @@ const get_PEI = async (req,res) =>{
 
 const disable_PEI = async (req, res) => {
     try {
-        const temporally = await db.PEI.update({
+        const temporally = await db.pei.update({
             isDelete : true
         }, {
             where: {

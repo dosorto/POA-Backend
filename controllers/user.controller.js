@@ -184,11 +184,35 @@ const allUser = async (req, res) => {
        return res.status(500).send({status:"Internal Server Error", error:error});
     }
 };  
+
+const updateUser = async(req, res) => {
+  try {
+
+    const user = await db.user.findByPk(req.body.id);
+    if(!user){
+      return res.status(404).send({message:'user not found'})
+    }
+    await db.user.update(
+      {username:req.body.username,
+      idEmpleado:req.body.idEmpleado,
+      idRol:req.body.idRol},
+      {where:{id:user.id}}
+      )
+    return res.status(200).send(user);
+
+  } catch(error){
+    res.status(500).json({
+      message:'error al ingresar ' + error
+    })
+  }
+}
+
   module.exports = {
     allUser,
     login,
     newUser,
     userValidation,
     get_rol_by_username,
-    getUserById
+    getUserById,
+    updateUser
   }

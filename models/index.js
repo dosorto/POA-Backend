@@ -31,6 +31,9 @@ db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.area = require("./area.models.js")(sequelize, Sequelize);
+db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -102,4 +105,75 @@ db.user.belongsTo(db.role, {
   foreignKey: { name: 'idRol', allowNull: false }
 });
 */
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN AREA TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHAS AREAS(1:N) ////
+db.objetivos.hasMany(db.area, {
+  foreignKey: { name: 'idObjetivos', allowNull: false }
+});
+db.area.belongsTo(db.objetivos, {
+  foreignKey: { name: 'idObjetivos', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN AREA TIENE UNA DIMENSIÓN, UNA DIMENSIÓN TIENE MUCHAS AREAS(1:N) ////
+db.dimension.hasMany(db.area, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+db.area.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN AREA TIENE UN PEI, UN PEI TIENE MUCHAS AREAS(1:N) ////
+db.pei.hasMany(db.area, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+db.area.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN RESULTADO TIENE UN AREA, UN AREA TIENE MUCHOS RESULTADOS(1:N) ////
+db.area.hasMany(db.resultado, {
+  foreignKey: { name: 'idArea', allowNull: false}
+});
+db.resultado.belongsTo(db.area, {
+  foreignKey: { name: 'idArea', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN RESULTADO TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHOS RESULTADOS(1:N) ////
+db.objetivos.hasMany(db.resultado, {
+  foreignKey: { name: 'idObjetivos', allowNull: false}
+});
+db.resultado.belongsTo(db.objetivos, {
+  foreignKey: { name: 'idObjetivos', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN RESULTADO TIENE UNA DIMENSIÓN, UNA DIMENSÓN TIENE MUCHOS RESULTADOS(1:N) ////
+db.dimension.hasMany(db.resultado, {
+  foreignKey: { name: 'idDimension', allowNull: false}
+});
+db.resultado.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN RESULTADO TIENE UN PEI, UN PEI TIENE MUCHOS RESULTADOS(1:N) ////
+db.pei.hasMany(db.resultado, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+db.resultado.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+
 module.exports = db;

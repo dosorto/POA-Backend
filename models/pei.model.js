@@ -1,17 +1,16 @@
-const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
     const PEI = sequelize.define("PEI", {
-        name: {
+        nombre: {
             type: Sequelize.STRING,
             allowNull: false,
             unique: true,
         },
-        initialYear: {
-            type: DataTypes.DATEONLY,
+        fechaInicio: {
+            type: Sequelize.STRING,
             allowNull: false,
         },
-        finalYear: {
-            type: DataTypes.DATEONLY,
+        fechaFin: {
+            type: Sequelize.STRING,
             allowNull: false,
         },
         isActive:{

@@ -9,6 +9,10 @@ const Role = db.role;
 const User = db.user;
 const Empleado = db.empleado;
 const PEI = db.pei;
+const Area = db.area;
+const Objetivos = db.objetivos;
+const Dimension = db.dimension;
+const Resultados = db.resultado;
 //const Sesion = db.sesion;
 
 
