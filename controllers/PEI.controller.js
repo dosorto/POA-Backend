@@ -51,9 +51,7 @@ const get_PEI = async (req,res) =>{
 
 module.exports = {
     updatePEI,
-    get_PEI,
-    new_PEI
-}
+    get_PEI}
 
 //Eliminar PEI
 /*

@@ -52,6 +52,7 @@ exports.initial = async () => {
             idEmpleado: 1,
             idRol: 1
         });
+
         //Agregue tabla catalogo de permisos de permisos
         /*await Permiso.create({
             id: 1,
@@ -75,22 +76,13 @@ exports.initial = async () => {
         },{
             Permiso: "Editar_User",
             Descripcion: "Permite al usuario editar documentos en el sistema"
-        },]).then(() => console.log("Permisos data have been saved"));
+        },])
 
         await Role.addPermisos(Permiso[0]);
         await Role.addPermisos(Permiso[1]);
         await Role.addPermisos(Permiso[2]);
         await Role.addPermisos(Permiso[3]);
         await Role.addPermisos(Permiso[4]);
-
-        await roles_permiso.bulkCreate([{
-            idRol: 1,
-            idPermiso: 1
-        },{
-            idRol: 1,
-            idPermiso: 2
-        }]).then(() => console.log("Roles Permisos data have been saved"));
-
         /*await roles_permiso.create({
             idRol:1,
             idPermiso: 1
