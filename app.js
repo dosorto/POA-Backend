@@ -21,6 +21,8 @@ require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
 require("./routes/PEI.routes")(app);
+require("./routes/dimension.routes")(app);
+require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app)
 
 
