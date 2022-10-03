@@ -5,7 +5,7 @@ const { Op, DataTypes, Model } = require("sequelize");
 const objetivo = db.objetivos;
 const bcrypt = require("bcryptjs");
 
-const allObjetivo = async(req,res) => { 
+const AllObjetivo = async(req,res) => { 
     try{ 
       const allObjetivo =  await db.objetivos.findAll({
       where: {
@@ -51,6 +51,6 @@ const eliminarObjetivo = async (req, res) => {
 }
 
 module.exports = {
-  allObjetivo,
+  AllObjetivo,
   eliminarObjetivo
 }
