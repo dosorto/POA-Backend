@@ -34,6 +34,7 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
+
 db.empleado.hasOne(db.user, {
   foreignKey: {
     name: 'idEmpleado', allowNull: false
@@ -53,6 +54,7 @@ db.role.hasMany(db.user, {
 db.user.belongsTo(db.role, {
   foreignKey: { name: 'idRol', allowNull: false }
 });
+
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN USUARIO TIENE MUCHAS SESIONES, UN SESION TIENE UN USUARIOS(1:N)////

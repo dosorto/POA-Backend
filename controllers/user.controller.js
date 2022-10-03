@@ -4,7 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
 // controlador para el inicio de sesion
 const login = async (req, res) => {
     //return res.status(200);
@@ -27,12 +27,13 @@ const login = async (req, res) => {
         });
       }
       // desabilitado temporalmente
-      
+      /*
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
-      
+      */
+      const passwordIsValid = user.password === req.body.password;
   
       if (!passwordIsValid) {
         return res.status(401).send({
@@ -40,7 +41,6 @@ const login = async (req, res) => {
         });
       }
      // jwt no incluido todavia
-     
       const token = jwt.sign({
         idUsuario: user.id,
         idEmpleado:user.empleado.id,
@@ -161,11 +161,34 @@ const allUser = async (req, res) => {
     }
   }
 
-
-  
+  // Controlador para obetener usuario por medio de un id
+  const getUserById = async (req,res) =>{
+    try{
+        const usuario = await db.user.findByPk(req.params.id,{
+          include:[{
+            model: db.role,
+          },{
+             model: db.empleado
+          }]
+        });
+        if(!usuario){
+          return res.status(404).send({message:'usuario no encontrado'});
+            
+        }else{
+          return res.status(200).send({usuario});
+        }
+        
+    }catch(error){
+      
+     console.log("error" + error);
+       return res.status(500).send({status:"Internal Server Error", error:error});
+    }
+};  
   module.exports = {
     allUser,
     login,
+    newUser,
     userValidation,
-    get_rol_by_username
+    get_rol_by_username,
+    getUserById
   }
