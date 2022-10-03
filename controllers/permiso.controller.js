@@ -43,7 +43,7 @@ const get_allPermisos = async (req,res) =>{
     try{
         const permiso = await db.permiso.findAll();
         if(!permiso){
-            return res.status(400).send("<h1>No existe ni un empleado</h1>");
+            return res.status(400).send("<h1>No existen permisos</h1>");
         }
         return res.status(200).json({permiso});
     }catch(error){
