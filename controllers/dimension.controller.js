@@ -34,7 +34,8 @@ const get_dimension = async (req,res) =>{
 const get_all_dimension = async (req,res) =>{
     try{
         const all_dimension = await db.dimension.findAll(
-           { where:{isDelete:false}}
+           { where:{isDelete:false},
+            include:db.pei}
         );
         if(!all_dimension){
             return res.status(404).send({message:'no hay ningun elemento'});
