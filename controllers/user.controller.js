@@ -24,7 +24,8 @@ const bcrypt = require("bcryptjs");
         idRol : req.body.idRol
         })
         res.status(200).json({
-          message:'usuario creado con éxito'
+          status:'ok'
+          
         })
         
       } catch (error){
