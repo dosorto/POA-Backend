@@ -12,6 +12,6 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/objetivos/get_all", controller.allObjetivo);
+  app.get("/objetivos/get_all", controller.AllObjetivo);
   app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
 };
