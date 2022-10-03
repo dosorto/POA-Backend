@@ -19,8 +19,6 @@ const newPermiso = async (req,res) =>{
 
 const get_permiso_by_id = async (req,res) =>{
     try{
-
-        
         const user = await db.user.findOne({
             where: {
               IsDelete: false,
@@ -35,40 +33,26 @@ const get_permiso_by_id = async (req,res) =>{
             },{model: db.empleado },]
           });
         return res.status(200).json({user})
-       /*const idRol = await db.role.findOne({
-        attributes:['id'],
-        include:{
-            model:user,
-            attributes:['username'],
-            where:{
-                id: req.body.id 
-            }
-        },
-        });
-
-    const idPermiso = await db.roles_permiso.findAll({
-        attributes:['idPermiso'],
-        where:{
-        idRol: idRol.id
-    }});
-
-    const permisos = await db.permiso.findAll({
-        attributes:['Permiso','Descripcion'],
-        idPermiso: idPermiso.id = 'idPermiso'
-    }/*,{where:{ [Op.in]:[{
-        idRol: idRol.id
-    },{idPermiso: idPermiso.id}] 
-    })
-
-
-       return res.status(200).json({idRol,idPermiso,permisos})*/
     }catch(error){
         console.log("error: " + error);
         return res.status(400).json({status:"error", error : error});
     }
 }
 
+const get_allPermisos = async (req,res) =>{
+    try{
+        const permiso = await db.permiso.findAll();
+        if(!permiso){
+            return res.status(400).send("<h1>No existe ni un empleado</h1>");
+        }
+        return res.status(200).json({permiso});
+    }catch(error){
+        return res.status(400).json({status:"Bad Request", error:error});
+    }
+}
+
 module.exports = {
     newPermiso,
-    get_permiso_by_id
+    get_permiso_by_id,
+    get_allPermisos
   }

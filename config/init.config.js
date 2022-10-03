@@ -56,10 +56,10 @@ exports.initial = async () => {
         //Agregue tabla catalogo de permisos de permisos
         await Permiso.create({
             id: 1,
-            Permiso: "Edicion de documentos",
-            Descripcion: "Le permite a este usuario editar documentos"
+            Permiso: "All_User",
+            Descripcion: "Permite acceder al usuario a todo el sistema."
         });
-        /*const Permiso = await Permiso.bulkCreate([{
+        /*const Permiso = await Permiso.create.bulkCreate([{
             Permiso: "All_User",
             Descripcion: "Permite acceder al usuario a todo el sistema."
         },

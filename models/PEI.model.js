@@ -1,14 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
     const PEI = sequelize.define("pei", {
-      nombre: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      fechaInicio: {
+      initialYear: {
         type: Sequelize.DATEONLY,
         allowNull: true,
       },
-      fechaFin: {
+      finalYear: {
         type: Sequelize.DATEONLY,
         allowNull: true,
       },
