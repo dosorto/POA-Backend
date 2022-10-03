@@ -43,7 +43,7 @@ const login = async (req, res) => {
     const token = jwt.sign({
       idUsuario: user.id,
       idEmpleado: user.empleado.id,
-      idInstitucion: user.empleado.institucion.id
+      idInstitucion: user.empleado.Institucion.id
     },
 
       config.secret, {
