@@ -133,6 +133,8 @@ const allAreasByidPEI = async (req, res) => {
     }
   };
 
+  
+
 
 module.exports = {
     delete_area,
