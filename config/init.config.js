@@ -49,6 +49,22 @@ exports.initial = async () => {
             idDimension: 1,
             idPei:1
         })
+
+        await db.area.create({
+            nombre:"Area 1",
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
+        await db.resultado.create({
+            nombre: "Resultado 1",
+            idArea: 1,
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
         await Empleado.create({
             id: 1,
             dni: "02012",
