@@ -1,5 +1,5 @@
 //const { authJwt } = require("../middleware");
-const controller = require("../controllers/PEI.controller");
+const controller = require("../controllers/permiso.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
 
@@ -11,8 +11,7 @@ module.exports = function(app) {
     );
     next();
   });
-  app.post("/PEI/new_PEI",controller.new_PEI);
-  app.get("/PEI/get_PEI",controller.get_PEI);
-  app.put("/PEI/disablePEI",controller.disable_PEI);
-  app.put("/PEI/updatePEI",controller.updatePEI);
+  app.post("/permiso/create_permiso",controller.newPermiso);
+  app.get("/permiso/get_permiso",controller.get_permiso_by_id);
+  app.get("/permiso/get_allPermiso",controller.get_allPermisos);
 };
