@@ -15,4 +15,5 @@ module.exports = function(app) {
   app.post("/auth/create-user",controller.newUser);
   app.put("/auth/changePassword",controller.changePassword);
   app.get("/auth/get_empleado/:id",controller.getEmpleadoById);
+  app.get("/auth/get/:id",controller.getUserById);
 };

@@ -1,5 +1,5 @@
 //const { authJwt } = require("../middleware");
-const controller = require("../controllers/objetivo.controller");
+const controller = require("../controllers/PEI.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
 
@@ -11,7 +11,6 @@ module.exports = function(app) {
     );
     next();
   });
-
-  app.get("/objetivos/get_all", controller.AllObjetivo);
-  app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
+  app.post("/auth/new_PEI",controller.new_PEI);
+  app.get("/auth/get_PEI/:id",controller.get_PEI)
 };

@@ -20,8 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 require("./routes/rol.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
-require("./routes/objetivo.routes")(app);
-require("./routes/AreaPEI.routes")(app);
+require("./routes/PEI.routes")(app);
+require("./routes/dimension.routes")(app);
+require("./routes/institucion.routes")(app);
+require("./routes/objetivo.routes")(app)
+
 
 app.use(
   cookieSession({
@@ -35,13 +38,10 @@ app.use(
 // database
 const db = require("./models/");
 db.sequelize.sync();
-
-/*
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
   init.initial();
 });
-*/
 
 
 
@@ -50,14 +50,6 @@ app.get("/", (req, res) => {
   res.json({ message: "¡Bienvenido!" });
 });
 
-app.get("/saludo",(req,res) => {
-  res.json({
-    saludo:"hola"
-  })
-});
-
-
-   // --------------------------------
 // routes
 //require("./routes/user.routes")(app);
 

@@ -31,10 +31,12 @@ db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
+
 db.empleado.hasOne(db.user, {
   foreignKey: {
     name: 'idEmpleado', allowNull: false
@@ -45,6 +47,26 @@ db.user.belongsTo(db.empleado, {
     name: 'idEmpleado', allowNull: false
   }
 });
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
+db.pei.hasMany(db.dimension, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.dimension.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN EMPLEADO PERTENECE A UNA INSTITUCION, UNA INSTITUCION TIENE MUCHOS EMPLEADOS ////
+db.institucion.hasMany(db.empleado, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+db.empleado.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN USUARIO TIENE UN ROL, UN ROL TIENE MUCHOS USUARIOS(1:N)////
@@ -54,6 +76,7 @@ db.role.hasMany(db.user, {
 db.user.belongsTo(db.role, {
   foreignKey: { name: 'idRol', allowNull: false }
 });
+
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN USUARIO TIENE MUCHAS SESIONES, UN SESION TIENE UN USUARIOS(1:N)////
