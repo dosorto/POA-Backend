@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const init = require("./config/init.config");
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 
 
@@ -22,6 +22,8 @@ require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
 require("./routes/PEI.routes")(app);
 require("./routes/resultados.routes")(app);
+require("./routes/dimension.routes")(app);
+require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 
 
@@ -38,8 +40,8 @@ app.use(
 // database
 const db = require("./models/");
 db.sequelize.sync();
-//force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
+// force: true will drop the table if it already exists
+db.sequelize.sync({force: false}).then(() => {
   init.initial();
 });
 

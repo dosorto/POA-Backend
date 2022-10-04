@@ -7,7 +7,7 @@ const { Op, DataTypes, Model } = require("sequelize");
 const new_PEI = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
-        db.pei.create({
+        await db.pei.create({
             name: req.body.name,
             initialYear: req.body.initialYear,
             finalYear: req.body.finalYear
