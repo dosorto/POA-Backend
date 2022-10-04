@@ -44,6 +44,7 @@ exports.initial = async () => {
             fechaNacimiento: '1995-08-07',
             sexo: "M",
         });
+        
         await User.create({
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
