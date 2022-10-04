@@ -17,7 +17,6 @@ const PEI = db.pei;
 //const Sesion = db.sesion;
 
 
-
 exports.initial = async () => {
     try {
 
@@ -45,7 +44,6 @@ exports.initial = async () => {
             fechaNacimiento: '1995-08-07',
             sexo: "M",
         });
-
         await User.create({
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
