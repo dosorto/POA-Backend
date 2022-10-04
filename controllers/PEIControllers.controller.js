@@ -133,7 +133,7 @@ const allAreasByidPEI = async (req, res) => {
     }
   };
 
-  
+
 
 
 module.exports = {
