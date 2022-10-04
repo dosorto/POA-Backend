@@ -36,7 +36,7 @@ const delete_area = async (req, res) => {
             isDelete: true
         }, {
             where: {
-                id: req.body.id
+               nombre : req.body.nombre
             }
         });
         if (delete_area) {
@@ -136,6 +136,20 @@ const allAreasByidPEI = async (req, res) => {
     }
   };
 
+  const get_Area = async (req,res) =>{
+    try{
+        const all_areas = await db.areas.findAll({
+            where:{isDelete:false}
+        });
+        if(!all_areas){
+            return res.status(404).send({message:'no hay ningun elemento'});
+        }
+        return res.status(200).json(all_areas);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
 
 module.exports = {
     delete_area,
@@ -143,4 +157,6 @@ module.exports = {
     updateArea,
     allAreasByidPEI,
     allAreasByidDimension,
-    allAreasByidObjetivos}
+    allAreasByidObjetivos,
+    get_Area
+  }
