@@ -20,7 +20,7 @@ const PEI = db.pei;
 
 exports.initial = async () => {
     try {
-        
+
 
         await Role.create({
             id: 1,
@@ -30,11 +30,11 @@ exports.initial = async () => {
 
         await PEI.create({
             name: "Mantenimiento general",
-            initialYear:'2020-08-07',
-            finalYear:'2020-09-08',
+            initialYear: '2020-08-07',
+            finalYear: '2020-09-08',
         });
 
-        
+
         await Empleado.create({
             id: 1,
             dni: "02012",
@@ -42,10 +42,10 @@ exports.initial = async () => {
             apellido: "root",
             direccion: "La libertad",
             telefono: "123",
-            fechaNacimiento:'1995-08-07',
+            fechaNacimiento: '1995-08-07',
             sexo: "M",
         });
-        
+
         await User.create({
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
@@ -53,44 +53,44 @@ exports.initial = async () => {
             idRol: 1
         });
 
-        //Agregue tabla catalogo de permisos de permisos
-        await Permiso.create({
-            id: 1,
+        //Agregue tabla catalogo de permisos
+        await Permiso.bulkCreate([{
             Permiso: "All_User",
-            Descripcion: "Permite acceder al usuario a todo el sistema."
-        });
-        /*const Permiso = await Permiso.create.bulkCreate([{
-            Permiso: "All_User",
-            Descripcion: "Permite acceder al usuario a todo el sistema."
+            Descripcion: "Permite al usuario acceder a todo el sistema."
+        },
+        {
+            Permiso: "Delete_User",
+            Descripcion: "Permite al usuario eliminar."
         },
         {
             Permiso: "Create_User",
-            Descripcion: "Permite crear usuarios."
+            Descripcion: "Permite al usuario crear."
+        },
+        {
+            Permiso: "Read_User",
+            Descripcion: "Permite al usuario solamente leer."
         },
         {
             Permiso: "Update_User",
-            Descripcion: "Permite actualizar al usuario a todo el sistema"
-        },{
-            Permiso: "Delete_User",
-            Descripcion: "Permite eliminar al usuario a todo el sistema"
-        },{
-            Permiso: "Editar_User",
-            Descripcion: "Permite al usuario editar documentos en el sistema"
-        },])
+            Descripcion: "Permite al usuario editar."
+        }]);
 
-        await Role.addPermisos(Permiso[0]);
-        await Role.addPermisos(Permiso[1]);
-        await Role.addPermisos(Permiso[2]);
-        await Role.addPermisos(Permiso[3]);
-        await Role.addPermisos(Permiso[4]);*/
-        await roles_permiso.create({
-            idRol:1,
+        await roles_permiso.bulkCreate([{
+            idRol: 1,
             idPermiso: 1
-        })
+        },
+        {
+            idRol: 1,
+            idPermiso: 2
+        },
+        {
+            idRol: 1,
+            idPermiso: 3
+        }])
 
-        } catch (error) {
-            console.log(error);
-        }
+    } catch (error) {
+        console.log(error);
+    }
 
 
-    };
+};
