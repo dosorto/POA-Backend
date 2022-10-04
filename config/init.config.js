@@ -25,6 +25,7 @@ exports.initial = async () => {
             nombre:'CURLP',
             descripcion:'Centro regional'
         })
+        
 
         await db.pei.create({
             name:'UNAH1',
@@ -39,6 +40,11 @@ exports.initial = async () => {
             idPei:1
         })
         
+        await db.objetivos.create({
+            nombre:"IS",
+            idDimension: 1,
+            idPei:1
+        })
         await Empleado.create({
             id: 1,
             dni: "02012",
