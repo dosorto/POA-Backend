@@ -4,6 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // controlador para el inicio de sesion
 const login = async (req, res) => {
@@ -26,14 +27,12 @@ const login = async (req, res) => {
           message: "User Not found."
         });
       }
-      // desabilitado temporalmente
-      /*
+      
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
-      */
-      const passwordIsValid = user.password === req.body.password;
+    //  const passwordIsValid = user.password === req.body.password;
   
       if (!passwordIsValid) {
         return res.status(401).send({
@@ -120,6 +119,9 @@ const allUser = async (req, res) => {
       where: {
           isDelete: false,
       },
+      attributes: {
+        exclude: ['password']
+      },
       include:[{
         model: db.role,
       },{
@@ -165,6 +167,12 @@ const allUser = async (req, res) => {
   const getUserById = async (req,res) =>{
     try{
         const usuario = await db.user.findByPk(req.params.id,{
+          where: {
+            isDelete: false,
+          },
+          attributes: {
+            exclude: ['password']
+          },
           include:[{
             model: db.role,
           },{

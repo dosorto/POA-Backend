@@ -97,14 +97,13 @@ db.pei.hasMany(db.objetivos, {
 db.objetivos.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
-/*
+
 db.role.hasMany(db.user, {
   foreignKey: { name: 'idRol', allowNull: false }
 });
 db.user.belongsTo(db.role, {
   foreignKey: { name: 'idRol', allowNull: false }
 });
-*/
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////

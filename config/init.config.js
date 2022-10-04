@@ -15,8 +15,6 @@ const Dimension = db.dimension;
 const Resultados = db.resultado;
 //const Sesion = db.sesion;
 
-
-/*
 exports.initial = async () => {
     try {
         
@@ -50,4 +48,4 @@ exports.initial = async () => {
         }
 
 
-    };*/
+    };
