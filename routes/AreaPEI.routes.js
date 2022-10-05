@@ -1,4 +1,4 @@
-const controller = require("../controllers/PEIControllers.controller");
+const controller = require("../controllers/area.controller");
 
 module.exports = function(app) {
   app.use(function(req, res, next) {

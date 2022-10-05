@@ -1,12 +1,7 @@
-
-
-
-
-const db = require("../models/");
+const db = require("../models");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-
 // controlador para crear una nueva area
 
 
