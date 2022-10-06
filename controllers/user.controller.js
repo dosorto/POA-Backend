@@ -11,7 +11,7 @@ const { user } = require("../models/");
 const app = express;
 const validate = require('class-validator');
 const { jwtSecret } = require("../config/auth.config");
-const transporter = require("../config/mailer");
+
 const nodemailer = require("nodemailer");
 
 // controlador para el inicio de sesion
