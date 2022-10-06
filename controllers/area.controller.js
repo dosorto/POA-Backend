@@ -7,7 +7,11 @@ const { Op, DataTypes, Model } = require("sequelize");
 
 const newArea = async (req, res) => {
     try {
-        db.areas.create({
+      const area = await db.areas.findOne({where:{nombre:req.body.nombre}})
+      if(area){
+          return res.status(400).json({message:'Nombre de area ya utilizado'});
+      }
+       await db.areas.create({
             nombre: req.body.nombre,
             idObjetivo: req.body.idObjetivo,
             idDimension: req.body.idDimension,
@@ -22,6 +26,37 @@ const newArea = async (req, res) => {
         })
     }
 };
+
+// Funcion para obtener una unica area
+const get_area = async (req,res) =>{
+  try{
+      const area = await db.areas.findOne({where:{id:req.params.id}})
+      if(!area){
+          return res.status(404).json({message:'No se encuentra esa area'});
+      }
+      return res.status(200).json({status:"Ok",area});
+  } catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+
+
+//Funcion para obtener todas las areas
+const get_all_areas = async (req,res) =>{
+  try{
+      const all_areas = await db.areas.findAll(
+         { where:{isDelete:false},
+          include:db.PEI}
+      );
+      if(!all_areas){
+          return res.status(404).send({message:'no hay ningun elemento'});
+      }
+      return res.status(200).json(all_areas);
+  }catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+
 
 //controlador para borrar un area del pei
 
@@ -49,30 +84,30 @@ const delete_area = async (req, res) => {
 
 const updateArea = async (req, res) => {
     try {
+      if(!req.body.nombre){
+        return res.status(400).json({message:'Debe enviar todos los datos'});
+    }
 
-        const area = await db.areas.findByPk(req.body.id);
-        if (!area) {
-            return res.status(404).send({ message: 'area no encontrada' })
-        }
-        await db.areas.update(
+    const temporally =  await db.areas.update(
             {
                 nombre: req.body.nombre,
                 idObjetivo: req.body.idObjetivo,
                 idDimension: req.body.idDimension,
-                idPEI: req.body.idPEI
+                idPei: req.body.idPei
             },
-            { where: { id: req.body.id } })
+            { where: { id: req.body.id } });
 
-        res.status(200).json({
-            message: 'Area actualizada con exito'
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            message: 'error al ingresar ' + error
-        })
-    }
-}
+            if (temporally) {
+              res.status(200).send({
+                  message: "Area actualizada con exito",
+                  areas : temporally
+              });
+            }
+          } catch (error) {
+              console.log(error);
+              return res.status(500).json({status:"Server Error: " + error});
+          }
+      }
 
 
 
@@ -153,5 +188,6 @@ module.exports = {
     allAreasByidPEI,
     allAreasByidDimension,
     allAreasByidObjetivos,
-    get_Area
+    get_Area,
+    get_all_areas
   }

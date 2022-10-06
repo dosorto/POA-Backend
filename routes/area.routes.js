@@ -8,13 +8,16 @@ module.exports = function(app) {
     );
     next();
   });
-  app.post("/area/crear",controller.newArea);
+  app.get("/area/get_All",controller.get_all_areas);
+  app.get("/area/get/:id",controller.get_Area);
   app.put("/area/eliminar",controller.delete_area);
   app.put("/area/editar",controller.updateArea);
+  app.post("/area/crear",controller.newArea);
+
   app.post("/area/allByPEI",controller.allAreasByidPEI);
   app.post("/area/allByObjetivos",controller.allAreasByidObjetivos);
   app.post("/area/allByDimension",controller.allAreasByidDimension);
-  app.get("/area/getArea",controller.get_Area);
+
 };
 
 
