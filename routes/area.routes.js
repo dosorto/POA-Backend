@@ -9,8 +9,8 @@ module.exports = function(app) {
     next();
   });
   app.post("/area/crear",controller.newArea);
-  app.post("/area/eliminar",controller.delete_area);
-  app.post("/area/editar",controller.updateArea);
+  app.put("/area/eliminar",controller.delete_area);
+  app.put("/area/editar",controller.updateArea);
   app.post("/area/allByPEI",controller.allAreasByidPEI);
   app.post("/area/allByObjetivos",controller.allAreasByidObjetivos);
   app.post("/area/allByDimension",controller.allAreasByidDimension);
