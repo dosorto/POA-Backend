@@ -15,6 +15,7 @@ const new_empleado = async (req,res) =>{
             fechaNacimiento : req.body.fecha_nacimiento,
             sexo: req.body.sexo,
             idInstitucion: req.body.idInstitucion
+          
         });
         return res.status(200).json({status:"ok"});
     } catch(error){
@@ -28,11 +29,7 @@ const get_empleado_by_id = async (req,res) =>{
         const empleado = await db.empleado.findByPk(req.params.id,{
             where: {
                 isDelete: false,
-              },
-              include: [{
-                model: db.institucion,
-              }]
-        });
+              }        });
         if(!empleado){
             return res.status(400).send("<h1>No existe el usuario</h1>");
         }
@@ -46,10 +43,7 @@ const get_empleados = async (req,res) =>{
         const empleados = await db.empleado.findAll({
             where: {
                 isDelete: false,
-              },
-              include: [{
-                model: db.institucion,
-              }]
+              }
         });
         if(!empleados){
             return res.status(400).send("<h1>No existe ni un empleado</h1>");

@@ -72,6 +72,33 @@ db.empleado.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN area PERTENECE A UNA INSTITUCION, UNA area TIENE MUCHOS objetivos ////
+db.objetivos.hasMany(db.areas, {
+  foreignKey: { name: 'idObjetivo', allowNull: false }
+});
+db.areas.belongsTo(db.objetivos, {
+  foreignKey: { name: 'idObjetivo', allowNull: false }
+});
+
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN area PERTENECE A UNA INSTITUCION, UNA area TIENE MUCHOS objetivos ////
+db.dimension.hasMany(db.areas, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+db.areas.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false }
+});
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN area PERTENECE A UNA INSTITUCION, UNA area TIENE MUCHOS objetivos ////
+db.pei.hasMany(db.areas, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.areas.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
 
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////

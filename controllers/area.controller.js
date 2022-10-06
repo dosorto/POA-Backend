@@ -11,7 +11,7 @@ const newArea = async (req, res) => {
             nombre: req.body.nombre,
             idObjetivo: req.body.idObjetivo,
             idDimension: req.body.idDimension,
-            idPEI: req.body.idPEI
+            idPei: req.body.idPEI
         });
         res.status(200).json({
             message: 'Area creada con exito'

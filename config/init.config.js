@@ -4,7 +4,7 @@ const roleModelb = require("../models/role.model");
 const userModel = require("../models/usuario.model");
 const permisoModel = require("../models/permiso.model");
 const PEIModel = require("../models/PEI.model");
-const areasModel = require("../models/usuario.model");
+const areasModel = require("../models/areas.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
@@ -77,6 +77,13 @@ exports.initial = async () => {
             idEmpleado: 1,
             idRol: 1
         });
+        await Areas.create({
+            nombre: "root",
+            idObjetivo: 1,
+            idDimension: 1,
+            idPei: 1
+        });
+        
 
         //Agregue tabla catalogo de permisos
         await Permiso.bulkCreate([{
@@ -112,13 +119,6 @@ exports.initial = async () => {
             idRol: 1,
             idPermiso: 3
         }]);
-        await Areas.create({
-            nombre: "root",
-            idObjeto: "1",
-            idDimension: "1",
-            idPEI: "123"
-        });
-
     } catch (error) {
         console.log(error);
     }
