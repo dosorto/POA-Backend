@@ -15,16 +15,12 @@ const newArea = async (req, res) => {
             nombre: req.body.nombre,
             idObjetivo: req.body.idObjetivo,
             idDimension: req.body.idDimension,
-            idPei: req.body.idPEI
-        });
-        res.status(200).json({
-            message: 'Area creada con exito'
-        })
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al crear esta Area' + error
-        })
-    }
+            idPei: req.body.idPei
+          });
+          return res.status(200).json({status:"Ok"});
+      } catch(error){
+          return res.status(500).json({status:"Server Error: " + error});
+      }
 };
 
 // Funcion para obtener una unica area
@@ -39,14 +35,20 @@ const get_area = async (req,res) =>{
       return res.status(500).json({status:"Server Error: " + error});
   }
 }
-
-
 //Funcion para obtener todas las areas
 const get_all_areas = async (req,res) =>{
   try{
       const all_areas = await db.areas.findAll(
          { where:{isDelete:false},
-          include:db.PEI}
+         include:[{
+          model: db.pei,
+        },{
+           model: db.dimension
+        },
+      {
+       model: db.objetivos
+      }]
+        }
       );
       if(!all_areas){
           return res.status(404).send({message:'no hay ningun elemento'});
@@ -74,11 +76,9 @@ const delete_area = async (req, res) => {
                 message: "Area eliminada correctamente"
             });
         }
-    } catch (error) {
+      } catch (error) {
         console.log(error);
-        res.status(401).send({
-            message: "Error al eliminar el area: " + error.message
-        });
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 

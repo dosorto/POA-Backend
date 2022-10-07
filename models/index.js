@@ -96,7 +96,7 @@ db.areas.belongsTo(db.dimension, {
 db.pei.hasMany(db.areas, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
-db.areas.belongsTo(db.pei, {
+db.areas.belongsTo(db.PEI, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
 
