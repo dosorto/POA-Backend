@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@angular/cli": "^14.2.3",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
@@ -18,7 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.22.1"
+    "sequelize": "^6.23.2"
   },
   "main": "app.js",
   "repository": {
@@ -33,6 +34,6 @@
   "homepage": "https://github.com/dosorto/POA-Backend#readme",
   "description": "",
   "devDependencies": {
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.5.1"
   }
 }
