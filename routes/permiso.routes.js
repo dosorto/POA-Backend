@@ -1,5 +1,5 @@
 //const { authJwt } = require("../middleware");
-const controller = require("../controllers/objetivo.controller");
+const controller = require("../controllers/permiso.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
 
@@ -11,8 +11,7 @@ module.exports = function(app) {
     );
     next();
   });
-
-  app.get("/objetivos/get_all", controller.AllObjetivo);
-  app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
-  app.post("/objetivos/crear",controller.newObjetivo)
+  app.post("/permiso/create_permiso",controller.newPermiso);
+  app.get("/permiso/get_permiso",controller.get_permiso_by_id);
+  app.get("/permiso/get_allPermiso",controller.get_allPermisos);
 };

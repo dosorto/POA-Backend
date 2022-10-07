@@ -28,9 +28,16 @@ db.sequelize = sequelize;
 db.user = require("./usuario.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
+db.permiso = require("./permiso.model.js")(sequelize, Sequelize);
+db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
+
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
+db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
+db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -45,6 +52,26 @@ db.user.belongsTo(db.empleado, {
     name: 'idEmpleado', allowNull: false
   }
 });
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
+db.PEI.hasMany(db.dimension, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.dimension.belongsTo(db.PEI, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UN EMPLEADO PERTENECE A UNA INSTITUCION, UNA INSTITUCION TIENE MUCHOS EMPLEADOS ////
+db.institucion.hasMany(db.empleado, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+db.empleado.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN USUARIO TIENE UN ROL, UN ROL TIENE MUCHOS USUARIOS(1:N)////
@@ -64,6 +91,29 @@ db.user.belongsTo(db.role, {
 db.sesion.belongsTo(db.user, {
   foreignKey: { name: 'idUsuario', allowNull: false }
 });*/
+
+// Relacion de muchos a muchos Roles y Permisos -- Letty
+/*
+db.permiso.hasMany(db.permiso, {
+  primaryKey: { name: 'idPermiso', allowNull: false }
+});
+db.role.belongsTo(db.role, {
+  foreignKey: { name: 'idPermiso', allowNull: false }
+});*/
+
+db.permiso.belongsToMany(db.role, {
+  through: db.roles_permiso,
+  foreignKey: "idRol",
+  otherKey: "idPermiso"
+});
+db.role.belongsToMany(db.permiso, {
+  through: db.roles_permiso,
+  foreignKey: "idRol",
+  otherKey: "idPermiso"
+});
+
+
+
 
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////

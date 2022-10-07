@@ -25,7 +25,23 @@ const AllObjetivo = async(req,res) => {
   }
   };
 
-   
+  const newObjetivo = async (req, res) => {
+    try {
+      db.objetivos.create({
+        nombre: req.body.nombre,
+        idDimension: req.body.idDimension,
+        idPei: req.body.idPei
+      })
+      res.status(200).json({
+        message: 'usuario creado con exito'
+      })
+  
+    } catch (error) {
+      res.status(400).json({
+        message: 'error al ingresar' + error
+      })
+    }
+  };   
 
 const eliminarObjetivo = async (req, res) => {
   try {
@@ -52,5 +68,6 @@ const eliminarObjetivo = async (req, res) => {
 
 module.exports = {
   AllObjetivo,
-  eliminarObjetivo
+  eliminarObjetivo,
+  newObjetivo
 }
