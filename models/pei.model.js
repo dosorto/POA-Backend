@@ -1,4 +1,3 @@
-const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
     const PEI = sequelize.define("pei", {
       name: {
@@ -24,5 +23,6 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false
       }
     });
+  
     return PEI;
-};
+  };
