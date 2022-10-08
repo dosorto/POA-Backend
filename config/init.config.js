@@ -72,6 +72,7 @@ exports.initial = async () => {
         });
 
         await User.create({
+            email: "cjso0323@gmail.com",
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
             idEmpleado: 1,

@@ -2,9 +2,10 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const User = db.user;
+const User = db.user ;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 // controlador para el inicio de sesion
 const login = async (req, res) => {
@@ -72,6 +73,7 @@ const login = async (req, res) => {
 const newUser = async (req, res) => {
   try {
     db.user.create({
+      email: req.body.email,
       username: req.body.username,
       password: bcrypt.hashSync(req.body.password, 8),
       idEmpleado: req.body.idEmpleado,
@@ -199,6 +201,7 @@ const getUserById = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const message = 'check your email for a loink to reset your password';
   const emailStatus = 'ok';
+  
   try {
     const user = await db.user.findOne({ where: { username: req.body.username, isDelete: false } });
     if (!user) { return res.status(401).send({ message: "User Not found." }); }
@@ -213,18 +216,15 @@ const forgotPassword = async (req, res) => {
     const resp = {
       userName: user.username,
       resetToken: token,
-      iduser: user.id
+      iduser: user.id,
+      email:user.email
     }
     verificationLink = `http://localhost:8080/auth/newPassword/${token}`;
 
     db.user.update(
       { resetToken: token },
       { where: { id: user.id } })
-  }
-  catch (error) {
-    return res.status(500).send(error);
-  }
-try {
+
    // create reusable transporter object using the default SMTP transport
    const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -237,6 +237,7 @@ try {
   });
   transporter.verify().then(()=>{
     console.log('ready for send emails')
+    console.log(db.user.email)
   })
 
   const mailoption = {
@@ -257,10 +258,10 @@ try {
   })
 
 } catch (error) {
-  return res.status(500).send(error);
+  return res.status(50).send(error);
 }  //TODO: sendemail
 
-  return res.json({ message, info: emailStatus, test: verificationLink })
+  return res.json({ message, info: emailStatus,  })
 
 };
 
@@ -285,20 +286,13 @@ const newPassword = async (req, res) => {
    // return res.status(200).send({ usuario: user.username, iduser: user.id });
     
    db.user.update(
-      { password: req.body.newPassword },
+      { password:bcrypt.hashSync( req.body.newPassword, 8 ) },
     { where: {id: user.id } })
     //  return res.status(200).send({ usuario: user.username, iduser: user.id });
   
   } catch (error) {
     return res.status(400).json({ message: 'algo salio mal de nuevo' });
   }
-
- // const validationOps = { validationError: { target: false, value: false } };
-  //const errors = await validate(user, validationOps);
-
-//  if (errors.lenght > 0) {
-  //  return res.status(401).json({ message: 'algo fue mal en el cambio de contrase;a1' });
-  //}
   res.json({ message: 'password cambiada correctamente' })
   };
 
@@ -308,5 +302,7 @@ module.exports = {
   newUser,
   userValidation,
   get_rol_by_username,
-  getUserById
+  getUserById,
+  forgotPassword,
+  newPassword
 }
