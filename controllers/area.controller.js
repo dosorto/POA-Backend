@@ -11,11 +11,16 @@ const newArea = async (req, res) => {
       if(area){
           return res.status(400).json({message:'Nombre de area ya utilizado'});
       }
+      const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivo}})
+      if(!objetivo){
+          return res.status(404).json({message:'Objetivo incorrecto'});
+      }
+
        await db.areas.create({
             nombre: req.body.nombre,
             idObjetivo: req.body.idObjetivo,
-            idDimension: req.body.idDimension,
-            idPei: req.body.idPei
+            idDimension:objetivo.idDimension,
+            idPei: objetivo.idPei
           });
           return res.status(200).json({status:"Ok"});
       } catch(error){
@@ -39,7 +44,9 @@ const get_area = async (req,res) =>{
 const get_all_areas = async (req,res) =>{
   try{
       const all_areas = await db.areas.findAll(
-         { where:{isDelete:false},
+         { where:{
+          isDelete:false
+        },
          include:[{
           model: db.pei,
         },{
@@ -57,7 +64,7 @@ const get_all_areas = async (req,res) =>{
   }catch(error){
       return res.status(500).json({status:"Server Error: " + error});
   }
-}
+};
 
 
 //controlador para borrar un area del pei
@@ -83,31 +90,34 @@ const delete_area = async (req, res) => {
 }
 
 const updateArea = async (req, res) => {
-    try {
-      if(!req.body.nombre){
-        return res.status(400).json({message:'Debe enviar todos los datos'});
-    }
+  try {
+    if(!req.body.nombre){
+      return res.status(400).json({message:'Debe enviar todos los datos'});
+  }
+  const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivo}})
+  if(!objetivo){
+      return res.status(404).json({message:'Objetivo incorrecto'});
+  }
+  const temporally =  await db.areas.update(
+          {
+              nombre: req.body.nombre,
+              idObjetivo: req.body.idObjetivo,
+              idDimension:objetivo.idDimension,
+            idPei: objetivo.idPei
+          },
+          { where: { id: req.body.id } });
 
-    const temporally =  await db.areas.update(
-            {
-                nombre: req.body.nombre,
-                idObjetivo: req.body.idObjetivo,
-                idDimension: req.body.idDimension,
-                idPei: req.body.idPei
-            },
-            { where: { id: req.body.id } });
-
-            if (temporally) {
-              res.status(200).send({
-                  message: "Area actualizada con exito",
-                  areas : temporally
-              });
-            }
-          } catch (error) {
-              console.log(error);
-              return res.status(500).json({status:"Server Error: " + error});
+          if (temporally) {
+            res.status(200).send({
+                message: "Area actualizada con exito",
+                areas : temporally
+            });
           }
-      }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({status:"Server Error: " + error});
+        }
+    }
 
 
 

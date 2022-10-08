@@ -193,6 +193,115 @@ const getUserById = async (req, res) => {
     return res.status(500).send({ status: "Internal Server Error", error: error });
   }
 };
+
+
+
+const forgotPassword = async (req, res) => {
+  const message = 'check your email for a loink to reset your password';
+  const emailStatus = 'ok';
+  try {
+    const user = await db.user.findOne({ where: { username: req.body.username, isDelete: false } });
+    if (!user) { return res.status(401).send({ message: "User Not found." }); }
+    //   res.status(200).json({ message ,usuario: user.username, iduser: user.id });  
+    const token = jwt.sign({
+      userId: user.id,
+      username: user.username
+    },
+      config.secret,
+      { expiresIn: '86400', });
+
+    const resp = {
+      userName: user.username,
+      resetToken: token,
+      iduser: user.id
+    }
+    verificationLink = `http://localhost:8080/auth/newPassword/${token}`;
+
+    db.user.update(
+      { resetToken: token },
+      { where: { id: user.id } })
+  }
+  catch (error) {
+    return res.status(500).send(error);
+  }
+try {
+   // create reusable transporter object using the default SMTP transport
+   const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: 'admistrar.poa.curlp@gmail.com', // generated ethereal user
+      pass: 'wphgvdcltjsnckir', // generated ethereal password
+    },
+  });
+  transporter.verify().then(()=>{
+    console.log('ready for send emails')
+  })
+
+  const mailoption = {
+    from: 'admistrar.poa.curlp@gmail.com', // sender address
+    to: user.email, // list of receivers
+    subject: "Recupera tu contraseña ✔", // Subject line
+    html: `
+    <b>POR FAVOR HAZ CLICK EN EL SIGUIENTE EN LACE PARA RECUPERAR TU CONTRASEÑA O COPIA EL LINK EN TU NAVEGADOR</b>
+    <a href="${verificationLink}">${verificationLink}</a>`
+
+  }
+
+  transporter.sendMail(mailoption,(err,result)=>{
+    if(err){
+      console.log(err)
+      res.json('vaya algo salio mal')
+    }else{res.json('gracias por mandar el email')}
+  })
+
+} catch (error) {
+  return res.status(500).send(error);
+}  //TODO: sendemail
+
+  return res.json({ message, info: emailStatus, test: verificationLink })
+
+};
+
+
+
+//controlaor para nueva contraseña
+
+
+
+const newPassword = async (req, res) => {
+  const { newPassword } = req.body;
+  const resetToken = req.headers.reset;
+
+  if (!(resetToken && newPassword)) {
+    return res.status(400).json({ message: 'todos los campos son requeridos' });
+  }// else{return res.status(400).json({resetToken:resetToken, newPassword:newPassword}); }
+  let jwtPayload;
+  try {
+    // jwtPayload = jwt.verify(db.user.resetToken, config.secret);
+    const user = await db.user.findOne({ where: { resetToken } });
+    if (!user) { return res.status(404).send({ message: "Usuario no encontrado" }); }
+   // return res.status(200).send({ usuario: user.username, iduser: user.id });
+    
+   db.user.update(
+      { password: req.body.newPassword },
+    { where: {id: user.id } })
+    //  return res.status(200).send({ usuario: user.username, iduser: user.id });
+  
+  } catch (error) {
+    return res.status(400).json({ message: 'algo salio mal de nuevo' });
+  }
+
+ // const validationOps = { validationError: { target: false, value: false } };
+  //const errors = await validate(user, validationOps);
+
+//  if (errors.lenght > 0) {
+  //  return res.status(401).json({ message: 'algo fue mal en el cambio de contrase;a1' });
+  //}
+  res.json({ message: 'password cambiada correctamente' })
+  };
+
 module.exports = {
   allUser,
   login,
