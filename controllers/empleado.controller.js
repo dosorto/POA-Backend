@@ -3,8 +3,8 @@ const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 
-const new_empleado = async (req,res) =>{
-    try{
+const new_empleado = async (req, res) => {
+    try {
         //db.sequelize.authenticate();
         await db.empleado.create({
             dni: req.body.dni,
@@ -16,10 +16,10 @@ const new_empleado = async (req,res) =>{
             sexo: req.body.sexo,
             idInstitucion: req.body.idInstitucion
         });
-        return res.status(200).json({status:"ok"});
-    } catch(error){
+        return res.status(200).json({ status: "ok" });
+    } catch (error) {
         console.log("error: " + error);
-        return res.status(400).json({status:"error", error : error});
+        return res.status(400).json({ status: "error", error: error });
     }
 }
 
@@ -36,9 +36,9 @@ const get_empleado_by_id = async (req,res) =>{
         if(!empleado){
             return res.status(400).send("<h1>No existe el usuario</h1>");
         }
-        return res.status(200).json({empleado});
-    }catch(error){
-        return res.status(400).json({status:"Bad Request", error:error});
+        return res.status(200).json({ empleado });
+    } catch (error) {
+        return res.status(400).json({ status: "Bad Request", error: error });
     }
 }
 const get_empleados = async (req,res) =>{
@@ -54,9 +54,9 @@ const get_empleados = async (req,res) =>{
         if(!empleados){
             return res.status(400).send("<h1>No existe ni un empleado</h1>");
         }
-        return res.status(200).json({empleados});
-    }catch(error){
-        return res.status(400).json({status:"Bad Request", error:error});
+        return res.status(200).json({ empleados });
+    } catch (error) {
+        return res.status(400).json({ status: "Bad Request", error: error });
     }
 }
 
@@ -65,4 +65,4 @@ module.exports = {
     new_empleado,
     get_empleado_by_id,
     get_empleados
-  }
+}
