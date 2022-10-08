@@ -6,11 +6,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       initialYear: {
         type: Sequelize.DATEONLY,
-        allowNull: true,
+        allowNull: false,
       },
       finalYear: {
         type: Sequelize.DATEONLY,
-        allowNull: true,
+        allowNull: false,
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
