@@ -11,7 +11,7 @@ const allResultado = async(req,res) => {
           isDelete: false,
       },
       include:[{
-        model: db.area,
+        model: db.areas,
       },{
         model: db.objetivos,
       },{

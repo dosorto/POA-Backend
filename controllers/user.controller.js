@@ -2,9 +2,10 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const User = db.user;
+const User = db.user ;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 
 // controlador para el inicio de sesion
 const login = async (req, res) => {
