@@ -231,8 +231,8 @@ const forgotPassword = async (req, res) => {
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'admistrar.poa.curlp@gmail.com', // generated ethereal user
-      pass: 'wphgvdcltjsnckir', // generated ethereal password
+      user: 'admistrar.poa.curlp@gmail.com', // generated gmail user
+      pass: 'wphgvdcltjsnckir', // generated gmail password
     },
   });
   transporter.verify().then(()=>{
@@ -245,7 +245,7 @@ const forgotPassword = async (req, res) => {
     to: user.email, // list of receivers
     subject: "Recupera tu contraseña ✔", // Subject line
     html: `
-    <b>POR FAVOR HAZ CLICK EN EL SIGUIENTE EN LACE PARA RECUPERAR TU CONTRASEÑA O COPIA EL LINK EN TU NAVEGADOR</b>
+    <b>POR FAVOR HAZ CLICK EN EL SIGUIENTE EN LACE PARA RECUPERAR TU CONTRASEÑA O COPIA EL LINK EN TU NAVEGADOR      </b>
     <a href="${verificationLink}">${verificationLink}</a>`
 
   }
@@ -273,8 +273,11 @@ const forgotPassword = async (req, res) => {
 
 const newPassword = async (req, res) => {
   const { newPassword } = req.body;
+  const { newPasswordAgain } = req.body;
   const resetToken = req.headers.reset;
-
+  if (!(newPassword === newPasswordAgain)) {
+    return res.status(400).send({ message: "No coiciden ambos campos para nueva contraseña" })
+  }else
   if (!(resetToken && newPassword)) {
     return res.status(400).json({ message: 'todos los campos son requeridos' });
   }// else{return res.status(400).json({resetToken:resetToken, newPassword:newPassword}); }
