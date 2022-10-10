@@ -69,24 +69,34 @@ const login = async (req, res) => {
 };
 
 // controlador para crear un usuario
-const newUser = async (req, res) => {
-  try {
-    db.user.create({
-      username: req.body.username,
-      password: bcrypt.hashSync(req.body.password, 8),
+const newUser = async(req,res) => { 
+  try{
+    const user = await db.user.findOne({where:{username:req.body.username}});
+    if (user){
+      return res.status(400).send({message:'El usuario ya existe'});
+    }
+    const verifyPassword = req.body.password === req.body.password2;
+    if(!verifyPassword){
+      return res.status(400).send({message:'Las contraseñas no coinciden'});
+    }
+    await db.user.create({
+      email : req.body.email,
+      username : req.body.username,
+      password : bcrypt.hashSync(req.body.password, 8),
       idEmpleado: req.body.idEmpleado,
-      idRol: req.body.idRol
-    })
-    res.status(200).json({
-      message: 'usuario creado con exito'
-    })
-
-  } catch (error) {
-    res.status(400).json({
-      message: 'error al ingresar' + error
-    })
-  }
-};
+      idRol : req.body.idRol
+      })
+      res.status(200).json({
+        status:'ok'
+        
+      })
+      
+    } catch (error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+    }
+   };
 
 // Controlador para la validacion de username
 const userValidation = async (req, res) => {
@@ -173,6 +183,7 @@ const update_user = async (req, res) => {
           return res.status(404).json({message:'Error al encontrar el usuario'});
       }
       const temporally = await db.user.update({
+        email: req.body.email,
         username: req.body.username,
         idEmpleado: req.body.idEmpleado,
         idRol: req.body.idRol

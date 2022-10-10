@@ -4,6 +4,7 @@ const roleModelb = require("../models/role.model");
 const userModel = require("../models/usuario.model");
 const permisoModel = require("../models/permiso.model");
 const PEIModel = require("../models/PEI.model");
+const areasModel = require("../models/areas.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
@@ -12,8 +13,12 @@ const Role = db.role;
 const User = db.user;
 const Empleado = db.empleado;
 const Permiso = db.permiso;
-const permiso_role = db.roles_permiso;
 const PEI = db.pei;
+const Areas = db.areas;
+const permiso_role = db.roles_permiso;
+const Objetivos = db.objetivos;
+const Dimension = db.dimension;
+const Resultados = db.resultado;
 //const Sesion = db.sesion;
 
 
@@ -57,6 +62,22 @@ exports.initial = async () => {
             idDimension: 1,
             idPei:1
         })
+
+        await db.areas.create({
+            nombre:"Area 1",
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
+        await db.resultado.create({
+            nombre: "Resultado 1",
+            idArea: 1,
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
         await Empleado.create({
             id: 1,
             dni: "02012",
@@ -70,6 +91,7 @@ exports.initial = async () => {
         });
         
         await User.create({
+            email: "cjso0323@gmail.com",
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
             idEmpleado: 1,
