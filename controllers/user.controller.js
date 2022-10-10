@@ -164,6 +164,35 @@ const get_rol_by_username = async (req, res) => {
   }
 }
 
+// Funcion para actualizar una dimension
+const update_user = async (req, res) => {
+  try {
+      
+      const user = await db.user.findByPk(req.body.id)
+      if(!user){
+          return res.status(404).json({message:'Error al encontrar el usuario'});
+      }
+      const temporally = await db.user.update({
+        username: req.body.username,
+        idEmpleado: req.body.idEmpleado,
+        idRol: req.body.idRol
+      }, {
+          where: {
+              id: req.body.id
+          }
+      });
+      if (temporally) {
+          res.status(200).send({
+              message: "Usuario actualizado con exito",
+              user : temporally
+          });
+      }
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+
 // Controlador para obetener usuario por medio de un id
 const getUserById = async (req, res) => {
   try {
@@ -199,5 +228,6 @@ module.exports = {
   newUser,
   userValidation,
   get_rol_by_username,
-  getUserById
+  getUserById,
+  update_user
 }
