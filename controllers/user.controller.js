@@ -219,7 +219,7 @@ const forgotPassword = async (req, res) => {
       iduser: user.id,
       email:user.email
     }
-    verificationLink = `http://localhost:8080/auth/newPassword/${token}`;
+    verificationLink = token;
 
     db.user.update(
       { resetToken: token },
@@ -245,7 +245,7 @@ const forgotPassword = async (req, res) => {
     to: user.email, // list of receivers
     subject: "Recupera tu contraseña ✔", // Subject line
     html: `
-    <b>POR FAVOR HAZ CLICK EN EL SIGUIENTE EN LACE PARA RECUPERAR TU CONTRASEÑA O COPIA EL LINK EN TU NAVEGADOR      </b>
+    <b>ESTE ES TU CODIGO DE VERIFICACION DE ACCESO--->    </b>
     <a href="${verificationLink}">${verificationLink}</a>`
 
   }
@@ -274,7 +274,7 @@ const forgotPassword = async (req, res) => {
 const newPassword = async (req, res) => {
   const { newPassword } = req.body;
   const { newPasswordAgain } = req.body;
-  const resetToken = req.headers.reset;
+  const {resetToken} = req.body;
   if (!(newPassword === newPasswordAgain)) {
     return res.status(400).send({ message: "No coiciden ambos campos para nueva contraseña" })
   }else
@@ -294,7 +294,7 @@ const newPassword = async (req, res) => {
     //  return res.status(200).send({ usuario: user.username, iduser: user.id });
   
   } catch (error) {
-    return res.status(400).json({ message: 'algo salio mal de nuevo' });
+    return res.status(400).json({ message: 'algo salio mal de nuevo'+error });
   }
   res.json({ message: 'password cambiada correctamente' })
   };
