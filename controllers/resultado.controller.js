@@ -11,13 +11,9 @@ const allResultado = async(req,res) => {
           isDelete: false,
       },
       include:[{
-        model: db.areas,
-      },{
-        model: db.objetivos,
-      },{
-        model: db.dimension,
-      },{
-        model: db.pei
+        model: db.areas, include :[{model:db.objetivos , include : [{model:db.dimension, include: [{model:db.pei}] 
+        }]
+        }]
       }]
     })
       return res.status(200).send({ allResultado });
@@ -30,12 +26,20 @@ const allResultado = async(req,res) => {
 
   const newResultado = async(req, res) => {
     try{
+      const resultado = await db.resultado.findOne({where:{nombre:req.body.nombre}})
+        if(resultado){
+            return res.status(400).json({message:'Nombre de resultado ya existente'});
+        }
+      const area = await db.areas.findByPk(req.body.idArea);
+      if (!area){ 
+        res.status(404).send({message:'no se encontro el área'});
+      }
        await db.resultado.create({
             nombre : req.body.nombre,
-            idArea : req.body.idArea,
-            idObjetivos : req.body.idObjetivos,
-            idDimension : req.body.idDimension,
-            idPei : req.body.idPei
+            idArea : area.id,
+            idObjetivos : area.idObjetivos,
+            idDimension : area.idDimension,
+            idPei : area.idPei
         })
         res.status(200).json({
           message:'Resultado creado con éxito'
