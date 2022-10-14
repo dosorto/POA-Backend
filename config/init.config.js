@@ -32,39 +32,41 @@ exports.initial = async () => {
             descripcion: "super usuario",
         });
 
+        await db.institucion.create({
+            nombre: 'CURLP',
+            descripcion: 'Centro regional'
+        });
+
         await PEI.create({
             name: "Mantenimiento general",
             initialYear: '2020-08-07',
             finalYear: '2020-09-08',
+            idInstitucion: 1,
+            isActive: 1
         });
 
-        await db.institucion.create({
-            nombre:'CURLP',
-            descripcion:'Centro regional'
-        })
-        
-
         await db.pei.create({
-            name:'UNAH1',
-            initialYear:'2020-01-01',
-            finalYear:'2022-01-01',
-            isActive:1,
+            name: 'UNAH1',
+            initialYear: '2020-01-01',
+            finalYear: '2022-01-01',
+            idInstitucion: 1,
+            isActive: 1
         })
 
         await db.dimension.create({
-            nombre:'Dimension 1',
-            descripcion:'descripcion 1',
-            idPei:1
+            nombre: 'Dimension 1',
+            descripcion: 'descripcion 1',
+            idPei: 1
         })
 
         await db.objetivos.create({
-            nombre:"IS",
+            nombre: "IS",
             idDimension: 1,
-            idPei:1
+            idPei: 1
         })
 
         await db.areas.create({
-            nombre:"Area 1",
+            nombre: "Area 1",
             idObjetivos: 1,
             idDimension: 1,
             idPei: 1
@@ -85,11 +87,11 @@ exports.initial = async () => {
             apellido: "root",
             direccion: "La libertad",
             telefono: "123",
-            fechaNacimiento:'1995-08-07',
+            fechaNacimiento: '1995-08-07',
             sexo: "M",
-            idInstitucion:1
+            idInstitucion: 1
         });
-        
+
         await User.create({
             email: "cjso0323@gmail.com",
             username: "root",

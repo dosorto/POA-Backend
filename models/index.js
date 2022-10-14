@@ -55,7 +55,7 @@ db.user.belongsTo(db.empleado, {
 });
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
-//// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
+//// UNA DIMENSION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
 db.PEI.hasMany(db.dimension, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
@@ -69,6 +69,17 @@ db.institucion.hasMany(db.empleado, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 db.empleado.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA INSTITUCION TIENE MUCHOS PEI(1:N) ////
+db.institucion.hasMany(db.pei, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+db.PEI.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
@@ -222,5 +233,7 @@ db.pei.hasMany(db.resultado, {
 db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
+
+
 
 module.exports = db;
