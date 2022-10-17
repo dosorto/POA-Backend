@@ -11,7 +11,8 @@ module.exports = function(app) {
     );
     next();
   });
-  app.post("/auth/new_PEI",controller.new_PEI);
-  app.get("/auth/get_PEI",controller.get_PEI)
-  app.post("/auth/disablePEI",controller.disable_PEI)
+  app.post("/PEI/new_PEI",controller.new_PEI);
+  app.get("/PEI/get_PEI",controller.get_PEI);
+  app.put("/PEI/disablePEI",controller.disable_PEI);
+  app.put("/PEI/updatePEI",controller.updatePEI);
 };
