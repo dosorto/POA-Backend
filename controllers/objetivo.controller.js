@@ -17,6 +17,26 @@ const AllObjetivo = async(req,res) => {
          model: db.dimension
       }]
     })
+      return res.status(200).send(allObjetivo);
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
+  const AllObjetivo_by_id_dimension = async(req,res) => { 
+    try{ 
+      const allObjetivo =  await db.objetivos.findAll({
+      where: {
+          isDelete: false,
+          idPei: req.params.idPei
+      },
+      include:[{
+        model: db.pei,
+      },{
+         model: db.dimension
+      }]
+    })
       return res.status(200).send({ allObjetivo });
   } catch(error){
       res.status(400).json({
@@ -86,5 +106,6 @@ module.exports = {
   AllObjetivo,
   eliminarObjetivo,
   newObjetivo,
-  updateObjetivo
+  updateObjetivo,
+  AllObjetivo_by_id_dimension
 }

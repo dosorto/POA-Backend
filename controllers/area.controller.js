@@ -164,7 +164,7 @@ const allAreasByidPEI = async (req, res) => {
       
       ({          
         where: {
-            idObjetivo : req.body.idObjetivo, isDelete: false,
+            idObjetivos : req.params.idObjetivo, isDelete: false,
         }
       });
   
