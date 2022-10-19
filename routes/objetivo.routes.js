@@ -14,4 +14,6 @@ module.exports = function(app) {
 
   app.get("/objetivos/get_all", controller.AllObjetivo);
   app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
+  app.post("/objetivos/crear",controller.newObjetivo);
+  app.put("/objetivos/actualizar",controller.updateObjetivo);
 };

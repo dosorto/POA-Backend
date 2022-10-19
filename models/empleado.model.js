@@ -39,4 +39,3 @@ module.exports = (sequelize, Sequelize) => {
     return Empleado;
   };
   
-  

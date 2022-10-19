@@ -1,9 +1,12 @@
-const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
-    const Areas = sequelize.define("areas", {
-      nombre: {
+    const Permiso = sequelize.define("permisos", {
+      Permiso: {
         type: Sequelize.STRING,
-        allowNull: false, 
+        allowNull: false,
+      },
+      Descripcion: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
@@ -11,6 +14,5 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false
       },
     });
-    return Areas;
+    return Permiso;
   };
- 

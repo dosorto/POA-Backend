@@ -1,29 +1,71 @@
-
 const db = require("../models");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-
 // controlador para crear una nueva area
 
 
 const newArea = async (req, res) => {
     try {
-        db.areas.create({
+      const area = await db.areas.findOne({where:{nombre:req.body.nombre}})
+      if(area){
+          return res.status(400).json({message:'Nombre de area ya utilizado'});
+      }
+      const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivos}})
+      if(!objetivo){
+          return res.status(404).json({message:'Objetivo incorrecto'});
+      }
+
+       await db.areas.create({
             nombre: req.body.nombre,
-            idObjetivo: req.body.idObjetivo,
-            idDimension: req.body.idDimension,
-            idPEI: req.body.idPEI
-        });
-        res.status(200).json({
-            message: 'Area creada con exito'
-        })
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al crear esta Area' + error
-        })
-    }
+            idObjetivo: req.body.idObjetivos,
+            idDimension:objetivo.idDimension,
+            idPei: objetivo.idPei
+          });
+          return res.status(200).json({status:"Ok"});
+      } catch(error){
+          return res.status(500).json({status:"Server Error: " + error});
+      }
 };
+
+// Funcion para obtener una unica area
+const get_area = async (req,res) =>{
+  try{
+      const area = await db.areas.findOne({where:{id:req.params.id}})
+      if(!area){
+          return res.status(404).json({message:'No se encuentra esa area'});
+      }
+      return res.status(200).json({status:"Ok",area});
+  } catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+//Funcion para obtener todas las areas
+const get_all_areas = async (req,res) =>{
+  try{
+      const all_areas = await db.areas.findAll(
+         { where:{
+          isDelete:false
+        },
+         include:[{
+          model: db.pei,
+        },{
+           model: db.dimension
+        },
+      {
+       model: db.objetivos
+      }]
+        }
+      );
+      if(!all_areas){
+          return res.status(404).send({message:'no hay ningun elemento'});
+      }
+      return res.status(200).json(all_areas);
+  }catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+};
+
 
 //controlador para borrar un area del pei
 
@@ -33,7 +75,7 @@ const delete_area = async (req, res) => {
             isDelete: true
         }, {
             where: {
-                id: req.body.id
+               nombre : req.body.nombre
             }
         });
         if (delete_area) {
@@ -41,40 +83,41 @@ const delete_area = async (req, res) => {
                 message: "Area eliminada correctamente"
             });
         }
-    } catch (error) {
+      } catch (error) {
         console.log(error);
-        res.status(401).send({
-            message: "Error al eliminar el area: " + error.message
-        });
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 const updateArea = async (req, res) => {
-    try {
+  try {
+    if(!req.body.nombre){
+      return res.status(400).json({message:'Debe enviar todos los datos'});
+  }
+  const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivo}})
+  if(!objetivo){
+      return res.status(404).json({message:'Objetivo incorrecto'});
+  }
+  const temporally =  await db.areas.update(
+          {
+              nombre: req.body.nombre,
+              idObjetivo: req.body.idObjetivo,
+              idDimension:objetivo.idDimension,
+            idPei: objetivo.idPei
+          },
+          { where: { id: req.body.id } });
 
-        const area = await db.areas.findByPk(req.body.id);
-        if (!area) {
-            return res.status(404).send({ message: 'area no encontrada' })
+          if (temporally) {
+            res.status(200).send({
+                message: "Area actualizada con exito",
+                areas : temporally
+            });
+          }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({status:"Server Error: " + error});
         }
-        await db.areas.update(
-            {
-                nombre: req.body.nombre,
-                idObjetivo: req.body.idObjetivo,
-                idDimension: req.body.idDimension,
-                idPEI: req.body.idPEI
-            },
-            { where: { id: req.body.id } })
-
-        res.status(200).json({
-            message: 'Area actualizada con exito'
-        })
-
-    } catch (error) {
-        res.status(500).json({
-            message: 'error al ingresar ' + error
-        })
     }
-}
 
 
 
@@ -132,29 +175,21 @@ const allAreasByidPEI = async (req, res) => {
       })
     }
   };
-// todas la areas
-  const allAreas = async(req,res) => { 
-    try{ 
-      const allareas =  await db.areas.findAll({
-      where: {
-          isDelete: false,
-      },
-      include:[{
-        model: db.pei,
-      },{
-         model: db.dimension,
-      },{
-        model: db.objetivos
-     }
-    ]
-    })
-      return res.status(200).send({ allareas });
-  } catch(error){
-      res.status(400).json({
-        message:'mostrar' + error
-      })
-  }
-  };
+
+  const get_Area = async (req,res) =>{
+    try{
+        const all_areas = await db.areas.findAll({
+            where:{isDelete:false}
+        });
+        if(!all_areas){
+            return res.status(404).send({message:'no hay ningun elemento'});
+        }
+        return res.status(200).json(all_areas);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
 
 module.exports = {
     delete_area,
@@ -163,6 +198,6 @@ module.exports = {
     allAreasByidPEI,
     allAreasByidDimension,
     allAreasByidObjetivos,
-    allAreas
-  
+    get_Area,
+    get_all_areas
   }
