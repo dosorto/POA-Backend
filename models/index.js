@@ -85,11 +85,11 @@ db.pei.belongsTo(db.institucion, {
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
-//// UNA INSTITUCION TIENE MUCHOS PEI(1:N) ////
+//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
 db.institucion.hasMany(db.pei, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
-db.PEI.belongsTo(db.institucion, {
+db.pei.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
