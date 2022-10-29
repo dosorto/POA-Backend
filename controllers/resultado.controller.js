@@ -24,27 +24,6 @@ const allResultado = async(req,res) => {
   }
   };
 
-  const allResultado_by_idArea= async(req,res) => { 
-    try{ 
-      const allResultado =  await db.resultado.findAll({
-      where: {
-          isDelete: false,
-          idArea: req.params.idArea
-      },
-      include:[{
-        model: db.areas, include :[{model:db.objetivos , include : [{model:db.dimension, include: [{model:db.pei}] 
-        }]
-        }]
-      }]
-    })
-      return res.status(200).send({ allResultado });
-  } catch(error){
-      res.status(400).json({
-        message:'error en la petición' + error
-      })
-  }
-  };
-
   const newResultado = async(req, res) => {
     try{
       const resultado = await db.resultado.findOne({where:{nombre:req.body.nombre}})
@@ -140,6 +119,5 @@ const allResultado = async(req,res) => {
     newResultado,
     deleteResultado,
     updateResultado,
-    getResultado,
-    allResultado_by_idArea
+    getResultado
   }

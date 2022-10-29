@@ -13,7 +13,6 @@ module.exports = function(app) {
 
   app.get("/resultados/get-all",controller.allResultado);
   app.get("/resultados/getResultado/:id",controller.getResultado);
-  app.get("/resultados/get-all_by_idArea/:idArea",controller.allResultado_by_idArea);
   app.post("/resultados/newResultado",controller.newResultado);
   app.put("/resultados/deleteResultado",controller.deleteResultado);
   app.put("/resultados/updateResultado",controller.updateResultado);
