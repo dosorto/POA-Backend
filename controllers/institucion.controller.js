@@ -74,7 +74,7 @@ const disable_institucion = async (req, res) => {
             isDelete : true
         }, {
             where: {
-                nombre: req.body.nombre
+                id: req.body.id
             }
         });
         if (temporally) {

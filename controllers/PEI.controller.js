@@ -42,7 +42,7 @@ const updatePEI = async (req, res) => {
 
 const disable_PEI = async (req, res) => {
     try {
-        const temporally = await db.PEI.update({
+        const temporally = await db.pei.update({
             isDelete: true
         }, {
             where: {
@@ -79,7 +79,7 @@ const get_PEI = async (req,res) =>{
         return res.status(500).json({status:"Server Error: " + error});
 }
 }
-get_all_pei_by_idInstitucion = async (req,res) =>{
+const get_all_pei_by_idInstitucion = async (req,res) =>{
     try{
         const all_peis = await db.pei.findAll(
            { where:{isDelete:false,
