@@ -11,14 +11,14 @@ const newArea = async (req, res) => {
       if(area){
           return res.status(400).json({message:'Nombre de area ya utilizado'});
       }
-      const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivo}})
+      const objetivo = await db.objetivos.findOne({where:{id:req.body.idObjetivos}})
       if(!objetivo){
           return res.status(404).json({message:'Objetivo incorrecto'});
       }
 
        await db.areas.create({
             nombre: req.body.nombre,
-            idObjetivo: req.body.idObjetivo,
+            idObjetivo: req.body.idObjetivos,
             idDimension:objetivo.idDimension,
             idPei: objetivo.idPei
           });

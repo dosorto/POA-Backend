@@ -22,9 +22,10 @@ require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
 require("./routes/permiso.routes")(app);
 require("./routes/PEI.routes")(app);
+require("./routes/resultados.routes")(app);
 require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
-require("./routes/objetivo.routes")(app)
+require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 
 

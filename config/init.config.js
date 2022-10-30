@@ -13,9 +13,12 @@ const Role = db.role;
 const User = db.user;
 const Empleado = db.empleado;
 const Permiso = db.permiso;
-const permiso_role = db.roles_permiso;
 const PEI = db.pei;
 const Areas = db.areas;
+const permiso_role = db.roles_permiso;
+const Objetivos = db.objetivos;
+const Dimension = db.dimension;
+const Resultados = db.resultado;
 //const Sesion = db.sesion;
 
 
@@ -36,29 +39,46 @@ exports.initial = async () => {
         });
 
         await db.institucion.create({
-            nombre: 'CURLP',
-            descripcion: 'Centro regional'
+            nombre:'CURLP',
+            descripcion:'Centro regional'
         })
-
+        
 
         await db.pei.create({
-            name: 'UNAH1',
-            initialYear: '2020-01-01',
-            finalYear: '2022-01-01',
-            isActive: 1,
+            name:'UNAH1',
+            initialYear:'2020-01-01',
+            finalYear:'2022-01-01',
+            isActive:1,
         })
 
         await db.dimension.create({
-            nombre: 'Dimension 1',
-            descripcion: 'descripcion 1',
-            idPei: 1
+            nombre:'Dimension 1',
+            descripcion:'descripcion 1',
+            idPei:1
         })
 
         await db.objetivos.create({
-            nombre: "IS",
+            nombre:"IS",
+            descripcion:"IS",
+            idDimension: 1,
+            idPei:1
+        })
+
+        await db.areas.create({
+            nombre:"Area 1",
+            idObjetivos: 1,
             idDimension: 1,
             idPei: 1
         })
+
+        await db.resultado.create({
+            nombre: "Resultado 1",
+            idArea: 1,
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
         await Empleado.create({
             id: 1,
             dni: "02012",
@@ -66,11 +86,11 @@ exports.initial = async () => {
             apellido: "root",
             direccion: "La libertad",
             telefono: "123",
-            fechaNacimiento: '1995-08-07',
+            fechaNacimiento:'1995-08-07',
             sexo: "M",
-            idInstitucion: 1
+            idInstitucion:1
         });
-
+        
         await User.create({
             email: "cjso0323@gmail.com",
             username: "root",
@@ -78,13 +98,6 @@ exports.initial = async () => {
             idEmpleado: 1,
             idRol: 1
         });
-        await Areas.create({
-            nombre: "root",
-            idObjetivo: 1,
-            idDimension: 1,
-            idPei: 1
-        });
-        
 
         //Agregue tabla catalogo de permisos
         await Permiso.bulkCreate([{
@@ -119,7 +132,8 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 3
-        }]);
+        }])
+
     } catch (error) {
         console.log(error);
     }

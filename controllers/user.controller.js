@@ -2,10 +2,10 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const User = db.user ;
+const User = db.user;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer")
 
 // controlador para el inicio de sesion
 const login = async (req, res) => {
@@ -70,25 +70,34 @@ const login = async (req, res) => {
 };
 
 // controlador para crear un usuario
-const newUser = async (req, res) => {
-  try {
-    db.user.create({
-      email: req.body.email,
-      username: req.body.username,
-      password: bcrypt.hashSync(req.body.password, 8),
+const newUser = async(req,res) => { 
+  try{
+    const user = await db.user.findOne({where:{username:req.body.username}});
+    if (user){
+      return res.status(400).send({message:'El usuario ya existe'});
+    }
+    const verifyPassword = req.body.password === req.body.password2;
+    if(!verifyPassword){
+      return res.status(400).send({message:'Las contraseñas no coinciden'});
+    }
+    await db.user.create({
+      email : req.body.email,
+      username : req.body.username,
+      password : bcrypt.hashSync(req.body.password, 8),
       idEmpleado: req.body.idEmpleado,
-      idRol: req.body.idRol
-    })
-    res.status(200).json({
-      message: 'usuario creado con exito'
-    })
-
-  } catch (error) {
-    res.status(400).json({
-      message: 'error al ingresar' + error
-    })
-  }
-};
+      idRol : req.body.idRol
+      })
+      res.status(200).json({
+        status:'ok'
+        
+      })
+      
+    } catch (error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+    }
+   };
 
 // Controlador para la validacion de username
 const userValidation = async (req, res) => {
@@ -166,6 +175,36 @@ const get_rol_by_username = async (req, res) => {
   }
 }
 
+// Funcion para actualizar una dimension
+const update_user = async (req, res) => {
+  try {
+      
+      const user = await db.user.findByPk(req.body.id)
+      if(!user){
+          return res.status(404).json({message:'Error al encontrar el usuario'});
+      }
+      const temporally = await db.user.update({
+        email: req.body.email,
+        username: req.body.username,
+        idEmpleado: req.body.idEmpleado,
+        idRol: req.body.idRol
+      }, {
+          where: {
+              id: req.body.id
+          }
+      });
+      if (temporally) {
+          res.status(200).send({
+              message: "Usuario actualizado con exito",
+              user : temporally
+          });
+      }
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+
 // Controlador para obetener usuario por medio de un id
 const getUserById = async (req, res) => {
   try {
@@ -219,7 +258,7 @@ const forgotPassword = async (req, res) => {
       iduser: user.id,
       email:user.email
     }
-    verificationLink = `http://localhost:8080/auth/newPassword/${token}`;
+    verificationLink = token;
 
     db.user.update(
       { resetToken: token },
@@ -231,8 +270,8 @@ const forgotPassword = async (req, res) => {
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'admistrar.poa.curlp@gmail.com', // generated ethereal user
-      pass: 'wphgvdcltjsnckir', // generated ethereal password
+      user: 'admistrar.poa.curlp@gmail.com', // generated gmail user
+      pass: 'wphgvdcltjsnckir', // generated gmail password
     },
   });
   transporter.verify().then(()=>{
@@ -245,7 +284,7 @@ const forgotPassword = async (req, res) => {
     to: user.email, // list of receivers
     subject: "Recupera tu contraseña ✔", // Subject line
     html: `
-    <b>POR FAVOR HAZ CLICK EN EL SIGUIENTE EN LACE PARA RECUPERAR TU CONTRASEÑA O COPIA EL LINK EN TU NAVEGADOR</b>
+    <b>ESTE ES TU CODIGO DE VERIFICACION DE ACCESO--->    </b>
     <a href="${verificationLink}">${verificationLink}</a>`
 
   }
@@ -273,8 +312,11 @@ const forgotPassword = async (req, res) => {
 
 const newPassword = async (req, res) => {
   const { newPassword } = req.body;
-  const resetToken = req.headers.reset;
-
+  const { newPasswordAgain } = req.body;
+  const {resetToken} = req.body;
+  if (!(newPassword === newPasswordAgain)) {
+    return res.status(400).send({ message: "No coiciden ambos campos para nueva contraseña" })
+  }else
   if (!(resetToken && newPassword)) {
     return res.status(400).json({ message: 'todos los campos son requeridos' });
   }// else{return res.status(400).json({resetToken:resetToken, newPassword:newPassword}); }
@@ -291,7 +333,7 @@ const newPassword = async (req, res) => {
     //  return res.status(200).send({ usuario: user.username, iduser: user.id });
   
   } catch (error) {
-    return res.status(400).json({ message: 'algo salio mal de nuevo' });
+    return res.status(400).json({ message: 'algo salio mal de nuevo'+error });
   }
   res.json({ message: 'password cambiada correctamente' })
   };
@@ -303,6 +345,7 @@ module.exports = {
   userValidation,
   get_rol_by_username,
   getUserById,
+  update_user,
   forgotPassword,
   newPassword
 }
