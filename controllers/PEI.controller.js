@@ -10,7 +10,8 @@ const new_PEI = async (req, res) => {
         await db.pei.create({
             name: req.body.name,
             initialYear: req.body.initialYear,
-            finalYear: req.body.finalYear
+            finalYear: req.body.finalYear,
+            idInstitucion: req.body.idInstitucion
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
@@ -26,7 +27,7 @@ const updatePEI = async (req, res) => {
         if (!PEI) {
             return res.status(404).send({ message: 'PEI not found' })
         }
-        await db.PEI.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear }, { where: { id: req.body.id } })
+        await db.PEI.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
         return res.status(200).send(user);
 
     } catch (error) {
@@ -37,7 +38,7 @@ const updatePEI = async (req, res) => {
 }
 
 
-//Eliminar PEI
+//Deshabilitar PEI
 
 const disable_PEI = async (req, res) => {
     try {
@@ -61,39 +62,44 @@ const disable_PEI = async (req, res) => {
     }
 }
 
-//Controlador para obtener todos los PEI
-/*const get_PEI = async (req, res) => {
-    try {
-        const get_pei = await db.PEI.findAll({
-            where: {
-                isDelete: false,
-            }
-        })
-        return res.status(200).send({ get_pei });
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al obtener' + error
-        })
-    }
-}*/
+
 const get_PEI = async (req,res) =>{
     try{
         const all_pei = await db.pei.findAll({
-            where:{isDelete:false}
+            where: { isDelete: false },
+            include: [{
+                model: db.institucion,
+            }]
         });
-        if(!all_pei){
-            return res.status(404).send({message:'no hay ningun elemento'});
+        if (!all_pei) {
+            return res.status(404).send({ message: 'no hay ningun elemento' });
         }
         return res.status(200).json(all_pei);
     }catch(error){
         return res.status(500).json({status:"Server Error: " + error});
-    }
+}
+}
+get_all_pei_by_idInstitucion = async (req,res) =>{
+    try{
+        const all_peis = await db.pei.findAll(
+           { where:{isDelete:false,
+                    idInstitucion: req.params.idInstitucion},
+            include:db.institucion}
+        );
+        if(!all_peis){
+            return res.status(404).send({message:'No hay ningún elemento'});
+        }
+        return res.status(200).json(all_peis);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
 }
 
 module.exports = {
     updatePEI,
     get_PEI,
     new_PEI,
-    disable_PEI
+    disable_PEI,
+    get_all_pei_by_idInstitucion
 }
 

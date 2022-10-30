@@ -15,10 +15,10 @@ const validateSesion = async (req,res) =>{
   if(!sesion){
     return res.status(404).send({message:'no existe sesion para ese usuario'})
   }
-  user = (JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString()));
+  //user = (JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString()));
   const fechaFin = new Date(sesion.FechaFin).getTime;
   const fechaActual = new Date(Date.now()).getTime;
-  if(fechaFin < fechaActual){
+  if(fechaFin > fechaActual){
     return res.status(200).send({message:'sesion válida'});
   }
   return res.status(401).send({message:'sesion caducada'});
@@ -74,10 +74,11 @@ const login = async (req, res) => {
       }
     )
     let fechaInicio = new Date(Date.now()).toISOString();
-    let fechaFin = new Date(Date.now() + (24*(60 * 60000))).toISOString(); // 24 horas de duracion
+    let fechaFin = new Date(Date.now() + (1*(60 * 60000))).toISOString(); // 24 horas de duracion
     const ses = await db.sesion.create(
       {
-        token:token,
+        idUsuario: user.id,
+        token:"temp",
         FechaInicio: fechaInicio,
         FechaFin: fechaFin
       }

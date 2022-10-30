@@ -35,6 +35,22 @@ const get_all_dimension = async (req,res) =>{
     try{
         const all_dimension = await db.dimension.findAll(
            { where:{isDelete:false},
+            include:db.pei}
+        );
+        if(!all_dimension){
+            return res.status(404).send({message:'no hay ningun elemento'});
+        }
+        return res.status(200).json(all_dimension);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
+const get_all_dimension_by_idPei = async (req,res) =>{
+    try{
+        const all_dimension = await db.dimension.findAll(
+           { where:{isDelete:false,
+                    idPei : req.params.idPei},
             include:db.PEI}
         );
         if(!all_dimension){
@@ -100,5 +116,6 @@ module.exports = {
     get_all_dimension,
     disable_dimension,
     update_dimension,
-    get_dimension
+    get_dimension,
+    get_all_dimension_by_idPei
   }

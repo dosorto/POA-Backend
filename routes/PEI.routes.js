@@ -15,4 +15,5 @@ module.exports = function(app) {
   app.get("/PEI/get_PEI",controller.get_PEI);
   app.put("/PEI/disablePEI",controller.disable_PEI);
   app.put("/PEI/updatePEI",controller.updatePEI);
+  app.get("/PEI/peiById/:idInstitucion",controller.get_all_pei_by_idInstitucion);
 };
