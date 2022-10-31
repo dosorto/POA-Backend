@@ -1,11 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Objetivos = sequelize.define("objetivos", {
       nombre: {
-        type: Sequelize.TEXT,
-        allowNull: false 
-      },
-      descripcion: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false 
       },
       isDelete: {

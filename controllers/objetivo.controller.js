@@ -17,20 +17,19 @@ const AllObjetivo = async(req,res) => {
          model: db.dimension
       }]
     })
-    res.status(200).json( allObjetivo );
+      return res.status(200).send(allObjetivo);
   } catch(error){
       res.status(400).json({
         message:'error al ingresar' + error
       })
   }
   };
-
-  const AllObjetivo_by_idDimension = async(req,res) => { 
+  const AllObjetivo_by_id_dimension = async(req,res) => { 
     try{ 
       const allObjetivo =  await db.objetivos.findAll({
       where: {
           isDelete: false,
-          idDimension: req.params.idDimension
+          idPei: req.params.idPei
       },
       include:[{
         model: db.pei,
@@ -38,43 +37,18 @@ const AllObjetivo = async(req,res) => {
          model: db.dimension
       }]
     })
-    res.status(200).json( allObjetivo );
+      return res.status(200).send({ allObjetivo });
   } catch(error){
       res.status(400).json({
         message:'error al ingresar' + error
       })
   }
   };
-
-  const AllObjetivo_by_id = async(req,res) => { 
-    try{ 
-      const allObjetivo =  await db.objetivos.findOne({
-      where: {
-          isDelete: false,
-          id: req.params.id
-      },
-      include:[{
-        model: db.pei,
-      },{
-         model: db.dimension
-      }]
-    })
-    res.status(200).json( allObjetivo );
-  } catch(error){
-      res.status(400).json({
-        message:'error al ingresar' + error
-      })
-  }
-  };
-
-
-
 
   const newObjetivo = async (req, res) => {
     try {
       db.objetivos.create({
         nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
         idDimension: req.body.idDimension,
         idPei: req.body.idPei
       })
@@ -118,7 +92,7 @@ const updateObjetivo = async (req, res) => {
       if (!objetivo) {
           return res.status(404).send({ message: 'PEI not found' })
       }
-      await db.objetivos.update({ nombre: req.body.nombre,descripcion: req.body.nombre, idDimension: req.body.idDimension, idPei: req.body.idPei }, { where: { id: req.body.id } })
+      await db.objetivos.update({ nombre: req.body.nombre, idDimension: req.body.idDimension, idPei: req.body.idPei }, { where: { id: req.body.id } })
       return res.status(200).send(objetivo);
 
   } catch (error) {
@@ -133,6 +107,5 @@ module.exports = {
   eliminarObjetivo,
   newObjetivo,
   updateObjetivo,
-  AllObjetivo_by_idDimension,
-  AllObjetivo_by_id
+  AllObjetivo_by_id_dimension
 }

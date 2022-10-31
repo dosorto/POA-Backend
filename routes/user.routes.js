@@ -15,5 +15,6 @@ module.exports = function(app) {
   app.post("/auth/create-user",controller.newUser);
   app.get("/auth/get/:id",controller.getUserById);
   app.post("/auth/update-user",controller.update_user);
+  app.post("/auth/validate-sesion",controller.validateSesion);
 };
 

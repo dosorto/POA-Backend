@@ -22,11 +22,15 @@ const Resultados = db.resultado;
 //const Sesion = db.sesion;
 
 
+
+//const Sesion = db.sesion;
+
+
 exports.initial = async () => {
     try {
 
 
-        await Role.create({
+        await db.role.create({
             id: 1,
             rol: "admin",
             descripcion: "super usuario",
@@ -45,30 +49,30 @@ exports.initial = async () => {
         
 
         await db.pei.create({
-            name:'UNAH1',
-            initialYear:'2020-01-01',
-            finalYear:'2022-01-01',
-            isActive:1,
+            name: 'UNAH1',
+            initialYear: '2020-01-01',
+            finalYear: '2022-01-01',
+            idInstitucion: 1,
+            isActive: 1
         })
 
         await db.dimension.create({
             nombre:'Dimension 1',
             descripcion:'descripcion 1',
-            idPei:1
+            idpei:1
         })
 
         await db.objetivos.create({
             nombre:"IS",
-            descripcion:"IS",
             idDimension: 1,
-            idPei:1
+            idpei:1
         })
 
         await db.areas.create({
             nombre:"Area 1",
             idObjetivos: 1,
             idDimension: 1,
-            idPei: 1
+            idpei: 1
         })
 
         await db.resultado.create({
@@ -76,10 +80,10 @@ exports.initial = async () => {
             idArea: 1,
             idObjetivos: 1,
             idDimension: 1,
-            idPei: 1
+            idpei: 1
         })
 
-        await Empleado.create({
+        await db.empleado.create({
             id: 1,
             dni: "02012",
             nombre: "root",
@@ -91,7 +95,7 @@ exports.initial = async () => {
             idInstitucion:1
         });
         
-        await User.create({
+        await db.user.create({
             email: "cjso0323@gmail.com",
             username: "root",
             password: bcrypt.hashSync(config.secret, 8),
@@ -100,7 +104,7 @@ exports.initial = async () => {
         });
 
         //Agregue tabla catalogo de permisos
-        await Permiso.bulkCreate([{
+        await db.permiso.bulkCreate([{
             Permiso: "All_User",
             Descripcion: "Permite al usuario acceder a todo el sistema."
         },
@@ -121,7 +125,7 @@ exports.initial = async () => {
             Descripcion: "Permite al usuario editar."
         }]);
 
-        await roles_permiso.bulkCreate([{
+        await db.roles_permiso.bulkCreate([{
             idRol: 1,
             idPermiso: 1
         },
