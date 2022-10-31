@@ -118,7 +118,7 @@ const updateObjetivo = async (req, res) => {
       if (!objetivo) {
           return res.status(404).send({ message: 'PEI not found' })
       }
-      await db.objetivos.update({ nombre: req.body.nombre,descripcion: req.body.nombre, idDimension: req.body.idDimension, idPei: req.body.idPei }, { where: { id: req.body.id } })
+      await db.objetivos.update({ nombre: req.body.nombre,descripcion: req.body.descripcion, idDimension: req.body.idDimension, idPei: req.body.idPei }, { where: { id: req.body.id } })
       return res.status(200).send(objetivo);
 
   } catch (error) {
