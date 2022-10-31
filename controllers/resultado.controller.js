@@ -11,12 +11,16 @@ const allResultado = async(req,res) => {
           isDelete: false,
       },
       include:[{
-        model: db.areas, include :[{model:db.objetivos , include : [{model:db.dimension, include: [{model:db.pei}] 
+        model: db.areas,
+      },{
+          model:db.objetivos ,
+        },{
+          model:db.dimension,
+        },{
+          model:db.pei,
         }]
-        }]
-      }]
     })
-      return res.status(200).send({ allResultado });
+      return res.status(200).json( allResultado );
   } catch(error){
       res.status(400).json({
         message:'error en la petición' + error
@@ -36,6 +40,7 @@ const allResultado = async(req,res) => {
       }
        await db.resultado.create({
             nombre : req.body.nombre,
+            descripcion : req.body.descripcion,
             idArea : area.id,
             idObjetivos : area.idObjetivos,
             idDimension : area.idDimension,
@@ -58,7 +63,7 @@ const allResultado = async(req,res) => {
             isDelete: true
       },{
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       });
       if (resultadoDelete){
@@ -81,6 +86,7 @@ const allResultado = async(req,res) => {
         }
         const updateResultado = await db.resultado.update({
             nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
             idArea : req.body.idArea,
             idObjetivos : req.body.idObjetivos,
             idDimension : req.body.idDimension,
@@ -104,9 +110,23 @@ const allResultado = async(req,res) => {
 
     const getResultado = async (req,res) =>{
       try{
-          const resultado = await db.resultado.findOne({where:{id:req.params.id}})
+          const resultado = await db.resultado.findOne({
+            where:{
+              isDelete: false,
+              id: req.params.id
+            },
+            include:[{
+              model: db.areas,
+            },{
+                model:db.objetivos ,
+              },{
+                model:db.dimension,
+              },{
+                model:db.pei,
+              }]
+          })
           if(!resultado){
-              return res.status(404).json({message:'No se encuentra esa dimension'});
+              return res.status(404).json({message:'No se encuentra el resultado'});
           }
           return res.status(200).json({status:"Ok",resultado});
       } catch(error){
@@ -114,10 +134,36 @@ const allResultado = async(req,res) => {
       }
   };
 
+  const AllResultado_by_idArea = async(req,res) => { 
+    try{ 
+      const allResultado =  await db.resultado.findAll({
+      where: {
+          isDelete: false,
+          idArea: req.params.idArea
+      },
+      include:[{
+        model: db.areas,
+      },{
+          model:db.objetivos ,
+        },{
+          model:db.dimension,
+        },{
+          model:db.pei,
+        }]
+    })
+    res.status(200).json( allResultado );
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
+
   module.exports = {
     allResultado,
     newResultado,
     deleteResultado,
     updateResultado,
-    getResultado
+    getResultado,
+    AllResultado_by_idArea
   }

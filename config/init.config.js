@@ -73,6 +73,7 @@ exports.initial = async () => {
 
         await db.resultado.create({
             nombre: "Resultado 1",
+            descripcion: "Desripción 1",
             idArea: 1,
             idObjetivos: 1,
             idDimension: 1,
