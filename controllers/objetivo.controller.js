@@ -4,6 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const objetivo = db.objetivos;
 const bcrypt = require("bcryptjs");
+// const { dimension } = require("../models/");
 
 const AllObjetivo = async(req,res) => { 
     try{ 
@@ -71,12 +72,20 @@ const AllObjetivo = async(req,res) => {
 
 
   const newObjetivo = async (req, res) => {
-    try {
-      db.objetivos.create({
+    try{
+      const resultado = await db.objetivos.findOne({where:{nombre:req.body.nombre}})
+        if(resultado){
+            return res.status(400).json({message:'Nombre de resultado ya existente'});
+        }
+        const dimension = await db.dimension.findOne({where:{id:req.body.idDimension}})
+        if(!objetivo){
+            return res.status(404).json({message:'Dimension incorrecto'});
+        }
+    await db.objetivos.create({
         nombre: req.body.nombre,
         descripcion: req.body.descripcion,
         idDimension: req.body.idDimension,
-        idPei: req.body.idPei
+        idPei: dimension.idPei
       })
       res.status(200).json({
         message: 'usuario creado con exito'
