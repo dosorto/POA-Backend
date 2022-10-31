@@ -4,6 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const objetivo = db.objetivos;
 const bcrypt = require("bcryptjs");
+const { dimension } = require("../models/");
 // const { dimension } = require("../models/");
 
 const AllObjetivo = async(req,res) => { 
@@ -121,21 +122,36 @@ const eliminarObjetivo = async (req, res) => {
 
 }
 
-const updateObjetivo = async (req, res) => {
+const updateObjetivo = async(req, res) =>{
   try {
-      const objetivo = await db.objetivos.findByPk(req.body.id);
-      if (!objetivo) {
-          return res.status(404).send({ message: 'PEI not found' })
-      }
-      await db.objetivos.update({ nombre: req.body.nombre,descripcion: req.body.descripcion, idDimension: req.body.idDimension, idPei: req.body.idPei }, { where: { id: req.body.id } })
-      return res.status(200).send(objetivo);
-
-  } catch (error) {
-      res.status(500).json({
-          message: 'error al actualizar ' + error
-      })
+    if(!req.body.nombre){
+        return res.status(400).json({message:'Debe enviar todos los datos'});
+    }
+    const dimension = await db.dimension.findByPk(req.body.idDimension);
+  if (!dimension){ 
+    res.status(404).send({message:'no se encontro la dimensión'});
   }
+    const updateObjetivo = await db.objetivos.update({
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        idDimension : dimension.id,
+        idPei : dimension.idPei
+    }, {
+        where: {
+            id: req.body.id
+        }
+    });
+    if (updateObjetivo) {
+        res.status(200).send({
+            message: "Objetivo actualizado con éxito",
+            resultado : updateObjetivo
+        });
+    }
+} catch (error) {
+    console.log(error);
+    return res.status(500).json({status:"Server Error: " + error});
 }
+};
 
 module.exports = {
   AllObjetivo,
