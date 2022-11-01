@@ -12,7 +12,8 @@ module.exports = function(app) {
     next();
   });
   app.post("/PEI/new_PEI",controller.new_PEI);
-  app.get("/PEI/get_PEI",controller.get_PEI);
+
+  app.get("/PEI/get/:id",controller.get_PEI);
   app.put("/PEI/disablePEI",controller.disable_PEI);
   app.put("/PEI/updatePEI",controller.updatePEI);
 };

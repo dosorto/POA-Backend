@@ -76,18 +76,23 @@ const disable_PEI = async (req, res) => {
         })
     }
 }*/
+
+
 const get_PEI = async (req,res) =>{
     try{
         const all_pei = await db.pei.findAll({
-            where:{isDelete:false}
+            where: { isDelete: false },
+            include: [{
+                model: db.institucion,
+            }]
         });
-        if(!all_pei){
-            return res.status(404).send({message:'no hay ningun elemento'});
+        if (!all_pei) {
+            return res.status(404).send({ message: 'no hay ningun elemento' });
         }
         return res.status(200).json(all_pei);
     }catch(error){
         return res.status(500).json({status:"Server Error: " + error});
-    }
+}
 }
 
 module.exports = {

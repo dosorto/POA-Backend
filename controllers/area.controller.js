@@ -18,7 +18,7 @@ const newArea = async (req, res) => {
 
        await db.areas.create({
             nombre: req.body.nombre,
-            idObjetivo: req.body.idObjetivos,
+            idObjetivos: req.body.idObjetivos,
             idDimension:objetivo.idDimension,
             idPei: objetivo.idPei
           });
@@ -75,7 +75,7 @@ const delete_area = async (req, res) => {
             isDelete: true
         }, {
             where: {
-               nombre : req.body.nombre
+               id : req.body.id
             }
         });
         if (delete_area) {
@@ -87,6 +87,28 @@ const delete_area = async (req, res) => {
         console.log(error);
         return res.status(500).json({status:"Server Error: " + error});
     }
+}
+
+
+
+const disable_dimension = async (req, res) => {
+  try {
+      const temporally = await db.dimension.update({
+          isDelete : true
+      }, {
+          where: {
+              nombre: req.body.nombre
+          }
+      });
+      if (temporally) {
+          res.status(200).send({
+              message: "Dimension eliminada con exito"
+          });
+      }
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({status:"Server Error: " + error});
+  }
 }
 
 const updateArea = async (req, res) => {
@@ -176,7 +198,7 @@ const allAreasByidPEI = async (req, res) => {
     }
   };
 
-  const get_Area = async (req,res) =>{
+ /* const get_Area = async (req,res) =>{
     try{
         const all_areas = await db.areas.findAll({
             where:{isDelete:false}
@@ -188,8 +210,35 @@ const allAreasByidPEI = async (req, res) => {
     }catch(error){
         return res.status(500).json({status:"Server Error: " + error});
     }
+}*/
+
+const get_Area = async (req,res) =>{
+  try{
+      const area = await db.areas.findOne({where:{id:req.params.id}})
+      if(!area){
+          return res.status(404).json({message:'No se encuentra esa area'});
+      }
+      return res.status(200).json({status:"Ok",area});
+  } catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
 }
 
+const get_all_area_by_idObjetivo = async (req,res) =>{
+  try{
+      const all_area = await db.areas.findAll(
+         { where:{isDelete:false,
+                  idObjetivos : req.params.idObjetivos},
+          include:db.objetivos}
+      );
+      if(!all_area){
+          return res.status(404).send({message:'no hay ningun elemento'});
+      }
+      return res.status(200).json(all_area);
+  }catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
 
 module.exports = {
     delete_area,
@@ -199,5 +248,6 @@ module.exports = {
     allAreasByidDimension,
     allAreasByidObjetivos,
     get_Area,
-    get_all_areas
+    get_all_areas,
+    get_all_area_by_idObjetivo
   }
