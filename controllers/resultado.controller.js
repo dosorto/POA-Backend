@@ -84,13 +84,17 @@ const allResultado = async(req,res) => {
         if(!req.body.nombre){
             return res.status(400).json({message:'Debe enviar todos los datos'});
         }
+        const area = await db.areas.findByPk(req.body.idArea);
+      if (!area){ 
+        res.status(404).send({message:'no se encontro el área'});
+      }
         const updateResultado = await db.resultado.update({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            idArea : req.body.idArea,
-            idObjetivos : req.body.idObjetivos,
-            idDimension : req.body.idDimension,
-            idPei : req.body.idPei
+            idArea : area.id,
+            idObjetivos : area.idObjetivos,
+            idDimension : area.idDimension,
+            idPei : area.idPei
         }, {
             where: {
                 id: req.body.id
