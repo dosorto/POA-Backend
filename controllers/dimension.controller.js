@@ -10,7 +10,7 @@ const new_dimension = async (req,res) =>{
         await db.dimension.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            idPei : req.body.idPei
+            idpei : req.body.idPei
         });
         return res.status(200).json({status:"Ok"});
     } catch(error){
@@ -97,7 +97,7 @@ const disable_dimension = async (req, res) => {
             isDelete : true
         }, {
             where: {
-                nombre: req.body.nombre
+                id: req.body.id
             }
         });
         if (temporally) {
