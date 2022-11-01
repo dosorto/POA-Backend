@@ -28,12 +28,11 @@ const new_PEI = async (req, res) => {
 //Actualizar PEI
 const updatePEI = async (req, res) => {
     try {
-
         const PEI = await db.pei.findByPk(req.body.id);
         if (!PEI) {
             return res.status(404).send({ message: 'PEI not found' })
         }
-        await db.PEI.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
+        await db.pei.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
         return res.status(200).send(user);
 
     } catch (error) {
@@ -43,7 +42,6 @@ const updatePEI = async (req, res) => {
     }
 }
 
-
 //Deshabilitar PEI
 
 const disable_PEI = async (req, res) => {
@@ -52,7 +50,7 @@ const disable_PEI = async (req, res) => {
             isDelete: true
         }, {
             where: {
-                name: req.body.name
+                id: req.body.id
             }
         });
         if (temporally) {
