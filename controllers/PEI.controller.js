@@ -7,21 +7,20 @@ const { institucion } = require("../models/");
 //Controlador para crear un nuevo PEI
 const new_PEI = async (req, res) => {
     try {
-        const insti = await db.institucion.findOne({where:{id:req.body.idInstitucion}})
-        if(!pei){
-            return res.status(404).json({message:'Pei incorrecto'});
+        const insti = await db.institucion.findOne({ where: { id: req.body.idInstitucion } })
+        if (!insti) {
+            return res.status(400).json({ message: 'Pei incorrecto' });
         }
-        //db.sequelize.authenticate();
         await db.pei.create({
             name: req.body.name,
             initialYear: req.body.initialYear,
             finalYear: req.body.finalYear,
-            idInstitucion: institucion.idInstitucion
+            idInstitucion: insti.id
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
         console.log("error: " + error);
-        return res.status(400).json({ status: "error", error: error });
+        return res.status(500).json({ status: "error", error: error });
     }
 }
 
@@ -33,8 +32,7 @@ const updatePEI = async (req, res) => {
             return res.status(404).send({ message: 'PEI not found' })
         }
         await db.pei.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
-        return res.status(200).send(user);
-
+        return res.status(200).send({message:"ok"});
     } catch (error) {
         res.status(500).json({
             message: 'error al actualizar ' + error
