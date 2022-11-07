@@ -19,6 +19,7 @@ const permiso_role = db.roles_permiso;
 const Objetivos = db.objetivos;
 const Dimension = db.dimension;
 const Resultados = db.resultado;
+const Indicadores = db.indicadores;
 //const Sesion = db.sesion;
 
 
@@ -73,7 +74,17 @@ exports.initial = async () => {
 
         await db.resultado.create({
             nombre: "Resultado 1",
-            descripcion: "Desripción 1",
+            descripcion: "Descripción 1",
+            idArea: 1,
+            idObjetivos: 1,
+            idDimension: 1,
+            idPei: 1
+        })
+
+        await db.indicadores.create({
+            nombre: "Indicador 1",
+            descripcion: "Descripción 1",
+            idResultado: 1,
             idArea: 1,
             idObjetivos: 1,
             idDimension: 1,

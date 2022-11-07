@@ -27,6 +27,7 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
+require("./routes/indicadores.routes")(app);
 
 
 app.use(
@@ -42,7 +43,7 @@ app.use(
 const db = require("./models/");
 db.sequelize.sync();
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
   init.initial();
 });
 

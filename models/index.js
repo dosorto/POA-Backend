@@ -39,6 +39,7 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
+db.indicadores = require("./indicadores.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -220,6 +221,57 @@ db.pei.hasMany(db.resultado, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 db.resultado.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Indicadores//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN INDICADOR TIENE UN RESULTADO, UN RESULTADO TIENE MUCHOS INDICADORES(1:N) ////
+db.resultado.hasMany(db.indicadores, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.indicadores.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN INDICADOR TIENE UN AREA, UN AREA TIENE MUCHOS INDICADORES(1:N) ////
+db.areas.hasMany(db.indicadores, {
+  foreignKey: { name: 'idArea', allowNull: false}
+});
+db.indicadores.belongsTo(db.areas, {
+  foreignKey: { name: 'idArea', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN INDICADOR TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHOS INDICADORES(1:N) ////
+db.objetivos.hasMany(db.indicadores, {
+  foreignKey: { name: 'idObjetivos', allowNull: false}
+});
+db.indicadores.belongsTo(db.objetivos, {
+  foreignKey: { name: 'idObjetivos', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN INDICADOR TIENE UNA DIMENSIÓN, UNA DIMENSÓN TIENE MUCHOS INDICADORES(1:N) ////
+db.dimension.hasMany(db.indicadores, {
+  foreignKey: { name: 'idDimension', allowNull: false}
+});
+db.indicadores.belongsTo(db.dimension, {
+  foreignKey: { name: 'idDimension', allowNull: false}
+});
+
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN INDICADOR TIENE UN PEI, UN PEI TIENE MUCHOS INDICADORES(1:N) ////
+db.pei.hasMany(db.indicadores, {
+  foreignKey: { name: 'idPei', allowNull: false}
+});
+db.indicadores.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 
