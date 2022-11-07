@@ -34,7 +34,7 @@ db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
-db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
+//db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
@@ -55,14 +55,14 @@ db.user.belongsTo(db.empleado, {
   }
 });
 
-/////// RELACIÓN DE UNO A MUCHOS /////////
-//// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
-db.PEI.hasMany(db.dimension, {
-  foreignKey: { name: 'idPei', allowNull: false }
-});
-db.dimension.belongsTo(db.PEI, {
-  foreignKey: { name: 'idPei', allowNull: false }
-});
+// /////// RELACIÓN DE UNO A MUCHOS /////////
+// //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
+// db.pei.hasMany(db.dimension, {
+//   foreignKey: { name: 'idpei', allowNull: false }
+// });
+// db.dimension.belongsTo(db.pei, {
+//   foreignKey: { name: 'idpei', allowNull: false }
+// });
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN EMPLEADO PERTENECE A UNA INSTITUCION, UNA INSTITUCION TIENE MUCHOS EMPLEADOS ////
@@ -73,6 +73,15 @@ db.empleado.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
+db.institucion.hasMany(db.pei, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+db.pei.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
 
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////

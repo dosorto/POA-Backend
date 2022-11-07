@@ -33,12 +33,6 @@ exports.initial = async () => {
             descripcion: "super usuario",
         });
 
-        await PEI.create({
-            name: "Mantenimiento general",
-            initialYear: '2020-08-07',
-            finalYear: '2020-09-08',
-        });
-
         await db.institucion.create({
             nombre:'CURLP',
             descripcion:'Centro regional'
@@ -46,10 +40,11 @@ exports.initial = async () => {
         
 
         await db.pei.create({
-            name:'UNAH1',
-            initialYear:'2020-01-01',
-            finalYear:'2022-01-01',
-            isActive:1,
+            name: 'UNAH1',
+            initialYear: '2020-01-01',
+            finalYear: '2022-01-01',
+            idInstitucion: 1,
+            isActive: 1
         })
 
         await db.dimension.create({
@@ -91,16 +86,16 @@ exports.initial = async () => {
             idPei: 1
         })
 
-        await Empleado.create({
+        await db.empleado.create({
             id: 1,
             dni: "02012",
             nombre: "root",
             apellido: "root",
             direccion: "La libertad",
             telefono: "123",
-            fechaNacimiento:'1995-08-07',
+            fechaNacimiento: '1995-08-07',
             sexo: "M",
-            idInstitucion:1
+            idInstitucion: 1
         });
         
         await User.create({
