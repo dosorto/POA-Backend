@@ -10,7 +10,7 @@ const new_dimension = async (req,res) =>{
         await db.dimension.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            idpei : req.body.idPei
+            idPei: req.body.idPei
         });
         return res.status(200).json({status:"Ok"});
     } catch(error){
