@@ -59,6 +59,7 @@ exports.initial = async () => {
 
         await db.objetivos.create({
             nombre:"IS",
+            descripcion:"IS",
             idDimension: 1,
             idPei:1
         })
@@ -72,6 +73,7 @@ exports.initial = async () => {
 
         await db.resultado.create({
             nombre: "Resultado 1",
+            descripcion: "Desripción 1",
             idArea: 1,
             idObjetivos: 1,
             idDimension: 1,
@@ -132,6 +134,57 @@ exports.initial = async () => {
             idRol: 1,
             idPermiso: 3
         }])
+
+        
+
+        /// CATALOGO DE OBJETO DEL GASTO
+
+        await db.grupogasto.bulkCreate([{
+            nombre: "Insumos",
+            identificador: 3000
+        },
+        {
+            nombre: "Insumos",
+            identificador: 3000
+        },
+        {
+            nombre: "Insumos",
+            identificador: 3000
+        },
+        {
+            nombre: "Insumos",
+            identificador: 3000
+        },
+        {
+            nombre: "Insumos",
+            identificador: 3000
+        }]);
+        ///Grupo del gasto
+        await db.objetogasto.bulkCreate([{
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        },
+        {
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        },
+        {
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        },
+        {
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        },
+        {
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        }]);
 
     } catch (error) {
         console.log(error);

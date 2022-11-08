@@ -44,21 +44,6 @@ const get_all_institucion = async (req,res) =>{
     }
 }
 
-const get_all_institucion_by_idPei = async (req,res) =>{
-    try{
-        const all_Institucion = await db.institucion.findAll({
-            where:{isDelete:false,
-            idPei: req.params.idPei}
-        });
-        if(!all_Institucion){
-            return res.status(404).send({message:'no hay ningun elemento'});
-        }
-        return res.status(200).json(all_Institucion);
-    }catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
-    }
-}
-
 // Funcion para actualizar una Institucion
 const update_institucion = async (req, res) => {
     try {
@@ -108,6 +93,5 @@ module.exports = {
     get_all_institucion,
     disable_institucion,
     update_institucion,
-    get_institucion,
-    get_all_institucion_by_idPei
+    get_institucion
   }

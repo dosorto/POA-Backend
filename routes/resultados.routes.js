@@ -13,7 +13,8 @@ module.exports = function(app) {
 
   app.get("/resultados/get-all",controller.allResultado);
   app.get("/resultados/getResultado/:id",controller.getResultado);
-  app.post("/resultados/newResultado",controller.newResultado);
-  app.put("/resultados/deleteResultado",controller.deleteResultado);
+  app.get("/resultados/getResultado_by_idArea/:idArea",controller.AllResultado_by_idArea);
+  app.post("/resultados/crear",controller.newResultado);
+  app.get("/resultados/deleteResultado/:id",controller.deleteResultado);
   app.put("/resultados/updateResultado",controller.updateResultado);
 };

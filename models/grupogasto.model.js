@@ -1,13 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
-    const Objetivos = sequelize.define("objetivos", {
+    const grupogasto = sequelize.define("grupogasto", {
       nombre: {
         type: Sequelize.TEXT,
         allowNull: false 
       },
-      descripcion: {
-        type: Sequelize.TEXT,
+     identificador: {
+        type: Sequelize.INTEGER,
         allowNull: false 
       },
+      
       isDelete: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
@@ -15,5 +16,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Objetivos;
+    return grupogasto;
   };

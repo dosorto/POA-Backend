@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Objetivos = sequelize.define("objetivos", {
+    const tareas = sequelize.define("tareas", {
       nombre: {
         type: Sequelize.TEXT,
         allowNull: false 
@@ -15,5 +15,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Objetivos;
+    return tareas;
   };

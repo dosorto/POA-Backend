@@ -1,6 +1,7 @@
 const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
+const dbConfig = require("../config/db.config.js");
 const sequelize = new Sequelize(
   config.DB,
   config.USER,
@@ -39,6 +40,15 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
+
+////Gestion POA
+db.objetogasto= require("./objetogasto.model.js")(sequelize, Sequelize);
+db.grupogasto= require("./grupogasto.model.js")(sequelize, Sequelize);
+db.presupuesto = require("./presupuesto.model.js")(sequelize,Sequelize);
+db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
+// planificacion
+db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -222,5 +232,67 @@ db.pei.hasMany(db.resultado, {
 db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
+
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UN OBJETO DEL GASTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
+    OBJETOS DEL GASTO
+*/
+db.grupogasto.hasMany(db.objetogasto, {
+  foreignKey: { name: 'idgrupo', allowNull: false}
+});
+db.objetogasto.belongsTo(db.grupogasto, {
+  foreignKey: { name: 'idgrupo', allowNull: false}
+});
+
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UN PRESUPUESTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
+    PRESUPUESTOS
+*/
+
+db.grupogasto.hasMany(db.presupuesto, {
+  foreignKey: { name: 'idgrupo', allowNull: false}
+});
+db.presupuesto.belongsTo(db.grupogasto, {
+  foreignKey: { name: 'idgrupo', allowNull: false}
+});
+
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UN PRESUPUESTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
+    PRESUPUESTOS
+*/
+
+db.objetogasto.hasMany(db.presupuesto, {
+  foreignKey: { name: 'idobjeto', allowNull: false}
+});
+db.presupuesto.belongsTo(db.objetogasto, {
+  foreignKey: { name: 'idobjeto', allowNull: false}
+});
+
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UNA TAREA TIENE UN PRESUPUESTO, UN PRESUPUESTO TIENE MUCHAS
+    TAREAS
+*/
+
+db.tarea.hasOne(db.presupuesto, {
+  foreignKey: { name: 'idtarea', allowNull: false}
+});
+db.presupuesto.belongsTo(db.tarea, {
+  foreignKey: { name: 'idtarea', allowNull: false}
+});
+
+// db.empleado.hasOne(db.user, {
+//   foreignKey: {
+//     name: 'idEmpleado', allowNull: false
+//   }
+// });
+// db.user.belongsTo(db.empleado, {
+//   foreignKey: {
+//     name: 'idEmpleado', allowNull: false
+//   }
+// })
 
 module.exports = db;
