@@ -14,6 +14,8 @@ module.exports = function(app) {
   app.put("/area/editar",controller.updateArea);
   app.post("/area/crear",controller.newArea);
 
+  app.get("/area/get_all_by_idObjetivo/:idObjetivos", controller.get_all_area_by_idObjetivo);
+
   app.post("/area/allByPEI",controller.allAreasByidPEI);
   app.get("/area/allByObjetivos/:idObjetivo",controller.allAreasByidObjetivos);
   app.post("/area/allByDimension",controller.allAreasByidDimension);

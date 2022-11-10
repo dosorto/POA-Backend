@@ -11,33 +11,16 @@ const allResultado = async(req,res) => {
           isDelete: false,
       },
       include:[{
-        model: db.areas, include :[{model:db.objetivos , include : [{model:db.dimension, include: [{model:db.pei}] 
+        model: db.areas,
+      },{
+          model:db.objetivos ,
+        },{
+          model:db.dimension,
+        },{
+          model:db.pei,
         }]
-        }]
-      }]
     })
-      return res.status(200).send({ allResultado });
-  } catch(error){
-      res.status(400).json({
-        message:'error en la petición' + error
-      })
-  }
-  };
-
-  const allResultado_by_idArea= async(req,res) => { 
-    try{ 
-      const allResultado =  await db.resultado.findAll({
-      where: {
-          isDelete: false,
-          idArea: req.params.idArea
-      },
-      include:[{
-        model: db.areas, include :[{model:db.objetivos , include : [{model:db.dimension, include: [{model:db.pei}] 
-        }]
-        }]
-      }]
-    })
-      return res.status(200).send({ allResultado });
+      return res.status(200).json( allResultado );
   } catch(error){
       res.status(400).json({
         message:'error en la petición' + error
@@ -47,6 +30,7 @@ const allResultado = async(req,res) => {
 
   const newResultado = async(req, res) => {
     try{
+      
       const resultado = await db.resultado.findOne({where:{nombre:req.body.nombre}})
         if(resultado){
             return res.status(400).json({message:'Nombre de resultado ya existente'});
@@ -55,8 +39,10 @@ const allResultado = async(req,res) => {
       if (!area){ 
         res.status(404).send({message:'no se encontro el área'});
       }
+      
        await db.resultado.create({
             nombre : req.body.nombre,
+            descripcion : req.body.descripcion,
             idArea : area.id,
             idObjetivos : area.idObjetivos,
             idDimension : area.idDimension,
@@ -79,7 +65,7 @@ const allResultado = async(req,res) => {
             isDelete: true
       },{
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       });
       if (resultadoDelete){
@@ -100,12 +86,17 @@ const allResultado = async(req,res) => {
         if(!req.body.nombre){
             return res.status(400).json({message:'Debe enviar todos los datos'});
         }
+        const area = await db.areas.findByPk(req.body.idArea);
+      if (!area){ 
+        res.status(404).send({message:'no se encontro el área'});
+      }
         const updateResultado = await db.resultado.update({
             nombre: req.body.nombre,
-            idArea : req.body.idArea,
-            idObjetivos : req.body.idObjetivos,
-            idDimension : req.body.idDimension,
-            idPei : req.body.idPei
+            descripcion: req.body.descripcion,
+            idArea : area.id,
+            idObjetivos : area.idObjetivos,
+            idDimension : area.idDimension,
+            idPei : area.idPei
         }, {
             where: {
                 id: req.body.id
@@ -125,14 +116,53 @@ const allResultado = async(req,res) => {
 
     const getResultado = async (req,res) =>{
       try{
-          const resultado = await db.resultado.findOne({where:{id:req.params.id}})
+          const resultado = await db.resultado.findOne({
+            where:{
+              isDelete: false,
+              id: req.params.id
+            },
+            include:[{
+              model: db.areas,
+            },{
+                model:db.objetivos ,
+              },{
+                model:db.dimension,
+              },{
+                model:db.pei,
+              }]
+          })
           if(!resultado){
-              return res.status(404).json({message:'No se encuentra esa dimension'});
+              return res.status(404).json({message:'No se encuentra el resultado'});
           }
           return res.status(200).json({status:"Ok",resultado});
       } catch(error){
           return res.status(500).json({status:"Server Error: " + error});
       }
+  };
+
+  const AllResultado_by_idArea = async(req,res) => { 
+    try{ 
+      const allResultado =  await db.resultado.findAll({
+      where: {
+          isDelete: false,
+          idArea: req.params.idArea
+      },
+      include:[{
+        model: db.areas,
+      },{
+          model:db.objetivos ,
+        },{
+          model:db.dimension,
+        },{
+          model:db.pei,
+        }]
+    })
+    res.status(200).json( allResultado );
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
   };
 
   module.exports = {
@@ -141,5 +171,5 @@ const allResultado = async(req,res) => {
     deleteResultado,
     updateResultado,
     getResultado,
-    allResultado_by_idArea
+    AllResultado_by_idArea
   }

@@ -46,41 +46,52 @@ exports.initial = async () => {
             nombre:'CURLP',
             descripcion:'Centro regional'
         })
-        
 
         await db.pei.create({
-            name: 'UNAH1',
-            initialYear: '2020-01-01',
-            finalYear: '2022-01-01',
-            idInstitucion: 1,
-            isActive: 1
-        })
+            name: "Mantenimiento general",
+            initialYear: '2020-08-07',
+            finalYear: '2020-09-08',
+            isActive:1,
+            idInstitucion: 1
+        });
+
+        
+        
+
+        // await db.pei.create({
+        //     name:'UNAH1',
+        //     initialYear:'2020-01-01',
+        //     finalYear:'2022-01-01',
+        //     isActive:1,
+        // })
 
         await db.dimension.create({
             nombre:'Dimension 1',
             descripcion:'descripcion 1',
-            idpei:1
+            idPei:1
         })
 
         await db.objetivos.create({
-            nombre:"IS",
+            nombre: "IS",
+            descripcion:"objetivo descripcion",
             idDimension: 1,
-            idpei:1
+            idPei:1
         })
 
         await db.areas.create({
             nombre:"Area 1",
             idObjetivos: 1,
             idDimension: 1,
-            idpei: 1
+            idPei: 1
         })
 
         await db.resultado.create({
             nombre: "Resultado 1",
+            descripcion: "Desripción 1",
             idArea: 1,
             idObjetivos: 1,
             idDimension: 1,
-            idpei: 1
+            idPei: 1
         })
 
         await db.empleado.create({
@@ -90,9 +101,9 @@ exports.initial = async () => {
             apellido: "root",
             direccion: "La libertad",
             telefono: "123",
-            fechaNacimiento:'1995-08-07',
+            fechaNacimiento: '1995-08-07',
             sexo: "M",
-            idInstitucion:1
+            idInstitucion: 1
         });
         
         await db.user.create({
