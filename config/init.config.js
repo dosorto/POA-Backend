@@ -607,7 +607,27 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 4
-        }])
+        }]);
+
+        await db.ue.create({
+            name: "Dirección",
+            descripcion: "General",
+        });
+
+        await db.depto.create({
+            name: "Facultad de Ingeniería en Sistemas",
+            descripcion: "Ingeniería en Sistemas",
+        });
+
+        await db.poa.create({
+            name: "Prueba",
+            anio: '2021-01-01',
+            techopre: "12344321",
+            isActive: 1,
+            idDepto: 1,
+            idUE: 1
+        });
+
 
     } catch (error) {
         console.log(error);

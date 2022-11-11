@@ -38,6 +38,11 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
+
+////////////////MODULO POA///////////////////////////
+db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
+db.depto = require("./departamento-poa.model.js")(sequelize, Sequelize);
+db.poa = require("./poa-poa.model.js")(sequelize, Sequelize);
 //db.areas = require("./planificacion.model")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
@@ -243,6 +248,24 @@ db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 
+
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN DEPARTAMENTO TIENE MUCHOS PEI(1:N) ////
+db.depto.hasMany(db.poa, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+db.poa.belongsTo(db.depto, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA UNIDAD EJECUTORA TIENE MUCHOS PEI(1:N) ////
+db.ue.hasMany(db.poa, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+db.poa.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
 
 
 module.exports = db;
