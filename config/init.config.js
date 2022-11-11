@@ -43,20 +43,20 @@ exports.initial = async () => {
         });
 
         await db.institucion.create({
-            nombre:'CURLP',
-            descripcion:'Centro regional'
+            nombre: 'CURLP',
+            descripcion: 'Centro regional'
         })
 
         await db.pei.create({
             name: "Mantenimiento general",
             initialYear: '2020-08-07',
             finalYear: '2020-09-08',
-            isActive:1,
+            isActive: 1,
             idInstitucion: 1
         });
 
-        
-        
+
+
 
         // await db.pei.create({
         //     name:'UNAH1',
@@ -66,20 +66,20 @@ exports.initial = async () => {
         // })
 
         await db.dimension.create({
-            nombre:'Dimension 1',
-            descripcion:'descripcion 1',
-            idPei:1
+            nombre: 'Dimension 1',
+            descripcion: 'descripcion 1',
+            idPei: 1
         })
 
         await db.objetivos.create({
             nombre: "IS",
-            descripcion:"objetivo descripcion",
+            descripcion: "objetivo descripcion",
             idDimension: 1,
-            idPei:1
+            idPei: 1
         })
 
         await db.areas.create({
-            nombre:"Area 1",
+            nombre: "Area 1",
             idObjetivos: 1,
             idDimension: 1,
             idPei: 1
@@ -105,7 +105,7 @@ exports.initial = async () => {
             sexo: "M",
             idInstitucion: 1
         });
-        
+
         await db.user.create({
             email: "cjso0323@gmail.com",
             username: "root",
@@ -153,5 +153,14 @@ exports.initial = async () => {
         console.log(error);
     }
 
+    await db.actividades.create({
+        nombre: "actividad1",
+        descripcion:"",
+        tipoActividad:"",
+        Categoria:"",
+        resultadoUnidad:"",
+        responsable:"" // aca se tiene que hacerv una tabla transacional de responsable
+
+    });
 
 };
