@@ -1,5 +1,7 @@
+const DataTypes = require('sequelize').DataTypes;
+
 module.exports = (sequelize, Sequelize) => {
-const actividad { Sequelize, resultado, sequelize } = require("sequelize");
+    const Areas = sequelize.define("actividad", {
 
 nombre:{
     type: Sequelize.TEXT,
@@ -12,8 +14,6 @@ descripcion:{
     allowNull:false,
 },
 
-
-
 resultadoUnidad:{
     type:Sequelize.TEXT,
     allowNull:false,
@@ -23,7 +23,7 @@ resultadoUnidad:{
 estado:{
     type:Sequelize.ENUM('FORMULACION','REFORMULACION','REVISION','APROBADO','RECHAZADO',),
     allowNull:false,
-}
+},
 
 
 tipoActividad:{
@@ -40,4 +40,13 @@ isActive:{
     type:Sequelize.BOOLEAN,
     allowNull:false,
     defaultValue:false
-}}
+},
+isDelete: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+});
+return Actividad;
+};
+

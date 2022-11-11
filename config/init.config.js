@@ -636,10 +636,13 @@ exports.initial = async () => {
     await db.actividades.create({
         nombre: "actividad1",
         descripcion:"",
-        tipoActividad:"",
-        Categoria:"",
         resultadoUnidad:"",
-        responsable:"" // aca se tiene que hacerv una tabla transacional de responsable
+        estado:"reprobrado",
+        tipoActividad:"", 
+        Categoria:"",
+       
+      
+    // responsable:"" // aca se tiene que hacerv una tabla transacional de responsable
 
     });
 
