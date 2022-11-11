@@ -1,28 +1,12 @@
 const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
-const { Op, DataTypes, Model, where } = require("sequelize");
+const { Op, DataTypes, Model } = require("sequelize");
 const User = db.user;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer")
 
-const validateSesion = async (req,res) =>{
-  const token = req.body.token;
-  const sesion = await db.sesion.findOne({
-    token:token
-  })
-  if(!sesion){
-    return res.status(404).send({message:'no existe sesion para ese usuario'})
-  }
-  //user = (JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString()));
-  const fechaFin = new Date(sesion.FechaFin).getTime;
-  const fechaActual = new Date(Date.now()).getTime;
-  if(fechaFin > fechaActual){
-    return res.status(200).send({message:'sesion válida'});
-  }
-  return res.status(401).send({message:'sesion caducada'});
-}
 // controlador para el inicio de sesion
 const login = async (req, res) => {
   //return res.status(200);
@@ -66,30 +50,13 @@ const login = async (req, res) => {
       config.secret, {
       expiresIn: 86400, // 24 horas de ducración de tokens
     });
-    const permisos = await db.roles_permiso.findAll(
-      {
-        where:{
-          idRol : user.idRol
-        }
-      }
-    )
-    let fechaInicio = new Date(Date.now()).toISOString();
-    let fechaFin = new Date(Date.now() + (1*(60 * 60000))).toISOString(); // 24 horas de duracion
-    const ses = await db.sesion.create(
-      {
-        idUsuario: user.id,
-        token:"temp",
-        FechaInicio: fechaInicio,
-        FechaFin: fechaFin
-      }
-    )
+
     const resp = {
       id: user.id,
       usuario: user.username,
       empleado: user.empleado,
-      rol: user.role,
-      permisos:permisos,
-      sesion:ses,
+      rol: user.role,//,
+      //sesion:ses,
       token: token
     }
     return res.status(200).send(resp);
@@ -380,6 +347,5 @@ module.exports = {
   getUserById,
   update_user,
   forgotPassword,
-  newPassword,
-  validateSesion
+  newPassword
 }
