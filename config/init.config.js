@@ -19,6 +19,7 @@ const permiso_role = db.roles_permiso;
 const Objetivos = db.objetivos;
 const Dimension = db.dimension;
 const Resultados = db.resultado;
+const actividad = db.actividad;
 //const Sesion = db.sesion;
 
 
@@ -633,17 +634,17 @@ exports.initial = async () => {
         console.log(error);
     }
 
-    await db.actividades.create({
+    await db.actividad.bulkCreate([{
         nombre: "actividad1",
-        descripcion:"",
-        resultadoUnidad:"",
-        estado:"reprobrado",
-        tipoActividad:"", 
-        Categoria:"",
+        descripcion:"año",
+        resultadoUnidad:"1",
+        estado:"1",
+        tipoActividad:"as", 
+        Categoria:"dc",
        
       
     // responsable:"" // aca se tiene que hacerv una tabla transacional de responsable
 
-    });
+    }]);
 
 };
