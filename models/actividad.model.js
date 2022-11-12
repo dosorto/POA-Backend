@@ -26,6 +26,8 @@ estado:{
 },
 
 
+
+
 tipoActividad:{
     type:Sequelize.ENUM('ACADEMICA','ADMINISTRATIVA'),
     allowNull:false,
