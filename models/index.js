@@ -40,6 +40,7 @@ db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
 db.indicadores = require("./indicadores.model.js")(sequelize, Sequelize);
+db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
