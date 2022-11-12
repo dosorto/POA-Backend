@@ -75,13 +75,11 @@ const get_POA = async (req,res) =>{
         const all_poa = await db.poa.findAll({
             where: { isDelete: false },
             include: [{
-                model: db.depto
-                
-            }],
-            include: [{
+                model: db.depto,
                 model: db.ue
                 
-            }]
+            }],
+            
         });
         if (!all_poa) {
             return res.status(404).send({ message: 'no hay ningun elemento' });

@@ -15,7 +15,9 @@ module.exports = function(app) {
   app.get("/POA/get_POA",controller.get_POA);
   app.put("/POA/disablePOA",controller.disable_POA);
   app.put("/POA/updatePOA",controller.updatePOA);
-  app.get("/POA/poaById/:idDepto",controller.get_all_pei_by_idDepto);
-  app.get("/POA/poaById/:idUE",controller.get_all_pei_by_idUE);
+  app.get("/POA/poaById/:idDepto",controller.get_all_poa_by_idDepto);
+  app.get("/POA/poaById/:idUE",controller.get_all_poa_by_idUE);
   app.get("/POA/get/:id",controller.get_poa);
 };
+
+
