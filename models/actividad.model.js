@@ -1,6 +1,6 @@
+const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
-const actividad { Sequelize, resultado, sequelize } = require("sequelize");
-
+    const Actividades = sequelize.define("actividades", {
 nombre:{
     type: Sequelize.TEXT,
     allowNull: false,
@@ -23,7 +23,7 @@ resultadoUnidad:{
 estado:{
     type:Sequelize.ENUM('FORMULACION','REFORMULACION','REVISION','APROBADO','RECHAZADO',),
     allowNull:false,
-}
+},
 
 
 tipoActividad:{
@@ -40,4 +40,7 @@ isActive:{
     type:Sequelize.BOOLEAN,
     allowNull:false,
     defaultValue:false
-}}
+},
+});
+return Actividades;
+};
