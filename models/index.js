@@ -39,6 +39,7 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
+db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -53,6 +54,8 @@ db.user.belongsTo(db.empleado, {
     name: 'idEmpleado', allowNull: false
   }
 });
+
+
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
@@ -173,6 +176,13 @@ db.areas.belongsTo(db.dimension, {
   foreignKey: { name: 'idDimension', allowNull: false}
 });
 
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
 //// UN AREA TIENE UN PEI, UN PEI TIENE MUCHAS AREAS(1:N) ////
@@ -212,6 +222,8 @@ db.dimension.hasMany(db.resultado, {
 db.resultado.belongsTo(db.dimension, {
   foreignKey: { name: 'idDimension', allowNull: false}
 });
+
+
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
