@@ -647,4 +647,12 @@ exports.initial = async () => {
 
     }]);
 
+    await db.actividad_responsable.bulkCreate([{
+        idResponsable: 1,
+        idActividad: 1
+    }])
+
+
+
+
 };
