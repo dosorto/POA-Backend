@@ -6,6 +6,7 @@ const permisoModel = require("../models/permiso.model");
 const PEIModel = require("../models/PEI.model");
 const areasModel = require("../models/areas.model");
 const ActividadModel = require("../models/actividad.model");
+const ActividaEncargadodModel = require("../models/actividadEncargado.model");
 const bcrypt = require("bcryptjs");
 const config = require("./auth.config.js");
 const { DB } = require("./db.config");
@@ -102,15 +103,18 @@ exports.initial = async () => {
             idEmpleado: 1,
             idRol: 1
         });
+     
         await db.actividad.create({
             nombre: 'Arreglo 1',
             descripcion: 'prueba',
             estado: 'FORMULACION',
             tipoActividad: 'ACADEMICA',
             categoria: 'COORDINACION',
-            isActive: 1,
             idResultado: 1,
+         
         });
+      
+
         //Agregue tabla catalogo de permisos
         await Permiso.bulkCreate([{
             Permiso: "All_User",

@@ -5,11 +5,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-        isDelete: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
+      
 
         descripcion: {
             type: Sequelize.TEXT,
@@ -35,8 +31,13 @@ module.exports = (sequelize, Sequelize) => {
         isActive: {
             type: Sequelize.BOOLEAN,
             allowNull: false,
-            defaultValue: false
+            defaultValue: true
         },
+        isDelete: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
     });
     return Actividades;
 };

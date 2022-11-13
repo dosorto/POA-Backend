@@ -40,6 +40,7 @@ db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
 db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
+db.ACencargados = require("./actividadEncargado.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -176,12 +177,7 @@ db.areas.belongsTo(db.dimension, {
   foreignKey: { name: 'idDimension', allowNull: false}
 });
 
-db.resultado.hasMany(db.actividad, {
-  foreignKey: { name: 'idResultado', allowNull: false}
-});
-db.actividad.belongsTo(db.resultado, {
-  foreignKey: { name: 'idResultado', allowNull: false}
-});
+
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
@@ -234,5 +230,36 @@ db.pei.hasMany(db.resultado, {
 db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
+
+//////////////////////////RESULTADOS
+//Una actividad  tiene un resultado, un resultado tiene muchas actividades
+
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+///////////////////////
+db.user.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+db.ACencargados.belongsTo(db.user, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+///////////////////////
+db.actividad.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+db.ACencargados.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+
+
+/////
+
+///////////////////////
+
+
 
 module.exports = db;
