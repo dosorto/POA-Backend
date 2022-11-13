@@ -1,69 +1,121 @@
 const db = require("../models/");
-const config = require("../config/auth.config");
 
-// -------------------------------
-const allPei = async (req,res) => {
-  try {
-    const { id } = req.params;
-
-    const peis = await db.dimension.findAll({
-      where: {idPei: id}
-    });
-    return res.json(peis);
-  } catch (error) {
-
-  }  
-};
-
-const editar = async (req, res) => {
-  try {
-    const dimension = await db.dimension.findByPk(req.params.id);
-
-    if (!dimension) {
-      db.dimension.set(req.body);
-      await db.dimension.save();
-      return res.json(dimension)
-    } else {
-      return console.log("La dimension a editar no existe");
+//Funcion para crear una nueva dimension
+const new_dimension = async (req,res) =>{
+    try{
+        const dimension = await db.dimension.findOne({where:{nombre:req.body.nombre}})
+        if(dimension){
+            return res.status(400).json({message:'Nombre de Dimension ya utilizado'});
+        }
+        await db.dimension.create({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            idPei : req.body.idPei
+        });
+        return res.status(200).json({status:"Ok"});
+    } catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
     }
-  } catch (error) {
-    res.status(400).json({
-    message:'error: ' + error
-    });
-  }
-};
-
-const agregar = async (req, res) => {
-  try {
-    db.dimension.create({
-      nombre: req.body.nombre,
-      descripcion: req.body.descripcion,
-  });
-  return res.status(200).json({status:"ok"});
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({status:"error", error: error});
-  }
 }
 
-const borrar = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const dimension = await db.dimension.destroy({
-      where: {
-        id,
-      },
-    });
-    console.log(dimension);
-    res.sendStatus(204);
-  } catch (error) {
-    res.status.json({mensage: error.mesage})
-  }
+// Funcion para obtener una unica dimension
+const get_dimension = async (req,res) =>{
+    try{
+        const dimension = await db.dimension.findOne({where:{id:req.params.id}})
+        if(!dimension){
+            return res.status(404).json({message:'No se encuentra esa dimension'});
+        }
+        return res.status(200).json({status:"Ok",dimension});
+    } catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+//Funcion para obtener todas las dimensiones
+const get_all_dimension = async (req,res) =>{
+    try{
+        const all_dimension = await db.dimension.findAll(
+           { where:{isDelete:false},
+            include:db.pei}
+        );
+        if(!all_dimension){
+            return res.status(404).send({message:'no hay ningun elemento'});
+        }
+        return res.status(200).json(all_dimension);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
+const get_all_dimension_by_idPei = async (req,res) =>{
+    try{
+        const all_dimension = await db.dimension.findAll(
+           { where:{isDelete:false,
+                    idPei : req.params.idPei},
+            include:db.PEI}
+        );
+        if(!all_dimension){
+            return res.status(404).send({message:'no hay ningun elemento'});
+        }
+        return res.status(200).json(all_dimension);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
+// Funcion para actualizar una dimension
+const update_dimension = async (req, res) => {
+    try {
+        if(!req.body.nombre){
+            return res.status(400).json({message:'Debe enviar todos los datos'});
+        }
+        const temporally = await db.dimension.update({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            idPei : req.body.idPei
+        }, {
+            where: {
+                id: req.body.id
+            }
+        });
+        if (temporally) {
+            res.status(200).send({
+                message: "Dimension actualizada con exito",
+                dimension : temporally
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({status:"Server Error: " + error});
+    }
+}
+
+//Funcion para deshabilitar una dimension
+
+const disable_dimension = async (req, res) => {
+    try {
+        const temporally = await db.dimension.update({
+            isDelete : true
+        }, {
+            where: {
+                id: req.body.id
+            }
+        });
+        if (temporally) {
+            res.status(200).send({
+                message: "Dimension eliminada con exito"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({status:"Server Error: " + error});
+    }
 }
 
 module.exports = {
-  allPei,
-  editar,
-  borrar,
-  agregar
-}
+    new_dimension,
+    get_all_dimension,
+    disable_dimension,
+    update_dimension,
+    get_dimension,
+    get_all_dimension_by_idPei
+  }

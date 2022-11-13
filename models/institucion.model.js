@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    const Objetivos = sequelize.define("objetivos", {
+    const Institucion = sequelize.define("Institucion", {
       nombre: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false 
       },
       descripcion: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false 
       },
       isDelete: {
@@ -15,5 +15,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Objetivos;
+    return Institucion;
   };
