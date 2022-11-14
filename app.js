@@ -22,17 +22,12 @@ require("./routes/user.routes")(app);
 require("./routes/empleado.routes")(app);
 require("./routes/permiso.routes")(app);
 require("./routes/PEI.routes")(app);
-<<<<<<< HEAD
-require("./routes/dimension.routes")(app);
-
-=======
 require("./routes/resultados.routes")(app);
 require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
-require("./routes/planificacion.route")(app);
->>>>>>> main
+require("./routes/planificacion.routes")(app);
 
 
 app.use(
@@ -46,15 +41,10 @@ app.use(
 
 // database
 const db = require("./models/");
-db.sequelize.sync();
+// db.sequelize.sync();
 // force: true will drop the table if it already exists
-<<<<<<< HEAD
-db.sequelize.sync({force: false}).then(() => {
-  // init.initial();
-=======
 db.sequelize.sync({force: true}).then(() => {
   init.initial();
->>>>>>> main
 });
 
 

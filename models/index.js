@@ -38,7 +38,7 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
-//db.areas = require("./planificacion.model")(sequelize, Sequelize);
+db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////

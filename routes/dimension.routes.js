@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-const controller = require("../controllers/dimension.controller.js");
-
-module.exports = function(app) {
-    app.use(function(req, res, next) {
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, Content-Type, Accept"
-      );
-      next();
-    });
-    app.get("/dimension/allPei/:id", controller.allPei);
-    app.post("/dimension/agregar",controller.agregar);
-    app.put("/dimension/editar/:id",controller.editar);
-    app.delete("/dimension/borrar/:id",controller.borrar);
-  };
-=======
 const controller = require("../controllers/dimension.controller");
 
 module.exports = function(app) {
@@ -33,4 +16,3 @@ module.exports = function(app) {
   app.post("/dimension/create",controller.new_dimension);
   app.get("/dimension/get_all_by_id_pei/:idPei", controller.get_all_dimension_by_idPei);
 };
->>>>>>> main
