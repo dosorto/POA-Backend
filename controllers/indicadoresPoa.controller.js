@@ -117,30 +117,24 @@ const allindicadores = async(req,res) => {
 //       }
 //   };
 
-//   const AllResultado_by_idArea = async(req,res) => { 
-//     try{ 
-//       const allResultado =  await db.resultado.findAll({
-//       where: {
-//           isDelete: false,
-//           idArea: req.params.idArea
-//       },
-//       include:[{
-//         model: db.areas,
-//       },{
-//           model:db.objetivos ,
-//         },{
-//           model:db.dimension,
-//         },{
-//           model:db.pei,
-//         }]
-//     })
-//     res.status(200).json( allResultado );
-//   } catch(error){
-//       res.status(400).json({
-//         message:'error al ingresar' + error
-//       })
-//   }
-//   };
+  const AllIndicador_by_idActividad = async(req,res) => { 
+    try{ 
+      const allIndicador =  await db.indicadoresPoa.findAll({
+      where: {
+          isDelete: false,
+          idActividad: req.params.idActividad
+      },
+      include:[{
+        model: db.actividades,
+      }]
+    })
+    res.status(200).json( allIndicador );
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
 
   module.exports = {
     allindicadores,
@@ -148,5 +142,5 @@ const allindicadores = async(req,res) => {
     deleteIndicador,
     updateIndicador,
     // getResultado,
-    // AllResultado_by_idArea
+    AllIndicador_by_idActividad
   }
