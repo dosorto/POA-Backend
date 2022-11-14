@@ -14,7 +14,7 @@ module.exports = function(app) {
   app.put("/actividad/editar",controller.updateActividad);
   app.post("/actividad/crear",controller.newActividad);
 
-  app.get("/actividad/get_all_by_idObjetivo/:idObjetivos", controller.get_all_actividad_by_idResultado);
+  app.get("/actividad/get_all_by_idResultado/:idResultado", controller.get_all_actividad_by_idResultado);
 
 
 };

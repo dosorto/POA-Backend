@@ -6,24 +6,14 @@ const { resultado } = require("../models");
 // controlador para crear una nueva ctividad
 
 
-const newActividad = async (req, res) => {
+const newActividadEncargado = async (req, res) => {
     try {
-        const actividad = await db.actividad.findOne({ where: { nombre: req.body.nombre } })
-        if (actividad) {
-            return res.status(400).json({ message: 'Nombre de Actividad ya utilizado' });
-        }
-        const resultado = await db.resultado.findOne({ where: { id: req.body.idResultado } })
-        if (!resultado) {
-            return res.status(404).json({ message: 'resultado incorrecto' });
-        }
+      
 
-        await db.actividad.create({
-            nombre: req.body.nombre,
-            descripcion: req.body.descripcion,
-            estado: req.body.estado,
-            tipoActividad: req.body.tipoActividad,
-            categoria: req.body.categoria,
-            idResultado: req.body.idResultado
+        await db.ACencargados.create({
+          descripcion : req.body.descripcion,
+          idUser: req.body.idUser ,
+          idActividad: req.body.idActividad
 
         });
         return res.status(200).json({ status: "Ok" });
@@ -37,7 +27,7 @@ const newActividad = async (req, res) => {
 
 //controlador para borrar un actividad del poa
 
-const delete_actividad = async (req, res) => {
+const delete_actividadEncargado = async (req, res) => {
     try {
         const delete_actividad = await db.actividad.update({
             isDelete: true
@@ -58,7 +48,7 @@ const delete_actividad = async (req, res) => {
 }
 
 
-const updateActividad = async (req, res) => {
+const updateActividadEncargado = async (req, res) => {
     try {
         if (!req.body.nombre) {
             return res.status(400).json({ message: 'Debe enviar todos los datos' });
@@ -90,7 +80,7 @@ const updateActividad = async (req, res) => {
     }
 }
 
-const get_actividad = async (req, res) => {
+const get_actividadEncargado = async (req, res) => {
     try {
         const actividad = await db.actividad.findOne({ where: { id: req.params.id } })
         if (!actividad) {
@@ -104,7 +94,7 @@ const get_actividad = async (req, res) => {
 
 
 //Funcion para obtener todas las actividades
-const get_all_actividades= async (req,res) =>{
+const get_all_actividadesEncargado= async (req,res) =>{
     try{
         const all_actividades = await db.actividad.findAll(
            { where:{
@@ -145,10 +135,10 @@ const get_all_actividad_by_idResultado = async (req, res) => {
 }
 
 module.exports = {
-    newActividad,
+    newActividadEncargado,
     get_all_actividad_by_idResultado,
-    get_actividad,
-    updateActividad,
-    delete_actividad,
-    get_all_actividades
+    get_actividadEncargado,
+    updateActividadEncargado,
+    delete_actividadEncargado,
+    get_all_actividadesEncargado
 }
