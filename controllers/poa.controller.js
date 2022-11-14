@@ -37,7 +37,7 @@ const updatePOA = async (req, res) => {
             return res.status(404).send({ message: 'POA not found' })
         }
         await db.poa.update({ name: req.body.name, anio: req.body.anio, techopre: req.body.techopre, idDepto: req.body.idDepto, idUE: req.body.idUE }, { where: { id: req.body.id } })
-        return res.status(200).send({message:"ok"});
+        return res.status(200).send({ message: "ok" });
     } catch (error) {
         res.status(500).json({
             message: 'error al actualizar ' + error
@@ -69,72 +69,81 @@ const disable_POA = async (req, res) => {
     }
 }
 
-
-const get_POA = async (req,res) =>{
-    try{
+//Obtener todos los POA
+const get_POA = async (req, res) => {
+    try {
         const all_poa = await db.poa.findAll({
             where: { isDelete: false },
             include: [{
-                model: db.depto,
-                model: db.ue
-                
-            }],
-            
+                model: db.depto
+            }, { model: db.ue }],
         });
         if (!all_poa) {
             return res.status(404).send({ message: 'no hay ningun elemento' });
         }
         return res.status(200).json(all_poa);
-    }catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
+    }
 }
-}
-const get_all_poa_by_idDepto = async (req,res) =>{
-    try{
+
+// Obtener POA por depto
+const get_all_poa_by_idDepto = async (req, res) => {
+    try {
         const all_poas = await db.poa.findAll(
-           { where:{isDelete:false,
-                    idDepto: req.params.idDepto},
-            include:db.depto}
+            {
+                where: {
+                    isDelete: false,
+                    idDepto: req.params.idDepto
+                },
+                include: db.depto
+            }
         );
-        if(!all_poas){
-            return res.status(404).send({message:'No hay ningún elemento'});
+        if (!all_poas) {
+            return res.status(404).send({ message: 'No hay ningún elemento' });
         }
         return res.status(200).json(all_poas);
-    }catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
     }
 }
 
-const get_all_poa_by_idUE = async (req,res) =>{
-    try{
+// Obetener POA por Unidad Ejecutora
+const get_all_poa_by_idUE = async (req, res) => {
+    try {
         const all_ues = await db.ue.findAll(
-           { where:{isDelete:false,
-                    idUE: req.params.idUE},
-            include:db.ue}
+            {
+                where: {
+                    isDelete: false,
+                    idUE: req.params.idUE
+                },
+                include: db.ue
+            }
         );
-        if(!all_ues){
-            return res.status(404).send({message:'No hay ningún elemento'});
+        if (!all_ues) {
+            return res.status(404).send({ message: 'No hay ningún elemento' });
         }
         return res.status(200).json(all_ues);
-    }catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
     }
 }
 
-const get_poa = async (req,res) =>{
-    try{
-        const poa = await db.poa.findOne({where:{id:req.params.id}})
-        if(!poa){
-            return res.status(404).json({message:'No se encuentra esa dimension'});
+//Obtener POA por ID
+const get_poa = async (req, res) => {
+    try {
+        const poa = await db.poa.findOne({ where: { id: req.params.id } })
+        if (!poa) {
+            return res.status(404).json({ message: 'No se encuentra esa dimension' });
         }
-        return res.status(200).json({status:"Ok",poa});
-    } catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
+        return res.status(200).json({ status: "Ok", poa });
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
     }
 }
 
 module.exports = {
-    
+
     new_POA,
     updatePOA,
     get_POA,
