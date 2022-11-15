@@ -38,8 +38,16 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
-db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
+
+////////////////MODULO POA///////////////////////////
+db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
+db.depto = require("./departamento-poa.model.js")(sequelize, Sequelize);
+db.poa = require("./poa-poa.model.js")(sequelize, Sequelize);
 //db.areas = require("./planificacion.model")(sequelize, Sequelize);
+db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
+db.ACencargados = require("./actividadEncargado.model.js")(sequelize, Sequelize);
+db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
+
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -244,55 +252,60 @@ db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// //Indicadores//
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// //////// RELACIÓN DE UNO A MUCHOS ////////
-// //// UN INDICADOR TIENE UN RESULTADO, UN RESULTADO TIENE MUCHOS INDICADORES(1:N) ////
-// db.resultado.hasMany(db.indicadores, {
-//   foreignKey: { name: 'idResultado', allowNull: false}
-// });
-// db.indicadores.belongsTo(db.resultado, {
-//   foreignKey: { name: 'idResultado', allowNull: false}
-// });
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UN DEPARTAMENTO TIENE MUCHOS PEI(1:N) ////
+db.depto.hasMany(db.poa, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+db.poa.belongsTo(db.depto, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
 
-// //////// RELACIÓN DE UNO A MUCHOS ////////
-// //// UN INDICADOR TIENE UN AREA, UN AREA TIENE MUCHOS INDICADORES(1:N) ////
-// db.areas.hasMany(db.indicadores, {
-//   foreignKey: { name: 'idArea', allowNull: false}
-// });
-// db.indicadores.belongsTo(db.areas, {
-//   foreignKey: { name: 'idArea', allowNull: false}
-// });
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA UNIDAD EJECUTORA TIENE MUCHOS PEI(1:N) ////
+db.ue.hasMany(db.poa, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+db.poa.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+//////////////////////////RELACIONES DE ACTIVIDAD Y ACTIVIDAD ENCARGADO-------
+//Una actividad  tiene un resultado, un resultado tiene muchas actividades
 
-// ///////////////////////////////////////////
-// //////// RELACIÓN DE UNO A MUCHOS ////////
-// //// UN INDICADOR TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHOS INDICADORES(1:N) ////
-// db.objetivos.hasMany(db.indicadores, {
-//   foreignKey: { name: 'idObjetivos', allowNull: false}
-// });
-// db.indicadores.belongsTo(db.objetivos, {
-//   foreignKey: { name: 'idObjetivos', allowNull: false}
-// });
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+///////////////////////
+db.user.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+db.ACencargados.belongsTo(db.user, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+///////////////////////
+db.actividad.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+db.ACencargados.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
 
-// ///////////////////////////////////////////
-// //////// RELACIÓN DE UNO A MUCHOS ////////
-// //// UN INDICADOR TIENE UNA DIMENSIÓN, UNA DIMENSÓN TIENE MUCHOS INDICADORES(1:N) ////
-// db.dimension.hasMany(db.indicadores, {
-//   foreignKey: { name: 'idDimension', allowNull: false}
-// });
-// db.indicadores.belongsTo(db.dimension, {
-//   foreignKey: { name: 'idDimension', allowNull: false}
-// });
 
-// ///////////////////////////////////////////
-// //////// RELACIÓN DE UNO A MUCHOS ////////
-// //// UN INDICADOR TIENE UN PEI, UN PEI TIENE MUCHOS INDICADORES(1:N) ////
-// db.pei.hasMany(db.indicadores, {
-//   foreignKey: { name: 'idPei', allowNull: false}
-// });
-// db.indicadores.belongsTo(db.pei, {
-//   foreignKey: { name: 'idPei', allowNull: false}
-// });
+/////----------------------------------------------------------------------
+
+///////////////////////
+
+/////////////// RELACIONES DE Indicadores POA Y Actividades /////////
+//Un indicador tiene una actividad, una actividad tiene muchos indicadores
+db.actividad.hasMany(db.indicadoresPoa, {
+  foreignKey: {name : 'idActividad' , allowNull: false }
+});
+db.indicadoresPoa.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
+
 
 module.exports = db;

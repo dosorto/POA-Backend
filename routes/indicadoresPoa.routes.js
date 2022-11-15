@@ -12,8 +12,7 @@ module.exports = function(app) {
   })
 
   app.get("/indicadoresPOA/get-all",controller.allindicadores);
-//   app.get("/indicadores/getResultado/:id",controller.getResultado);
-//   app.get("/indicadores/getResultado_by_idArea/:idArea",controller.AllResultado_by_idArea);
+  app.get("/indicadores/getIndicador_by_idActividad/:idActividad",controller.AllIndicador_by_idActividad);
   app.post("/indicadoresPOA/crear",controller.newIndicador);
   app.get("/indicadoresPOA/deleteResultado/:id",controller.deleteIndicador);
   app.put("/indicadoresPOA/updateResultado",controller.updateIndicador);

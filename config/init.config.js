@@ -550,6 +550,16 @@ exports.initial = async () => {
             idRol: 1
         });
 
+        await db.actividad.create({
+            nombre: 'Arreglo 1',
+            descripcion: 'prueba',
+            estado: 'FORMULACION',
+            tipoActividad: 'ACADEMICA',
+            categoria: 'COORDINACION',
+            idResultado: 1,
+        });
+      
+
         //Agregue tabla catalogo de permisos
         await db.permiso.bulkCreate([{
             Permiso: "Gestion_PEI"
@@ -607,7 +617,29 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 4
-        }])
+        }]);
+
+        await db.ue.create({
+            name: "Dirección",
+            descripcion: "General",
+        });
+
+        await db.depto.create({
+            name: "Facultad de Ingeniería en Sistemas",
+            descripcion: "Ingeniería en Sistemas",
+        });
+
+        await db.poa.create({
+            name: "Prueba",
+            anio: '2021-01-01',
+            fuente11: "22,000",
+            fuente12: "30,000",
+            fuente12B: "23,000",
+            isActive: 1,
+            idDepto: 1,
+            idUE: 1
+        });
+
 
     } catch (error) {
         console.log(error);
@@ -619,7 +651,8 @@ exports.initial = async () => {
         descripcion : "Indicador 1",
         cantidadPlanificada : 20,
         cantidadEjecutada : 0,
-        promedioAlcanzado : 0
+        promedioAlcanzado : 0,
+        idActividad: 1
 
     })
 

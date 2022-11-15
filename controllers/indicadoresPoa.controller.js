@@ -2,7 +2,6 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-//const resultado = db.resultado;
 
 const allindicadores = async(req,res) => { 
     try{ 
@@ -21,15 +20,21 @@ const allindicadores = async(req,res) => {
 
   const newIndicador = async(req, res) => {
     try{
+      
       const Indicador = await db.indicadoresPoa.findOne({where:{nombre:req.body.nombre}})
         if(Indicador){
             return res.status(400).json({message:'Nombre del indicador ya existente'});
         }
+        const actividad = await db.actividad.findByPk(req.body.idActividad);
+      if (!actividad){ 
+        res.status(404).send({message:'no se encontro la actividad'});
+      }
       
        await db.indicadoresPoa.create({
             nombre : req.body.nombre,
             descripcion : req.body.descripcion,
             cantidadPlanificada : req.body.cantidadPlanificada,
+            idActividad: actividad.id
 
         })
         res.status(200).json({
@@ -67,17 +72,20 @@ const allindicadores = async(req,res) => {
 
     const updateIndicador = async(req, res) =>{
       try {
-        if(!req.body.nombre){
-            return res.status(400).json({message:'Debe enviar todos los datos'});
-        }
+        if (!req.body.nombre) {
+          return res.status(400).json({ message: 'Debe enviar todos los datos' });
+      }
+      const actividad = await db.actividad.findOne({ where: { id: req.body.idActividad } })
+      if (!actividad) {
+          return res.status(404).json({ message: 'Actividad incorrecta' });
+      }
         const updateIndicador = await db.indicadoresPoa.update({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            cantidadPlanificada : req.body.cantidadPlanificada
+            cantidadPlanificada : req.body.cantidadPlanificada,
+            idActividad: actividad.idActividad
         }, {
-            where: {
-                id: req.body.id
-            }
+            where: {id: req.body.id }
         });
         if (updateIndicador) {
             res.status(200).send({
@@ -88,34 +96,7 @@ const allindicadores = async(req,res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({status:"Server Error: " + error});
-    }
-    };
-
-//     const getResultado = async (req,res) =>{
-//       try{
-//           const resultado = await db.resultado.findOne({
-//             where:{
-//               isDelete: false,
-//               id: req.params.id
-//             },
-//             include:[{
-//               model: db.areas,
-//             },{
-//                 model:db.objetivos ,
-//               },{
-//                 model:db.dimension,
-//               },{
-//                 model:db.pei,
-//               }]
-//           })
-//           if(!resultado){
-//               return res.status(404).json({message:'No se encuentra el resultado'});
-//           }
-//           return res.status(200).json({status:"Ok",resultado});
-//       } catch(error){
-//           return res.status(500).json({status:"Server Error: " + error});
-//       }
-//   };
+    }};
 
   const AllIndicador_by_idActividad = async(req,res) => { 
     try{ 
@@ -125,7 +106,7 @@ const allindicadores = async(req,res) => {
           idActividad: req.params.idActividad
       },
       include:[{
-        model: db.actividades,
+        model: db.actividad,
       }]
     })
     res.status(200).json( allIndicador );
@@ -141,6 +122,5 @@ const allindicadores = async(req,res) => {
     newIndicador,
     deleteIndicador,
     updateIndicador,
-    // getResultado,
     AllIndicador_by_idActividad
   }

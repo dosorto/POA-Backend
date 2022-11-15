@@ -27,9 +27,11 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
-require("./routes/indicadores.routes")(app);
-require("./routes/indicadoresPOA.routes")(app);
 require("./routes/planificacion.route")(app);
+require("./routes/poa.routes")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
+require("./routes/indicadoresPOA.routes")(app);
 
 app.use(
   cookieSession({
