@@ -692,7 +692,7 @@ exports.initial = async () => {
     await db.presupuesto.bulkCreate([{
         cantidad:10,
         costounitario:40,
-        Total:400,
+        total:400,
         idgrupo:1,
         idobjeto:2,
         idtarea:1,
@@ -701,7 +701,7 @@ exports.initial = async () => {
     },{
         cantidad:20,
         costounitario:40,
-        Total:800,
+        total:800,
         idgrupo:1,
         idobjeto:1,
         idtarea:2,
