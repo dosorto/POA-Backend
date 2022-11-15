@@ -48,7 +48,6 @@ const AllTareas = async(req,res) => {
 // Tercero Listo
   const newTarea = async (req,res) =>{
     try{
-        //db.sequelize.authenticate();
         const actividad = await db.actividad.findByPk(req.body.idActividad);
         if (!actividad){ 
           res.status(404).send({message:'no se encontro la actividad'});
@@ -131,24 +130,6 @@ const probando_like = async(req,res) => {
     },
       include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto}]},]
     });
-  //   const onepresupuesto =  await db.presupuesto.findOne({
-     
-  //   include:[{
-  //     model: db.tarea,
-  //     isDelete: false,
-  //         name: {
-  //             substring: req.body.nombre
-  //           }
-  // },{
-  //     model: db.objetogasto,
-  //     // where: {
-  //     //     isDelete: false,
-  //     //     name: {
-  //     //         like: '%'+req.body.tarea.nombre+'%'
-  //     //       }
-  //     // },
-  //     }]
-  // })
   res.status(200).json( tarea );
 } catch(error){
     res.status(400).json({
