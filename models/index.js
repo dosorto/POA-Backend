@@ -35,7 +35,6 @@ db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
-// db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
@@ -51,6 +50,15 @@ db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 // planificacion
 db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
 
+////////////////MODULO POA///////////////////////////
+db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
+db.depto = require("./departamento-poa.model.js")(sequelize, Sequelize);
+db.poa = require("./poa-poa.model.js")(sequelize, Sequelize);
+//db.areas = require("./planificacion.model")(sequelize, Sequelize);
+db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
+db.ACencargados = require("./actividadEncargado.model.js")(sequelize, Sequelize);
+//db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -65,6 +73,15 @@ db.user.belongsTo(db.empleado, {
     name: 'idEmpleado', allowNull: false
   }
 });
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
+// db.institucion.hasMany(db.pei, {
+//   foreignKey: { name: 'idInstitucion', allowNull: false }
+// });
+// db.pei.belongsTo(db.institucion, {
+//   foreignKey: { name: 'idInstitucion', allowNull: false }
+// });
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
@@ -83,6 +100,16 @@ db.institucion.hasMany(db.empleado, {
 db.empleado.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
+db.institucion.hasMany(db.pei, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+db.pei.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+
 
 
 ////////////////////////////////////////////
@@ -187,7 +214,7 @@ db.areas.belongsTo(db.dimension, {
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN AREA TIENE UN PEI, UN PEI TIENE MUCHAS AREAS(1:N) ////
+//// UN AREA TIENE UN pei, UN pei TIENE MUCHAS AREAS(1:N) ////
 db.pei.hasMany(db.areas, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
@@ -235,8 +262,14 @@ db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 
+/// Aqui comienza tareas
+
+
+
 /////////////////////////////////////////
 ////// RELACION DE UNO A MUCHOS /////////
+
+/// Aqui comienza tareas
 /* UN OBJETO DEL GASTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
     OBJETOS DEL GASTO
 */
@@ -311,16 +344,13 @@ db.presupuesto.belongsTo(db.unidadmedida, {
   foreignKey: { name: 'idunidad', allowNull: false}
 });
 
-
-// db.empleado.hasOne(db.user, {
-//   foreignKey: {
-//     name: 'idEmpleado', allowNull: false
-//   }
-// });
-// db.user.belongsTo(db.empleado, {
-//   foreignKey: {
-//     name: 'idEmpleado', allowNull: false
-//   }
-// })
+/////////////// RELACIONES DE Tareas Y Actividades /////////
+//Un indicador tiene una actividad, una actividad tiene muchos indicadores
+db.actividad.hasMany(db.tarea, {
+  foreignKey: {name : 'idActividad' , allowNull: false }
+});
+db.tarea.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
 
 module.exports = db;

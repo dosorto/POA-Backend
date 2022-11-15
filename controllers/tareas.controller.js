@@ -15,7 +15,9 @@ const AllTareas = async(req,res) => {
       const AllTareas =  await db.tarea.findAll({
       where: {
           isDelete: false,
-      }
+      },include: [{
+        model: db.actividad,
+      }]
     })
     res.status(200).json( AllTareas );
   } catch(error){
@@ -31,7 +33,9 @@ const AllTareas = async(req,res) => {
       where: {
           isDelete: false,
           id: req.params.id
-      }
+      },include: [{
+        model: db.actividad,
+      }]
     })
     res.status(200).json( allTareas );
   } catch(error){
@@ -45,10 +49,15 @@ const AllTareas = async(req,res) => {
   const newTarea = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
+        const actividad = await db.actividad.findByPk(req.body.idActividad);
+        if (!actividad){ 
+          res.status(404).send({message:'no se encontro la actividad'});
+        }
         db.tarea.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            isPresupuesto: req.body.isPresupuesto
+            isPresupuesto: req.body.isPresupuesto,
+            idActividad: actividad.id
         });
         return res.status(200).json({status:"ok"});
     } catch(error){
@@ -82,13 +91,18 @@ const eliminarTarea = async (req, res) => {
 
 const updateTarea = async(req, res) =>{
   try {
+    const actividad = await db.actividad.findByPk(req.body.idActividad);
+    if (!actividad){ 
+      res.status(404).send({message:'no se encontro la actividad'});
+    }
     if(!req.body.nombre){
         return res.status(400).json({message:'Debe enviar todos los datos'});
     }
     const updateTarea = await db.tarea.update({
         nombre: req.body.nombre,
         descripcion:req.body.descripcion,
-        isPresupuesto:req.body.isPresupuesto
+        isPresupuesto:req.body.isPresupuesto,
+        idActividad: actividad.id
     }, {
         where: {
             id: req.body.id
@@ -143,6 +157,25 @@ const probando_like = async(req,res) => {
 }
 };
 
+const AllTarea_by_idActividad = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        idActividad: req.params.idActividad
+    },
+    include:[{
+      model: db.actividad,
+    }]
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
 
 module.exports = {
   AllTareas,
@@ -150,5 +183,6 @@ module.exports = {
   updateTarea,
   eliminarTarea,
   newTarea,
-  probando_like
+  probando_like,
+  AllTarea_by_idActividad
 }
