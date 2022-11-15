@@ -34,13 +34,13 @@ db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
-//db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
-db.indicadores = require("./indicadores.model.js")(sequelize, Sequelize);
 db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
+//db.areas = require("./planificacion.model")(sequelize, Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -55,15 +55,24 @@ db.user.belongsTo(db.empleado, {
     name: 'idEmpleado', allowNull: false
   }
 });
+///////////////////////////////////////////
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
+// db.institucion.hasMany(db.pei, {
+//   foreignKey: { name: 'idInstitucion', allowNull: false }
+// });
+// db.pei.belongsTo(db.institucion, {
+//   foreignKey: { name: 'idInstitucion', allowNull: false }
+// });
 
-// /////// RELACIÓN DE UNO A MUCHOS /////////
-// //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
-// db.pei.hasMany(db.dimension, {
-//   foreignKey: { name: 'idpei', allowNull: false }
-// });
-// db.dimension.belongsTo(db.pei, {
-//   foreignKey: { name: 'idpei', allowNull: false }
-// });
+/////// RELACIÓN DE UNO A MUCHOS /////////
+//// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
+db.pei.hasMany(db.dimension, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
+db.dimension.belongsTo(db.pei, {
+  foreignKey: { name: 'idPei', allowNull: false }
+});
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN EMPLEADO PERTENECE A UNA INSTITUCION, UNA INSTITUCION TIENE MUCHOS EMPLEADOS ////
@@ -73,8 +82,6 @@ db.institucion.hasMany(db.empleado, {
 db.empleado.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
-
-///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
 //// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
 db.institucion.hasMany(db.pei, {
@@ -83,6 +90,9 @@ db.institucion.hasMany(db.pei, {
 db.pei.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
+
+
+
 
 ////////////////////////////////////////////
 /////// RELACIÓN DE UNO A MUCHOS /////////
@@ -186,7 +196,7 @@ db.areas.belongsTo(db.dimension, {
 
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN AREA TIENE UN PEI, UN PEI TIENE MUCHAS AREAS(1:N) ////
+//// UN AREA TIENE UN pei, UN pei TIENE MUCHAS AREAS(1:N) ////
 db.pei.hasMany(db.areas, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
@@ -234,55 +244,55 @@ db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Indicadores//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN INDICADOR TIENE UN RESULTADO, UN RESULTADO TIENE MUCHOS INDICADORES(1:N) ////
-db.resultado.hasMany(db.indicadores, {
-  foreignKey: { name: 'idResultado', allowNull: false}
-});
-db.indicadores.belongsTo(db.resultado, {
-  foreignKey: { name: 'idResultado', allowNull: false}
-});
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// //Indicadores//
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// //////// RELACIÓN DE UNO A MUCHOS ////////
+// //// UN INDICADOR TIENE UN RESULTADO, UN RESULTADO TIENE MUCHOS INDICADORES(1:N) ////
+// db.resultado.hasMany(db.indicadores, {
+//   foreignKey: { name: 'idResultado', allowNull: false}
+// });
+// db.indicadores.belongsTo(db.resultado, {
+//   foreignKey: { name: 'idResultado', allowNull: false}
+// });
 
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN INDICADOR TIENE UN AREA, UN AREA TIENE MUCHOS INDICADORES(1:N) ////
-db.areas.hasMany(db.indicadores, {
-  foreignKey: { name: 'idArea', allowNull: false}
-});
-db.indicadores.belongsTo(db.areas, {
-  foreignKey: { name: 'idArea', allowNull: false}
-});
+// //////// RELACIÓN DE UNO A MUCHOS ////////
+// //// UN INDICADOR TIENE UN AREA, UN AREA TIENE MUCHOS INDICADORES(1:N) ////
+// db.areas.hasMany(db.indicadores, {
+//   foreignKey: { name: 'idArea', allowNull: false}
+// });
+// db.indicadores.belongsTo(db.areas, {
+//   foreignKey: { name: 'idArea', allowNull: false}
+// });
 
-///////////////////////////////////////////
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN INDICADOR TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHOS INDICADORES(1:N) ////
-db.objetivos.hasMany(db.indicadores, {
-  foreignKey: { name: 'idObjetivos', allowNull: false}
-});
-db.indicadores.belongsTo(db.objetivos, {
-  foreignKey: { name: 'idObjetivos', allowNull: false}
-});
+// ///////////////////////////////////////////
+// //////// RELACIÓN DE UNO A MUCHOS ////////
+// //// UN INDICADOR TIENE UN OBJETIVO, UN OBJETIVO TIENE MUCHOS INDICADORES(1:N) ////
+// db.objetivos.hasMany(db.indicadores, {
+//   foreignKey: { name: 'idObjetivos', allowNull: false}
+// });
+// db.indicadores.belongsTo(db.objetivos, {
+//   foreignKey: { name: 'idObjetivos', allowNull: false}
+// });
 
-///////////////////////////////////////////
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN INDICADOR TIENE UNA DIMENSIÓN, UNA DIMENSÓN TIENE MUCHOS INDICADORES(1:N) ////
-db.dimension.hasMany(db.indicadores, {
-  foreignKey: { name: 'idDimension', allowNull: false}
-});
-db.indicadores.belongsTo(db.dimension, {
-  foreignKey: { name: 'idDimension', allowNull: false}
-});
+// ///////////////////////////////////////////
+// //////// RELACIÓN DE UNO A MUCHOS ////////
+// //// UN INDICADOR TIENE UNA DIMENSIÓN, UNA DIMENSÓN TIENE MUCHOS INDICADORES(1:N) ////
+// db.dimension.hasMany(db.indicadores, {
+//   foreignKey: { name: 'idDimension', allowNull: false}
+// });
+// db.indicadores.belongsTo(db.dimension, {
+//   foreignKey: { name: 'idDimension', allowNull: false}
+// });
 
-///////////////////////////////////////////
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN INDICADOR TIENE UN PEI, UN PEI TIENE MUCHOS INDICADORES(1:N) ////
-db.pei.hasMany(db.indicadores, {
-  foreignKey: { name: 'idPei', allowNull: false}
-});
-db.indicadores.belongsTo(db.pei, {
-  foreignKey: { name: 'idPei', allowNull: false}
-});
+// ///////////////////////////////////////////
+// //////// RELACIÓN DE UNO A MUCHOS ////////
+// //// UN INDICADOR TIENE UN PEI, UN PEI TIENE MUCHOS INDICADORES(1:N) ////
+// db.pei.hasMany(db.indicadores, {
+//   foreignKey: { name: 'idPei', allowNull: false}
+// });
+// db.indicadores.belongsTo(db.pei, {
+//   foreignKey: { name: 'idPei', allowNull: false}
+// });
 
 module.exports = db;

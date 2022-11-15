@@ -29,6 +29,7 @@ require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 require("./routes/indicadores.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
+require("./routes/planificacion.route")(app);
 
 app.use(
   cookieSession({

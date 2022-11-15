@@ -30,6 +30,7 @@ const allResultado = async(req,res) => {
 
   const newResultado = async(req, res) => {
     try{
+      
       const resultado = await db.resultado.findOne({where:{nombre:req.body.nombre}})
         if(resultado){
             return res.status(400).json({message:'Nombre de resultado ya existente'});
@@ -38,6 +39,7 @@ const allResultado = async(req,res) => {
       if (!area){ 
         res.status(404).send({message:'no se encontro el área'});
       }
+      
        await db.resultado.create({
             nombre : req.body.nombre,
             descripcion : req.body.descripcion,
