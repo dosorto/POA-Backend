@@ -39,6 +39,16 @@ db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
 
+////Gestion POA
+db.objetogasto= require("./objetogasto.model.js")(sequelize, Sequelize);
+db.grupogasto= require("./grupogasto.model.js")(sequelize, Sequelize);
+db.presupuesto = require("./presupuesto.model.js")(sequelize,Sequelize);
+db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
+db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
+db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
+// planificacion
+db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
+
 ////////////////MODULO POA///////////////////////////
 db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
 db.depto = require("./departamento-poa.model.js")(sequelize, Sequelize);
