@@ -613,32 +613,70 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 3
+        }])
+
+        
+            /// Tareas desde aqui
+        /// CATALOGO DE OBJETO DEL GASTO
+
+        await db.grupogasto.bulkCreate([{
+            nombre: "Insumos",
+            identificador: 3000
         },
         {
-            idRol: 1,
-            idPermiso: 4
+            nombre: "Servicios no personales",
+            identificador: 2000
+        }]);
+        ///Grupo del gasto
+        await db.objetogasto.bulkCreate([{
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo:1
+        },{
+            nombre: "Diesel",
+            identificador: 30002,
+            idgrupo:1
+        },{
+            nombre: "Alimentacion",
+            identificador: 20001,
+            idgrupo:1
+        },
+        {
+            nombre: "Viaticos",
+            identificador: 10001,
+            idgrupo:1
         }]);
 
-        await db.ue.create({
-            name: "Dirección",
-            descripcion: "General",
-        });
+    //FUente
+    await db.fuente.bulkCreate([{
+        nombre: "Ingresos del estado",
+        identificador: "11",
+    },{
+        nombre: "Ahorros",
+        identificador:"12",
+    },{
+        nombre: "ingresos propios",
+        identificador: "12B",
+        idgrupo:1
+    }]);
+    
+    ///unidad de medida
 
-        await db.depto.create({
-            name: "Facultad de Ingeniería en Sistemas",
-            descripcion: "Ingeniería en Sistemas",
-        });
+    await db.unidadmedida.bulkCreate([{
+        nombre: "Litros",
+    }]);
 
-        await db.poa.create({
-            name: "Prueba",
-            anio: '2021-01-01',
-            fuente11: "22,000",
-            fuente12: "30,000",
-            fuente12B: "23,000",
-            isActive: 1,
-            idDepto: 1,
-            idUE: 1
-        });
+    await db.tarea.bulkCreate([{
+        nombre: "Compra de Combustible",
+        descripcion:"Utilizacion de Diesel",
+        isPresupuesto:true,
+        idActividad: 1
+    },{
+        nombre: "Compra de Combustible",
+        descripcion:"Utilizacion de Gasolina",
+        isPresupuesto:true,
+        idActividad: 1
+    }]);
 
         //Indicadores_Poa
         await db.indicadoresPoa.create ({
@@ -650,6 +688,25 @@ exports.initial = async () => {
             idActividad: 1
 
         })
+        await db.presupuesto.bulkCreate([{
+            cantidad:10,
+            costounitario:40,
+            Total:400,
+            idgrupo:1,
+            idobjeto:2,
+            idtarea:1,
+            idfuente:1,
+            idunidad:1
+        },{
+            cantidad:20,
+            costounitario:40,
+            Total:800,
+            idgrupo:1,
+            idobjeto:1,
+            idtarea:2,
+            idfuente:1,
+            idunidad:1
+        }]);
 
     } catch (error) {
         console.log(error);
