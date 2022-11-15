@@ -632,7 +632,9 @@ exports.initial = async () => {
         await db.poa.create({
             name: "Prueba",
             anio: '2021-01-01',
-            techopre: "12344321",
+            fuente11: "22,000",
+            fuente12: "30,000",
+            fuente12B: "23,000",
             isActive: 1,
             idDepto: 1,
             idUE: 1

@@ -8,7 +8,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      techopre: {
+      fuente11: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fuente12: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fuente12B: {
         type: Sequelize.STRING,
         allowNull: false,
       },
