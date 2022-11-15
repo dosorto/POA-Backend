@@ -35,7 +35,7 @@ db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
-db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
+// db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
@@ -46,6 +46,8 @@ db.objetogasto= require("./objetogasto.model.js")(sequelize, Sequelize);
 db.grupogasto= require("./grupogasto.model.js")(sequelize, Sequelize);
 db.presupuesto = require("./presupuesto.model.js")(sequelize,Sequelize);
 db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
+db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
+db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 // planificacion
 db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
 
@@ -66,10 +68,10 @@ db.user.belongsTo(db.empleado, {
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
-db.PEI.hasMany(db.dimension, {
+db.pei.hasMany(db.dimension, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
-db.dimension.belongsTo(db.PEI, {
+db.dimension.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
 
@@ -272,7 +274,7 @@ db.presupuesto.belongsTo(db.objetogasto, {
 });
 
 /////////////////////////////////////////
-////// RELACION DE UNO A MUCHOS /////////
+////// RELACION DE UNO A UNO /////////
 /* UNA TAREA TIENE UN PRESUPUESTO, UN PRESUPUESTO TIENE MUCHAS
     TAREAS
 */
@@ -283,6 +285,32 @@ db.tarea.hasOne(db.presupuesto, {
 db.presupuesto.belongsTo(db.tarea, {
   foreignKey: { name: 'idtarea', allowNull: false}
 });
+
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UN PRESUPUESTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
+    PRESUPUESTOS
+*/
+
+db.fuente.hasMany(db.presupuesto, {
+  foreignKey: { name: 'idfuente', allowNull: false}
+});
+db.presupuesto.belongsTo(db.fuente, {
+  foreignKey: { name: 'idfuente', allowNull: false}
+});
+/////////////////////////////////////////
+////// RELACION DE UNO A MUCHOS /////////
+/* UN PRESUPUESTO TIENE UN GRUPO DEL GASTO, UN GRUPO DEL GASTO MUCHOS
+    PRESUPUESTOS
+*/
+
+db.unidadmedida.hasMany(db.presupuesto, {
+  foreignKey: { name: 'idunidad', allowNull: false}
+});
+db.presupuesto.belongsTo(db.unidadmedida, {
+  foreignKey: { name: 'idunidad', allowNull: false}
+});
+
 
 // db.empleado.hasOne(db.user, {
 //   foreignKey: {

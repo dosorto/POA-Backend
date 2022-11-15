@@ -27,7 +27,14 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
+/// lo nuevo que he agregado
+//Esta pendiente del crud completo el presupuesto B)
 require("./routes/presupuesto.routes")(app)
+require("./routes/fuente.routes")(app)
+require("./routes/tarea.routes")(app)
+require("./routes/objetogasto.routes")(app)
+require("./routes/grupogasto.routes")(app)
+require("./routes/unidadmedida.routes")(app)
 
 app.use(
   cookieSession({

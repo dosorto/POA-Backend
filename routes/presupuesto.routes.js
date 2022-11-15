@@ -12,10 +12,10 @@ module.exports = function(app) {
     next();
   });
 
-//   app.get("/objetivos/get_all", controller.AllObjetivo);
-//   app.get("/objetivos/eliminar/:id",controller.eliminarObjetivo);
-//   app.post("/objetivos/crear",controller.newObjetivo);
-//   app.put("/objetivos/actualizar",controller.updateObjetivo);
-  app.get("/presupuesto/presupuesto_by_idtarea/:nombre", controller.presupuesto_by_idTarea)
-  app.get("/presupuesto/prueba", controller.probando_like)
+  app.get("/presupuesto/get_all", controller.allPresupuesto);
+  app.get("/presupuesto/eliminar/:id",controller.deletePresupuesto);
+  app.post("/presupuesto/crear",controller.newPresupuesto);
+  app.put("/presupuesto/actualizar",controller.updatePresupuesto);
+  app.get("/presupuesto/presupuesto_by_idtarea/:idtarea", controller.presupuesto_by_idTarea)
+  // app.get("/presupuesto/prueba", controller.probando_like)
 };

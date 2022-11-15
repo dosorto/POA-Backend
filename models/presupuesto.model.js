@@ -1,15 +1,15 @@
 
 module.exports = (sequelize, Sequelize) => {
     const presupuesto = sequelize.define("presupuesto", {
-      um: {
-        type: Sequelize.STRING,
-        allowNull: false 
-      },
       cantidad: {
         type: Sequelize.INTEGER,
         allowNull: false 
       },
       costounitario: {
+        type: Sequelize.INTEGER,
+        allowNull: false 
+      },
+      total: {
         type: Sequelize.INTEGER,
         allowNull: false 
       },
