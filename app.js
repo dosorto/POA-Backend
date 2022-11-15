@@ -27,15 +27,6 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
-
-//Esta pendiente del crud completo el presupuesto B)
-require("./routes/presupuesto.routes")(app)
-require("./routes/fuente.routes")(app)
-require("./routes/tarea.routes")(app)
-require("./routes/objetogasto.routes")(app)
-require("./routes/grupogasto.routes")(app)
-require("./routes/unidadmedida.routes")(app)
-////////s
 require("./routes/planificacion.route")(app);
 require("./routes/poa.routes")(app);
 require("./routes/actividad.routes")(app);
