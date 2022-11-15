@@ -29,6 +29,8 @@ require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 require("./routes/planificacion.route")(app);
 require("./routes/poa.routes")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
 
 
 app.use(

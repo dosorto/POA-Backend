@@ -44,6 +44,9 @@ db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
 db.depto = require("./departamento-poa.model.js")(sequelize, Sequelize);
 db.poa = require("./poa-poa.model.js")(sequelize, Sequelize);
 //db.areas = require("./planificacion.model")(sequelize, Sequelize);
+db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
+db.ACencargados = require("./actividadEncargado.model.js")(sequelize, Sequelize);
+
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -266,6 +269,35 @@ db.ue.hasMany(db.poa, {
 db.poa.belongsTo(db.ue, {
   foreignKey: { name: 'idUE', allowNull: false }
 });
+//////////////////////////RELACIONES DE ACTIVIDAD Y ACTIVIDAD ENCARGADO-------
+//Una actividad  tiene un resultado, un resultado tiene muchas actividades
+
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+///////////////////////
+db.user.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+db.ACencargados.belongsTo(db.user, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+///////////////////////
+db.actividad.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+db.ACencargados.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+
+
+/////----------------------------------------------------------------------
+
+///////////////////////
+
 
 
 module.exports = db;

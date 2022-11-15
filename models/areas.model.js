@@ -2,7 +2,7 @@ const DataTypes = require('sequelize').DataTypes;
 module.exports = (sequelize, Sequelize) => {
     const Areas = sequelize.define("areas", {
       nombre: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false, 
       },
       isDelete: {
