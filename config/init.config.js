@@ -550,6 +550,16 @@ exports.initial = async () => {
             idRol: 1
         });
 
+        await db.actividad.create({
+            nombre: 'Arreglo 1',
+            descripcion: 'prueba',
+            estado: 'FORMULACION',
+            tipoActividad: 'ACADEMICA',
+            categoria: 'COORDINACION',
+            idResultado: 1,
+        });
+      
+
         //Agregue tabla catalogo de permisos
         await db.permiso.bulkCreate([{
             Permiso: "Gestion_PEI"
