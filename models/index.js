@@ -34,12 +34,13 @@ db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
+db.PEI = require("./PEI.model.js")(sequelize, Sequelize);
 db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
-//db.areas = require("./planificacion.model")(sequelize, Sequelize);
-
+db.actividad = require("./actividad.model.js")(sequelize, Sequelize);
+db.ACencargados = require("./actividadEncargado.model.js")(sequelize, Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -64,12 +65,14 @@ db.user.belongsTo(db.empleado, {
 //   foreignKey: { name: 'idInstitucion', allowNull: false }
 // });
 
+
+
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
-db.pei.hasMany(db.dimension, {
+db.PEI.hasMany(db.dimension, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
-db.dimension.belongsTo(db.pei, {
+db.dimension.belongsTo(db.PEI, {
   foreignKey: { name: 'idPei', allowNull: false }
 });
 
@@ -79,14 +82,6 @@ db.institucion.hasMany(db.empleado, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 db.empleado.belongsTo(db.institucion, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
-});
-//////// RELACIÓN DE UNO A MUCHOS ////////
-//// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
-db.institucion.hasMany(db.pei, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
-});
-db.pei.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
@@ -193,9 +188,11 @@ db.areas.belongsTo(db.dimension, {
   foreignKey: { name: 'idDimension', allowNull: false}
 });
 
+
+
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
-//// UN AREA TIENE UN pei, UN pei TIENE MUCHAS AREAS(1:N) ////
+//// UN AREA TIENE UN PEI, UN PEI TIENE MUCHAS AREAS(1:N) ////
 db.pei.hasMany(db.areas, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
@@ -233,6 +230,8 @@ db.resultado.belongsTo(db.dimension, {
   foreignKey: { name: 'idDimension', allowNull: false}
 });
 
+
+
 ///////////////////////////////////////////
 //////// RELACIÓN DE UNO A MUCHOS ////////
 //// UN RESULTADO TIENE UN PEI, UN PEI TIENE MUCHOS RESULTADOS(1:N) ////
@@ -242,6 +241,35 @@ db.pei.hasMany(db.resultado, {
 db.resultado.belongsTo(db.pei, {
   foreignKey: { name: 'idPei', allowNull: false}
 });
+
+//////////////////////////RESULTADOS
+//Una actividad  tiene un resultado, un resultado tiene muchas actividades
+
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+///////////////////////
+db.user.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+db.ACencargados.belongsTo(db.user, {
+  foreignKey: { name: 'idUser', allowNull: false}
+});
+///////////////////////
+db.actividad.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+db.ACencargados.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false}
+});
+
+
+/////
+
+///////////////////////
 
 
 

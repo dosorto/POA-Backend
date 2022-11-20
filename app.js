@@ -14,7 +14,7 @@ app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 //app.use("/auth",user_routes); // permite usar las rutas de usuarios
 require("./routes/rol.routes")(app);
@@ -28,6 +28,8 @@ require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 require("./routes/planificacion.route")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
 
 
 app.use(

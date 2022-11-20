@@ -79,6 +79,8 @@ const disable_PEI = async (req, res) => {
         })
     }
 }*/
+
+
 const get_PEI = async (req,res) =>{
     try{
         const all_pei = await db.pei.findAll({
@@ -94,21 +96,6 @@ const get_PEI = async (req,res) =>{
     }catch(error){
         return res.status(500).json({status:"Server Error: " + error});
 }
-}
-const get_all_pei_by_idInstitucion = async (req,res) =>{
-    try{
-        const all_peis = await db.pei.findAll(
-           { where:{isDelete:false,
-                    idInstitucion: req.params.idInstitucion},
-            include:db.institucion}
-        );
-        if(!all_peis){
-            return res.status(404).send({message:'No hay ningún elemento'});
-        }
-        return res.status(200).json(all_peis);
-    }catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
-    }
 }
 
 const get_pei = async (req,res) =>{
