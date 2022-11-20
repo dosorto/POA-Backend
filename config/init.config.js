@@ -634,23 +634,7 @@ exports.initial = async () => {
         console.log(error);
     }
 
-    await db.actividad.bulkCreate([{
-        nombre: "actividad1",
-        descripcion:"año",
-        resultadoUnidad:"1",
-        estado:"1",
-        tipoActividad:"as", 
-        Categoria:"dc",
-       
-      
-    // responsable:"" // aca se tiene que hacerv una tabla transacional de responsable
 
-    }]);
-
-    await db.actividad_responsable.bulkCreate([{
-        idResponsable: 1,
-        idActividad: 1
-    }])
 
 
 
