@@ -2,37 +2,33 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const { institucion } = require("../models/");
 
 //Controlador para crear un nuevo PEI
 const new_PEI = async (req, res) => {
     try {
-        const insti = await db.institucion.findOne({ where: { id: req.body.idInstitucion } })
-        if (!insti) {
-            return res.status(400).json({ message: 'Pei incorrecto' });
-        }
+        //db.sequelize.authenticate();
         await db.pei.create({
             name: req.body.name,
             initialYear: req.body.initialYear,
-            finalYear: req.body.finalYear,
-            idInstitucion: insti.id
+            finalYear: req.body.finalYear
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
         console.log("error: " + error);
-        return res.status(500).json({ status: "error", error: error });
+        return res.status(400).json({ status: "error", error: error });
     }
 }
-
 //Actualizar PEI
 const updatePEI = async (req, res) => {
     try {
-        const PEI = await db.pei.findByPk(req.body.id);
+
+        const PEI = await db.PEI.findByPk(req.body.id);
         if (!PEI) {
             return res.status(404).send({ message: 'PEI not found' })
         }
-        await db.pei.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
-        return res.status(200).send({message:"ok"});
+        await db.PEI.update({ name: req.body.name, initialYear: req.body.initialYear, finalYear: req.body.finalYear }, { where: { id: req.body.id } })
+        return res.status(200).send(user);
+
     } catch (error) {
         res.status(500).json({
             message: 'error al actualizar ' + error
@@ -40,15 +36,16 @@ const updatePEI = async (req, res) => {
     }
 }
 
-//Deshabilitar PEI
+
+//Eliminar PEI
 
 const disable_PEI = async (req, res) => {
     try {
-        const temporally = await db.pei.update({
+        const temporally = await db.PEI.update({
             isDelete: true
         }, {
             where: {
-                id: req.body.id
+                name: req.body.name
             }
         });
         if (temporally) {
@@ -98,24 +95,9 @@ const get_PEI = async (req,res) =>{
 }
 }
 
-const get_pei = async (req,res) =>{
-    try{
-        const pei = await db.pei.findOne({where:{id:req.params.id}})
-        if(!pei){
-            return res.status(404).json({message:'No se encuentra esa dimension'});
-        }
-        return res.status(200).json({status:"Ok",pei});
-    } catch(error){
-        return res.status(500).json({status:"Server Error: " + error});
-    }
-}
-
 module.exports = {
     updatePEI,
     get_PEI,
     new_PEI,
-    disable_PEI,
-    get_all_pei_by_idInstitucion,
-    get_pei
+    disable_PEI
 }
-
