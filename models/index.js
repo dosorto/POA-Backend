@@ -67,6 +67,8 @@ db.user.belongsTo(db.empleado, {
 
 
 
+
+
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UNA DIMENCION PERTENECE A UN PEI, UN PEI TIENE MUCHAS DIMENSIONES ////
 db.PEI.hasMany(db.dimension, {
@@ -84,8 +86,6 @@ db.institucion.hasMany(db.empleado, {
 db.empleado.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
-
-
 
 
 ////////////////////////////////////////////
