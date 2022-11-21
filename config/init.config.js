@@ -628,6 +628,7 @@ exports.initial = async () => {
         await db.depto.create({
             name: "Facultad de Ingeniería en Sistemas",
             descripcion: "Ingeniería en Sistemas",
+            idUE: 1
         });
 
         await db.poa.create({
