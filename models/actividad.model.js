@@ -5,8 +5,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-      
-
         descripcion: {
             type: Sequelize.TEXT,
             allowNull: false,

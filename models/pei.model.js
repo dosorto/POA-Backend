@@ -25,4 +25,4 @@ module.exports = (sequelize, Sequelize) => {
     });
   
     return PEI;
-  };
+  }; 

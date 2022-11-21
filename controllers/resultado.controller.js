@@ -70,13 +70,13 @@ const allResultado = async(req,res) => {
       });
       if (resultadoDelete){
           res.status(200).send({
-            message: "Usuario baja en el backend"
+            message: "Resultado eliminado"
         });
       }
     } catch (error) {
       console.log(error);
       res.status(401).send({
-        message: "Error al elimiar el usuario " + error.message
+        message: "Error al elimiar el indicador " + error.message
       });
     }
     };
