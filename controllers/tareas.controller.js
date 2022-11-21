@@ -8,7 +8,6 @@ const { dimension } = require("../models/");
 const { disable_dimension } = require("./dimension.controller");
 const { UpdateDateColumn } = require("typeorm");
 // const { dimension } = require("../models/");
-
 /// Listo
 const AllTareas = async(req,res) => { 
     try{ 
@@ -44,7 +43,6 @@ const AllTareas = async(req,res) => {
       })
   }
   };
-
 // Tercero Listo
   const newTarea = async (req,res) =>{
     try{
@@ -65,7 +63,6 @@ const AllTareas = async(req,res) => {
         return res.status(400).json({status:"error", error : error});
     }
 } 
-
 const eliminarTarea = async (req, res) => {
   try {
     const updateTarea = await db.tarea.update({
@@ -86,9 +83,7 @@ const eliminarTarea = async (req, res) => {
     message: "Error al elimiar el usuario " + error.message
   });
 }
-
 }
-
 const updateTarea = async(req, res) =>{
   try {
     const actividad = await db.actividad.findByPk(req.body.idActividad);
@@ -119,7 +114,6 @@ const updateTarea = async(req, res) =>{
     return res.status(500).json({status:"Server Error: " + error});
 }
 };
-
 const probando_like = async(req,res) => { 
   try{ 
     const tarea = await db.tarea.findOne({
@@ -132,7 +126,6 @@ const probando_like = async(req,res) => {
       include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto}]},]
     });
   //   const onepresupuesto =  await db.presupuesto.findOne({
-     
   //   include:[{
   //     model: db.tarea,
   //     isDelete: false,
@@ -156,7 +149,6 @@ const probando_like = async(req,res) => {
     })
 }
 };
-
 const AllTarea_by_idActividad = async(req,res) => { 
   try{ 
     const allTarea =  await db.tarea.findAll({
@@ -175,8 +167,6 @@ const AllTarea_by_idActividad = async(req,res) => {
     })
 }
 };
-
-
 module.exports = {
   AllTareas,
   AllTareas_by_id,

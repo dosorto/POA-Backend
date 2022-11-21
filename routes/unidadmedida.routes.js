@@ -2,7 +2,6 @@
 const controller = require("../controllers/unidadmedida.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +10,6 @@ module.exports = function(app) {
     );
     next();
   });
-
   app.get("/unidad/get_all", controller.AllUnidadMedida);
   app.get("/unidad/eliminar/:id",controller.eliminarUnidadMedida);
   app.post("/unidad/crear",controller.newUnidadMedida);

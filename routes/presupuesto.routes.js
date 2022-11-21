@@ -2,7 +2,6 @@
 const controller = require("../controllers/presupuesto.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +10,6 @@ module.exports = function(app) {
     );
     next();
   });
-
   app.get("/presupuesto/get_all", controller.allPresupuesto);
   app.get("/presupuesto/eliminar/:id",controller.deletePresupuesto);
   app.post("/presupuesto/crear",controller.newPresupuesto);

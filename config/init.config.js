@@ -558,7 +558,7 @@ exports.initial = async () => {
             categoria: 'COORDINACION',
             idResultado: 1,
         });
-      
+
 
         //Agregue tabla catalogo de permisos
         await db.permiso.bulkCreate([{
@@ -622,6 +622,7 @@ exports.initial = async () => {
         await db.ue.create({
             name: "Dirección",
             descripcion: "General",
+            idInstitucion: 1
         });
 
         await db.depto.create({
@@ -640,36 +641,88 @@ exports.initial = async () => {
             idUE: 1
         });
 
-        //Indicadores_Poa
-        await db.indicadoresPoa.create ({
-            nombre : "Indicador 1",
-            descripcion : "Indicador 1",
-            cantidadPlanificada : 20,
-            cantidadEjecutada : 0,
-            promedioAlcanzado : 0,
+        /// Tareas desde aqui
+        /// CATALOGO DE OBJETO DEL GASTO
+        await db.grupogasto.bulkCreate([{
+            nombre: "Insumos",
+            identificador: 3000
+        },
+        {
+            nombre: "Servicios no personales",
+            identificador: 2000
+        }]);
+        ///Grupo del gasto
+        await db.objetogasto.bulkCreate([{
+            nombre: "Gasolina",
+            identificador: 30001,
+            idgrupo: 1
+        }, {
+            nombre: "Diesel",
+            identificador: 30002,
+            idgrupo: 1
+        }, {
+            nombre: "Alimentacion",
+            identificador: 20001,
+            idgrupo: 1
+        },
+        {
+            nombre: "Viaticos",
+            identificador: 10001,
+            idgrupo: 1
+        }]);
+        //FUente
+        await db.fuente.bulkCreate([{
+            nombre: "Ingresos del estado",
+            identificador: "11",
+        }, {
+            nombre: "Ahorros",
+            identificador: "12",
+        }, {
+            nombre: "ingresos propios",
+            identificador: "12B",
+            idgrupo: 1
+        }]);
+        ///unidad de medida
+        await db.unidadmedida.bulkCreate([{
+            nombre: "Litros",
+        },
+        {
+            nombre: "Kilogramos",
+        },
+        {
+            nombre: "Gramos",
+        }
+    ]);
+        await db.tarea.bulkCreate([{
+            nombre: "Compra de Combustible",
+            descripcion: "Utilizacion de Diesel",
+            isPresupuesto: true,
             idActividad: 1
-
-        })
-    
-    await db.presupuesto.bulkCreate([{
-        cantidad:10,
-        costounitario:40,
-        total:400,
-        idgrupo:1,
-        idobjeto:2,
-        idtarea:1,
-        idfuente:1,
-        idunidad:1
-    },{
-        cantidad:20,
-        costounitario:40,
-        total:800,
-        idgrupo:1,
-        idobjeto:1,
-        idtarea:2,
-        idfuente:1,
-        idunidad:1
-    }]);
+        }, {
+            nombre: "Compra de Combustible",
+            descripcion: "Utilizacion de Gasolina",
+            isPresupuesto: true,
+            idActividad: 1
+        }]);
+        await db.presupuesto.bulkCreate([{
+            cantidad: 10,
+            costounitario: 40,
+            total: 400,
+            idgrupo: 1,
+            idobjeto: 2,
+            idtarea: 1,
+            idfuente: 1,
+            idunidad: 1
+        }, {
+            cantidad: 20,
+            costounitario: 40,
+            total: 800,
+            idgrupo: 1,
+            idobjeto: 1,
+            idtarea: 2,
+            idfuente: 1,
+            idunidad: 1
+        }]);
 
     } catch (error) {
         console.log(error);

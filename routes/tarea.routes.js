@@ -2,7 +2,6 @@
 const controller = require("../controllers/tareas.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +10,6 @@ module.exports = function(app) {
     );
     next();
   });
-
   app.get("/tarea/prueba", controller.probando_like)
   app.get("/tarea/get_all", controller.AllTareas);
   app.get("/tarea/eliminar/:id",controller.eliminarTarea);

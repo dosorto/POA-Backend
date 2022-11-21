@@ -2,7 +2,6 @@
 const controller = require("../controllers/fuente.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +10,6 @@ module.exports = function(app) {
     );
     next();
   });
-
   app.get("/fuente/get_all", controller.AllFuente);
   app.get("/fuente/eliminar/:id",controller.eliminarFuente);
   app.post("/fuente/crear",controller.newFuente);

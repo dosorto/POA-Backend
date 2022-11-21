@@ -10,6 +10,5 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false
       }
     });
-  
     return unidadmedida;
   };

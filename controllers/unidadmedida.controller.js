@@ -8,7 +8,6 @@ const { dimension } = require("../models/");
 const { disable_dimension } = require("./dimension.controller");
 const { UpdateDateColumn } = require("typeorm");
 // const { dimension } = require("../models/");
-
 /// Listo
 const AllUnidadMedida = async(req,res) => { 
     try{ 
@@ -40,7 +39,6 @@ const AllUnidadMedida = async(req,res) => {
       })
   }
   };
-
 // Tercero Listo
   const newUnidadMedida = async (req,res) =>{
     try{
@@ -54,7 +52,6 @@ const AllUnidadMedida = async(req,res) => {
         return res.status(400).json({status:"error", error : error});
     }
 } 
-
 const eliminarUnidadMedida = async (req, res) => {
   try {
     const updateUnidadMedida = await db.unidadmedida.update({
@@ -75,9 +72,7 @@ const eliminarUnidadMedida = async (req, res) => {
     message: "Error al elimiar la medida " + error.message
   });
 }
-
 }
-
 const updateUnidadMedida = async(req, res) =>{
   try {
     if(!req.body.nombre){
@@ -101,7 +96,6 @@ const updateUnidadMedida = async(req, res) =>{
     return res.status(500).json({status:"Server Error: " + error});
 }
 };
-
 module.exports = {
   AllUnidadMedida,
   AllUnidadmedida_by_id,

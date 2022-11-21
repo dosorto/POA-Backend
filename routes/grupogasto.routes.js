@@ -2,7 +2,6 @@
 const controller = require("../controllers/grupogasto.controller");
 //const controllerauth = require("../controllers/auth.controller");
 //const { permisosJwt } = require("../middleware");
-
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +10,6 @@ module.exports = function(app) {
     );
     next();
   });
-
   app.get("/grupogasto/get_all", controller.AllGrupo);
   app.get("/grupogasto/eliminar/:id",controller.eliminarGrupo);
   app.post("/grupogasto/crear",controller.newGrupo);
