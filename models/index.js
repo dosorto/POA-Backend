@@ -313,10 +313,10 @@ db.presupuesto.belongsTo(db.objetogasto, {
 */
 
 db.tarea.hasOne(db.presupuesto, {
-  foreignKey: { name: 'idtarea', allowNull: false}
+  foreignKey: { name: 'idtarea', allowNull: true}
 });
 db.presupuesto.belongsTo(db.tarea, {
-  foreignKey: { name: 'idtarea', allowNull: false}
+  foreignKey: { name: 'idtarea', allowNull: true}
 });
 
 /////////////////////////////////////////
