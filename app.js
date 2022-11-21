@@ -38,6 +38,7 @@ require("./routes/unidadmedida.routes")(app)
 ////////s
 require("./routes/planificacion.route")(app);
 require("./routes/poa.routes")(app);
+require("./routes/departamento.routes")(app);
 require("./routes/actividad.routes")(app);
 require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
