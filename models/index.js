@@ -276,6 +276,15 @@ db.resultado.belongsTo(db.pei, {
 });
 
 //////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA unidad ejecutora TIENE MUCHOS deptos(1:N) ////
+db.ue.hasMany(db.depto, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+db.depto.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+
+//////// RELACIÓN DE UNO A MUCHOS ////////
 //// UN DEPARTAMENTO TIENE MUCHOS PEI(1:N) ////
 db.depto.hasMany(db.poa, {
   foreignKey: { name: 'idDepto', allowNull: false }
