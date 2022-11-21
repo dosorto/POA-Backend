@@ -52,7 +52,7 @@ db.presupuesto = require("./presupuesto.model.js")(sequelize,Sequelize);
 db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
 db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
-
+db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -384,6 +384,15 @@ db.actividad.hasMany(db.tarea, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 db.tarea.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
+
+////////////// RELACIONES DE Indicadores POA Y Actividades /////////
+//Un indicador tiene una actividad, una actividad tiene muchos indicadores
+db.actividad.hasMany(db.indicadoresPoa, {
+  foreignKey: {name : 'idActividad' , allowNull: false }
+});
+db.indicadoresPoa.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 

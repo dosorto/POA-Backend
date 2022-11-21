@@ -724,6 +724,17 @@ exports.initial = async () => {
             idunidad: 1
         }]);
 
+        //Indicadores_Poa
+        await db.indicadoresPoa.create ({
+            nombre : "Indicador 1",
+            descripcion : "Indicador 1",
+            cantidadPlanificada : 20,
+            cantidadEjecutada : 0,
+            promedioAlcanzado : 0,
+            idActividad: 1
+    
+        })
+
     } catch (error) {
         console.log(error);
     }
