@@ -8,7 +8,10 @@ const allindicadores = async(req,res) => {
       const allIndicador =  await db.indicadoresPoa.findAll({
       where: {
           isDelete: false,
-      }
+      },
+      include:[{
+      model: db.actividad
+      }]
     })
       return res.status(200).json( allIndicador );
   } catch(error){
