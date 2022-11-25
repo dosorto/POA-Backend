@@ -15,6 +15,10 @@ const new_POA = async (req, res) => {
         if (!unidad) {
             return res.status(400).json({ message: 'POA incorrecto' });
         }
+        const insti = await db.institucion.findOne({ where: { id: req.body.idInstitucion } })
+        if (!insti) {
+            return res.status(400).json({ message: 'POA incorrecto' });
+        }
         await db.poa.create({
             name: req.body.name,
             anio: req.body.anio,
@@ -22,7 +26,8 @@ const new_POA = async (req, res) => {
             fuente12: req.body.fuente12,
             fuente12B: req.body.fuente12B,
             idDepto: depart.id,
-            idUE: unidad.id
+            idUE: unidad.id,
+            idInstitucion: insti.id
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
@@ -38,7 +43,7 @@ const updatePOA = async (req, res) => {
         if (!POA) {
             return res.status(404).send({ message: 'POA not found' })
         }
-        await db.poa.update({ name: req.body.name, anio: req.body.anio, fuente11: req.body.fuente11, fuente12: req.body.fuente12, fuente12B: req.body.fuente12B, idDepto: req.body.idDepto, idUE: req.body.idUE }, { where: { id: req.body.id } })
+        await db.poa.update({ name: req.body.name, anio: req.body.anio, fuente11: req.body.fuente11, fuente12: req.body.fuente12, fuente12B: req.body.fuente12B, idDepto: req.body.idDepto, idUE: req.body.idUE, idInstitucion: req.body.idInstitucion}, { where: { id: req.body.id } })
         return res.status(200).send({ message: "ok" });
     } catch (error) {
         res.status(500).json({

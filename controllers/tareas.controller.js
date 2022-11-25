@@ -47,16 +47,33 @@ const AllTareas = async(req,res) => {
   const newTarea = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
+        //isPresupuesto: boolean
         const actividad = await db.actividad.findByPk(req.body.idActividad);
         if (!actividad){ 
           res.status(404).send({message:'no se encontro la actividad'});
         }
-        db.tarea.create({
+        const tareaCreada = await db.tarea.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             isPresupuesto: req.body.isPresupuesto,
             idActividad: actividad.id
         });
+        if(tareaCreada.isPresupuesto==true){
+          const objeto= await db.objetogasto.findByPk(req.body.idobjeto)
+    db.presupuesto.create({
+        cantidad: req.body.cantidad,
+        costounitario: req.body.costounitario,
+        total:req.body.total,
+        idobjeto: objeto.id,
+        idgrupo: objeto.idgrupo,
+        idtarea:tareaCreada.id,
+        idfuente: req.body.idfuente,
+        idunidad: req.body.idunidad
+      })
+    }
+      console.log(tareaCreada)
+      console.log("ksdjfkjsfksjkdfjk")
+        
         return res.status(200).json({status:"ok"});
     } catch(error){
         console.log("error: " + error);
