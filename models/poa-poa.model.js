@@ -1,15 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-    const PEI = sequelize.define("pei", {
+    const POA = sequelize.define("poa", {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      initialYear: {
+      anio: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      finalYear: {
-        type: Sequelize.DATEONLY,
+      fuente11: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fuente12: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      fuente12B: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       isDelete: {
@@ -24,5 +32,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return PEI;
+    return POA;
   };
