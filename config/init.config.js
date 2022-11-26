@@ -724,6 +724,35 @@ exports.initial = async () => {
             idfuente: 1,
             idunidad: 1
         }]);
+        // historicos tarea
+        await db.tareas_historico.bulkCreate([{
+            nombre : "Compra de alimentos",
+            idobjeto: 2,
+            objeto : "baleadas",
+            idgrupo: 1,
+            grupo : "1",
+            idunidad: 1,
+            unidad : "unidades"
+        },
+        {
+            nombre : "Compra de combustible",
+            idobjeto: 2,
+            objeto : "premium",
+            idgrupo: 1,
+            grupo : "1",
+            idunidad: 1,
+            unidad : "litros"
+        },
+        {
+            nombre : "Compra de refacciones",
+            idobjeto: 2,
+            objeto : "refacciones",
+            idgrupo: 1,
+            grupo : "1",
+            idunidad: 1,
+            unidad : "unidades"
+        }
+    ]);
 
         //Indicadores_Poa
         await db.indicadoresPoa.create ({
