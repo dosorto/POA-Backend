@@ -28,6 +28,20 @@ require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 
+//Esta pendiente del crud completo el presupuesto B)
+require("./routes/presupuesto.routes")(app)
+require("./routes/fuente.routes")(app)
+require("./routes/tarea.routes")(app)
+require("./routes/objetogasto.routes")(app)
+require("./routes/grupogasto.routes")(app)
+require("./routes/unidadmedida.routes")(app)
+////////s
+require("./routes/planificacion.route")(app);
+require("./routes/poa.routes")(app);
+require("./routes/departamento.routes")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
+require("./routes/indicadoresPOA.routes")(app);
 
 app.use(
   cookieSession({
@@ -42,7 +56,7 @@ app.use(
 const db = require("./models/");
 db.sequelize.sync();
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: false}).then(() => {
+db.sequelize.sync({force: true}).then(() => {
   init.initial();
 });
 

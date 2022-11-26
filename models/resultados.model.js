@@ -1,8 +1,12 @@
 module.exports = (sequelize, Sequelize) =>{
     const Resultados = sequelize.define("resultados", {
         nombre: {
-           type: Sequelize.STRING,
+           type: Sequelize.TEXT,
            allowNull: false
+        },
+        descripcion:{
+            type: Sequelize.TEXT,
+            allowNull: false
         },
         isDelete: {
             type: Sequelize.BOOLEAN,

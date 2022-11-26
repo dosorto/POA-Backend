@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-    const Objetivos = sequelize.define("objetivos", {
-      nombre: {
-        type: Sequelize.TEXT,
-        allowNull: false 
+    const UE = sequelize.define("ejecutora", {
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       descripcion: {
-        type: Sequelize.TEXT,
-        allowNull: false 
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
@@ -15,5 +15,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Objetivos;
+    return UE;
   };

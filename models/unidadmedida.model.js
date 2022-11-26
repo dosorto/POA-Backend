@@ -1,11 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
-    const Objetivos = sequelize.define("objetivos", {
+    const unidadmedida = sequelize.define("unidadmedida", {
       nombre: {
-        type: Sequelize.TEXT,
-        allowNull: false 
-      },
-      descripcion: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false 
       },
       isDelete: {
@@ -14,6 +10,5 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: false
       }
     });
-  
-    return Objetivos;
+    return unidadmedida;
   };

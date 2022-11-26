@@ -18,10 +18,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false, // no permite valores nulos
         defaultValue: false // establece el valor por defecto en false
-      },
-      resetToken: {
-        type: Sequelize.STRING,
-        allowNull: true,
       }
     });
     return Usuario;
