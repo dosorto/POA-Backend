@@ -46,6 +46,7 @@ db.presupuesto = require("./presupuesto.model.js")(sequelize,Sequelize);
 db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
 db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
+db.tareas_historico = require("./tareas_historico.model.js")(sequelize, Sequelize);
 // planificacion
 db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
 
