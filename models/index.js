@@ -63,7 +63,7 @@ db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
 db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
-
+db.tareas_historico = require("./tareas_historico.model.js")(sequelize,Sequelize);
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////

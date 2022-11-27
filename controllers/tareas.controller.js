@@ -32,9 +32,8 @@ const AllTareas = async(req,res) => {
       where: {
           isDelete: false,
           id: req.params.id
-      },include: [{
-        model: db.actividad,
-      }]
+      },include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+    ]
     })
     res.status(200).json( allTareas );
   } catch(error){
@@ -71,8 +70,8 @@ const AllTareas = async(req,res) => {
         idunidad: req.body.idunidad
       })
     }
-      console.log(tareaCreada)
-      console.log("ksdjfkjsfksjkdfjk")
+      // console.log(tareaCreada)
+      // console.log("ksdjfkjsfksjkdfjk")
         
         return res.status(200).json({status:"ok"});
     } catch(error){
@@ -133,14 +132,13 @@ const updateTarea = async(req, res) =>{
 };
 const probando_like = async(req,res) => { 
   try{ 
-    const tarea = await db.tarea.findOne({
+    const tarea = await db.tareas_historico.findOne({
       where: {
-        isPresupuesto: true,
         nombre: {
-          [Op.substring]: req.body.nombre,
+          [Op.substring]: req.params.nombre,
         }
-    },
-      include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto}]},]
+    }
+    //   include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model: db.unidadmedida}]},]
     });
   //   const onepresupuesto =  await db.presupuesto.findOne({
   //   include:[{
@@ -173,9 +171,31 @@ const AllTarea_by_idActividad = async(req,res) => {
         isDelete: false,
         idActividad: req.params.idActividad
     },
-    include:[{
-      model: db.actividad,
-    }]
+    include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ]
+ 
+    
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
+const AllTarea_by_idActividad_presupuesto = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        idActividad: req.params.idActividad,
+        isPresupuesto: true
+    },
+    include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ]
+ 
+    
   })
   res.status(200).json( allTarea );
 } catch(error){
@@ -191,5 +211,6 @@ module.exports = {
   eliminarTarea,
   newTarea,
   probando_like,
-  AllTarea_by_idActividad
+  AllTarea_by_idActividad,
+  AllTarea_by_idActividad_presupuesto
 }
