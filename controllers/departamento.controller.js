@@ -9,8 +9,7 @@ const new_departamento = async (req, res) => {
         }
         await db.depto.create({
             name: req.body.name,
-            descripcion: req.body.descripcion,
-            idUE: ue.id
+            descripcion: req.body.descripcion
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
@@ -22,10 +21,7 @@ const new_departamento = async (req, res) => {
 const get_all_departamento = async (req, res) => {
     try {
         const all_depto = await db.depto.findAll({
-            where: { isDelete: false },
-            include: [{
-                model: db.ue,
-            }]
+            where: { isDelete: false }
         });
         if (!all_depto) {
             return res.status(404).send({ message: 'no hay ningun elemento' });
@@ -65,8 +61,7 @@ const update_departamento = async (req, res) => {
         }
         await db.depto.update({
             name: req.body.name,
-            descripcion: req.body.descripcion,
-            idUE: req.body.idUE
+            descripcion: req.body.descripcion
         }, { where: { id: req.body.id } })
         return res.status(200).send({ message: "ok" });
     } catch (error) {
