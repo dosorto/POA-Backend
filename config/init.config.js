@@ -635,7 +635,7 @@ exports.initial = async () => {
         }]);
 
         await db.poa.create({
-            name: "Prueba",
+            name: "POA 2020",
             anio: '2021-01-01',
             fuente11: "22,000",
             fuente12: "30,000",
