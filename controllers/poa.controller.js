@@ -57,7 +57,29 @@ const updatePOA = async (req, res) => {
 const disable_POA = async (req, res) => {
     try {
         const temporally = await db.poa.update({
-            isDelete: true
+            isActive: false
+        }, {
+            where: {
+                id: req.body.id
+            }
+        });
+        if (temporally) {
+            res.status(200).send({
+                message: "POA is disable"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(401).send({
+            message: "Error: POA can't be disable " + error.message
+        });
+    }
+}
+
+const active_POA = async (req, res) => {
+    try {
+        const temporally = await db.poa.update({
+            isActive: true
         }, {
             where: {
                 id: req.body.id
@@ -157,5 +179,6 @@ module.exports = {
     disable_POA,
     get_all_poa_by_idDepto,
     get_all_poa_by_idUE,
-    get_poa
+    get_poa,
+    active_POA
 }

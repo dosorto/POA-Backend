@@ -32,17 +32,9 @@ const get_all_departamento = async (req, res) => {
     }
 }
 //Funcion para obtener todas las departamento
-const get_all_departamento_UE = async (req, res) => {
+const get_all_departamentoid = async (req, res) => {
     try {
-        const all_deptos = await db.depto.findAll(
-            {
-                where: {
-                    isDelete: false,
-                    idUE: req.params.idUE
-                },
-                include: db.ue
-            }
-        );
+        const all_deptos = await db.depto.findByPk(req.params.id);
         if (!all_deptos) {
             return res.status(404).send({ message: 'No hay ningún elemento' });
         }
@@ -98,5 +90,5 @@ module.exports = {
     get_all_departamento,
     disable_departamento,
     update_departamento,
-    get_all_departamento_UE
+    get_all_departamentoid
 }
