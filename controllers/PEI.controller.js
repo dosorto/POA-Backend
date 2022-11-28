@@ -64,21 +64,7 @@ const disable_PEI = async (req, res) => {
     }
 }
 
-//Controlador para obtener todos los PEI
-/*const get_PEI = async (req, res) => {
-    try {
-        const get_pei = await db.PEI.findAll({
-            where: {
-                isDelete: false,
-            }
-        })
-        return res.status(200).send({ get_pei });
-    } catch (error) {
-        res.status(400).json({
-            message: 'error al obtener' + error
-        })
-    }
-}*/
+
 const get_PEI = async (req,res) =>{
     try{
         const all_pei = await db.pei.findAll({
@@ -131,4 +117,3 @@ module.exports = {
     get_all_pei_by_idInstitucion,
     get_pei
 }
-
