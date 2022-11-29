@@ -10,7 +10,7 @@ module.exports = function(app) {
   });
 
   app.get("/departamento/get_all", controller.get_all_departamento);
-  app.get("/departamento/get/:id",controller.get_all_departamento_UE);
+  app.get("/departamento/get/:id",controller.get_all_departamentoid);
   app.put("/departamento/delete",controller.disable_departamento);
   app.put("/departamento/update",controller.update_departamento);
   app.post("/departamento/create",controller.new_departamento);
