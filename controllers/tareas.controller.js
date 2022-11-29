@@ -4,7 +4,7 @@ const { request, response } = require('express');
 const { Op, DataTypes, Model, and, or } = require("sequelize");
 // const objetivo = db.objetivos;
 const bcrypt = require("bcryptjs");
-const { dimension } = require("../models/");
+const { dimension, presupuesto } = require("../models/");
 const { disable_dimension } = require("./dimension.controller");
 const { UpdateDateColumn } = require("typeorm");
 // const { dimension } = require("../models/");
@@ -32,9 +32,8 @@ const AllTareas = async(req,res) => {
       where: {
           isDelete: false,
           id: req.params.id
-      },include: [{
-        model: db.actividad,
-      }]
+      },include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+    ]
     })
     res.status(200).json( allTareas );
   } catch(error){
@@ -47,16 +46,33 @@ const AllTareas = async(req,res) => {
   const newTarea = async (req,res) =>{
     try{
         //db.sequelize.authenticate();
+        //isPresupuesto: boolean
         const actividad = await db.actividad.findByPk(req.body.idActividad);
         if (!actividad){ 
           res.status(404).send({message:'no se encontro la actividad'});
         }
-        db.tarea.create({
+        const tareaCreada = await db.tarea.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             isPresupuesto: req.body.isPresupuesto,
             idActividad: actividad.id
         });
+        if(tareaCreada.isPresupuesto==true){
+          const objeto= await db.objetogasto.findByPk(req.body.idobjeto)
+    db.presupuesto.create({
+        cantidad: req.body.cantidad,
+        costounitario: req.body.costounitario,
+        total:req.body.total,
+        idobjeto: objeto.id,
+        idgrupo: objeto.idgrupo,
+        idtarea:tareaCreada.id,
+        idfuente: req.body.idfuente,
+        idunidad: req.body.idunidad
+      })
+    }
+      // console.log(tareaCreada)
+      // console.log("ksdjfkjsfksjkdfjk")
+        
         return res.status(200).json({status:"ok"});
     } catch(error){
         console.log("error: " + error);
@@ -86,44 +102,63 @@ const eliminarTarea = async (req, res) => {
 }
 const updateTarea = async(req, res) =>{
   try {
+    const tareas = await db.tarea.findByPk(req.body.id);
     const actividad = await db.actividad.findByPk(req.body.idActividad);
-    if (!actividad){ 
-      res.status(404).send({message:'no se encontro la actividad'});
-    }
-    if(!req.body.nombre){
-        return res.status(400).json({message:'Debe enviar todos los datos'});
-    }
-    const updateTarea = await db.tarea.update({
+        if (!actividad){ 
+          res.status(404).send({message:'no se encontro la actividad'});
+        }
+    const updatetarea = await db.tarea.update({
         nombre: req.body.nombre,
         descripcion:req.body.descripcion,
         isPresupuesto:req.body.isPresupuesto,
         idActividad: actividad.id
-    }, {
+    },{
         where: {
-            id: req.body.id
+            id: tareas.id
         }
     });
-    if (updateTarea) {
+    console.log(tareas.isPresupuesto)
+    if(tareas.isPresupuesto == true){
+      const objeto= await db.objetogasto.findByPk(req.body.idobjeto)
+    
+      update_presupuesto = await db.presupuesto.update({
+        cantidad: req.body.cantidad,
+        costounitario: req.body.costounitario,
+        total:req.body.total,
+        idobjeto: objeto.id,
+        idgrupo: objeto.idgrupo,
+        idtarea:updateTarea.id,
+        idfuente: req.body.idfuente,
+        idunidad: req.body.idunidad
+      }, {
+        where: {
+        idP: req.body.id
+    }
+  })
+    }
+    if (updatetarea) {
         res.status(200).send({
             message: "Objetivo actualizado con éxito",
-            resultado : updateTarea
-        });
+            resultado : updatetarea
+            
+          });
     }
+    
 } catch (error) {
     console.log(error);
     return res.status(500).json({status:"Server Error: " + error});
 }
+
 };
 const probando_like = async(req,res) => { 
   try{ 
-    const tarea = await db.tarea.findOne({
+    const tarea = await db.tareas_historico.findOne({
       where: {
-        isPresupuesto: true,
         nombre: {
-          [Op.substring]: req.body.nombre,
+          [Op.substring]: req.params.nombre,
         }
-    },
-      include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto}]},]
+    }
+    //   include:[{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model: db.unidadmedida}]},]
     });
   //   const onepresupuesto =  await db.presupuesto.findOne({
   //   include:[{
@@ -156,9 +191,31 @@ const AllTarea_by_idActividad = async(req,res) => {
         isDelete: false,
         idActividad: req.params.idActividad
     },
-    include:[{
-      model: db.actividad,
-    }]
+    include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ]
+ 
+    
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
+const AllTarea_by_idActividad_presupuesto = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        idActividad: req.params.idActividad,
+        isPresupuesto: true
+    },
+    include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ]
+ 
+    
   })
   res.status(200).json( allTarea );
 } catch(error){
@@ -174,5 +231,6 @@ module.exports = {
   eliminarTarea,
   newTarea,
   probando_like,
-  AllTarea_by_idActividad
+  AllTarea_by_idActividad,
+  AllTarea_by_idActividad_presupuesto
 }

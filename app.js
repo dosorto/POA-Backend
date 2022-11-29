@@ -35,9 +35,11 @@ require("./routes/tarea.routes")(app)
 require("./routes/objetogasto.routes")(app)
 require("./routes/grupogasto.routes")(app)
 require("./routes/unidadmedida.routes")(app)
+require("./routes/tareas_historico.routes")(app)
 ////////s
 require("./routes/planificacion.route")(app);
 require("./routes/poa.routes")(app);
+require("./routes/departamento.routes")(app);
 require("./routes/actividad.routes")(app);
 require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
