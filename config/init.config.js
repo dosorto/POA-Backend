@@ -625,21 +625,25 @@ exports.initial = async () => {
             idInstitucion: 1
         });
 
-        await db.depto.create({
+        await db.depto.bulkCreate([{
             name: "Facultad de Ingeniería en Sistemas",
             descripcion: "Ingeniería en Sistemas",
-            idUE: 1
-        });
+        },
+        {
+            name: "Facultad de Ingeniería Acuicola",
+            descripcion: "Ingeniería",
+        }]);
 
         await db.poa.create({
-            name: "Prueba",
+            name: "POA 2020",
             anio: '2021-01-01',
             fuente11: "22,000",
             fuente12: "30,000",
             fuente12B: "23,000",
             isActive: 1,
             idDepto: 1,
-            idUE: 1
+            idUE: 1,
+            idInstitucion:1
         });
 
         /// Tareas desde aqui
