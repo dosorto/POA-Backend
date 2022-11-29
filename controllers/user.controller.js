@@ -338,6 +338,27 @@ const newPassword = async (req, res) => {
   res.json({ message: 'password cambiada correctamente' })
   };
 
+  const delete_user = async (req, res) => {
+    try {
+    const eliminarUsario = await db.user.update({
+    isDelete : true
+    }, {
+    where: {
+    id: req.body.id
+    }
+    });
+    if (eliminarUsuario) {
+    res.status(200).send({
+    message: "Usuario eliminado correctamente"
+    });
+    }
+    } catch (error) {
+    console.log(error);
+    res.status(401).send({
+    message: "Error al eliminar Usuario: " + error.message
+    });
+    }
+    }
 module.exports = {
   allUser,
   login,
@@ -347,5 +368,6 @@ module.exports = {
   getUserById,
   update_user,
   forgotPassword,
-  newPassword
+  newPassword,
+  delete_user
 }
