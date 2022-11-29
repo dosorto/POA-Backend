@@ -731,6 +731,8 @@ exports.initial = async () => {
             cantidadPlanificada : 20,
             cantidadEjecutada : 0,
             promedioAlcanzado : 0,
+            isCantidad: 1,
+            isPorcentaje:0,
             idActividad: 1
     
         })
