@@ -550,14 +550,6 @@ exports.initial = async () => {
             idRol: 1
         });
 
-        await db.actividad.create({
-            nombre: 'Arreglo 1',
-            descripcion: 'prueba',
-            estado: 'FORMULACION',
-            tipoActividad: 'ACADEMICA',
-            categoria: 'COORDINACION',
-            idResultado: 1,
-        });
 
 
         //Agregue tabla catalogo de permisos
@@ -645,7 +637,16 @@ exports.initial = async () => {
             idUE: 1,
             idInstitucion:1
         });
-
+        await db.actividad.create({
+            nombre: 'Arreglo 1',
+            descripcion: 'prueba',
+            estado: 'FORMULACION',
+            tipoActividad: 'ACADEMICA',
+            categoria: 'COORDINACION',
+            idPoa: 1,
+            idDepto:1,
+            idInstitucion:1
+        });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO
         await db.grupogasto.bulkCreate([{
