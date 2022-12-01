@@ -550,14 +550,6 @@ exports.initial = async () => {
             idRol: 1
         });
 
-        await db.actividad.create({
-            nombre: 'Arreglo 1',
-            descripcion: 'prueba',
-            estado: 'FORMULACION',
-            tipoActividad: 'ACADEMICA',
-            categoria: 'COORDINACION',
-            idResultado: 1,
-        });
 
 
         //Agregue tabla catalogo de permisos
@@ -645,7 +637,16 @@ exports.initial = async () => {
             idUE: 1,
             idInstitucion:1
         });
-
+        await db.actividad.create({
+            nombre: 'Arreglo 1',
+            descripcion: 'prueba',
+            estado: 'FORMULACION',
+            tipoActividad: 'ACADEMICA',
+            categoria: 'COORDINACION',
+            idPoa: 1,
+            idDepto:1,
+            idInstitucion:1
+        });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO
         await db.grupogasto.bulkCreate([{
@@ -1449,35 +1450,35 @@ exports.initial = async () => {
             {
              "nombre": "Servicio de limpieza aires 12000 BTU",
              "idobjeto": 31,
-             "objeto": "23360 - Mantenimiento y Reparación de Equipo de\nOficina y Muebles",
+             "objeto": "23360 - Mantenimiento y Reparación de Equipo de Oficina y Muebles",
              "idgrupo": 2,
              "grupo": "20000 - SERVICIOS NO PERSONALES"
             },
             {
              "nombre": "Servicio de limpieza aires 18000 BTU",
              "idobjeto": 31,
-             "objeto": "23360 - Mantenimiento y Reparación de Equipo de\nOficina y Muebles",
+             "objeto": "23360 - Mantenimiento y Reparación de Equipo de Oficina y Muebles",
              "idgrupo": 2,
              "grupo": "20000 - SERVICIOS NO PERSONALES"
             },
             {
              "nombre": "Servicio de limpieza aires 24000 BTU",
              "idobjeto": 31,
-             "objeto": "23360 - Mantenimiento y Reparación de Equipo de\nOficina y Muebles",
+             "objeto": "23360 - Mantenimiento y Reparación de Equipo de Oficina y Muebles",
              "idgrupo": 2,
              "grupo": "20000 - SERVICIOS NO PERSONALES"
             },
             {
              "nombre": "Servicio de limpieza aires 36000 BTU",
              "idobjeto": 31,
-             "objeto": "23360 - Mantenimiento y Reparación de Equipo de\nOficina y Muebles",
+             "objeto": "23360 - Mantenimiento y Reparación de Equipo de Oficina y Muebles",
              "idgrupo": 2,
              "grupo": "20000 - SERVICIOS NO PERSONALES"
             },
             {
              "nombre": "Servicio de limpieza aires 60000 BTU",
              "idobjeto": 31,
-             "objeto": "23360 - Mantenimiento y Reparación de Equipo de\nOficina y Muebles",
+             "objeto": "23360 - Mantenimiento y Reparación de Equipo de Oficina y Muebles",
              "idgrupo": 2,
              "grupo": "20000 - SERVICIOS NO PERSONALES"
             },
@@ -1496,7 +1497,7 @@ exports.initial = async () => {
              "grupo": "30000 - MATERIALES Y SUMINISTROS"
             },
             {
-             "nombre": "Servicio cambio de aceite para el NISAN FRONTIER ; 1 galon 1\/4 de aceite 15W40 LONG LIFE; 1 FILTRO DE ACEITE LFP9930T9",
+             "nombre": "Servicio cambio de aceite para el NISAN FRONTIER ; 1 galon 1/4 de aceite 15W40 LONG LIFE; 1 FILTRO DE ACEITE LFP9930T9",
              "idobjeto": 30,
              "objeto": "23200 - Mantenimiento y Reparación de Equipos y\nMedios de Transporte",
              "idgrupo": 2,
@@ -1585,6 +1586,8 @@ exports.initial = async () => {
             cantidadPlanificada : 20,
             cantidadEjecutada : 0,
             promedioAlcanzado : 0,
+            isCantidad: 1,
+            isPorcentaje:0,
             idActividad: 1
     
         })
