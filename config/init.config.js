@@ -629,9 +629,9 @@ exports.initial = async () => {
         await db.poa.create({
             name: "POA 2020",
             anio: '2021-01-01',
-            fuente11: "22,000",
-            fuente12: "30,000",
-            fuente12B: "23,000",
+            fuente11: "22000",
+            fuente12: "30000",
+            fuente12B: "23000",
             isActive: 1,
             idDepto: 1,
             idUE: 1,
@@ -1593,7 +1593,7 @@ exports.initial = async () => {
         });
 
         db.fuentePoa.create({
-            cantidad:"175,000",
+            cantidad:"175000",
             idPoa:1,
             idfuente:1
         })
