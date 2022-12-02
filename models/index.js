@@ -308,26 +308,57 @@ db.poa.belongsTo(db.ue, {
 //////////////////////////RELACIONES DE ACTIVIDAD Y ACTIVIDAD ENCARGADO-------
 //Una actividad  tiene un resultado, un resultado tiene muchas actividades
 
-db.resultado.hasMany(db.actividad, {
-  foreignKey: { name: 'idResultado', allowNull: false }
-});
-db.actividad.belongsTo(db.resultado, {
-  foreignKey: { name: 'idResultado', allowNull: false }
-});
-///////////////////////
-db.user.hasMany(db.ACencargados, {
-  foreignKey: { name: 'idUser', allowNull: false }
-});
-db.ACencargados.belongsTo(db.user, {
-  foreignKey: { name: 'idUser', allowNull: false }
-});
-///////////////////////
+
+
 db.actividad.hasMany(db.ACencargados, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 db.ACencargados.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
+
+
+
+db.poa.hasMany(db.actividad, {
+  foreignKey: { name: 'idPoa', allowNull: false }
+});
+db.actividad.belongsTo(db.poa, {
+  foreignKey: { name: 'idPoa', allowNull: false }
+});
+
+///relacion actividad-depto///////////
+
+db.depto.hasMany(db.actividad, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+db.actividad.belongsTo(db.depto, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+
+
+/////////relacion actividad-institucion
+db.institucion.hasMany(db.actividad, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+db.actividad.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+////////
+db.empleado.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idEmpleado', allowNull: false }
+});
+db.ACencargados.belongsTo(db.empleado, {
+  foreignKey: { name: 'idEmpleado', allowNull: false }
+});
+
+db.actividad.hasMany(db.ACencargados, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
+db.ACencargados.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
+  ///////////////////////
 
 
 /////----------------------------------------------------------------------
