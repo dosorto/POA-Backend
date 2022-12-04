@@ -6,15 +6,15 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true // Automatically gets converted to SERIAL for postgres
           },
         cantidad: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         costounitario: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         total: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         isDelete: {
