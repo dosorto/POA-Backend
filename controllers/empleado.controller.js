@@ -36,7 +36,7 @@ const get_empleado_by_id = async (req,res) =>{
         if(!empleado){
             return res.status(400).send("<h1>No existe el usuario</h1>");
         }
-        return res.status(200).json({empleado});
+        return res.status(200).json(empleado);
     }catch(error){
         return res.status(400).json({status:"Bad Request", error:error});
     }
@@ -54,7 +54,7 @@ const get_empleados = async (req,res) =>{
         if(!empleados){
             return res.status(400).send("<h1>No existe ni un empleado</h1>");
         }
-        return res.status(200).json({empleados});
+        return res.status(200).json(empleados);
     }catch(error){
         return res.status(400).json({status:"Bad Request", error:error});
     }

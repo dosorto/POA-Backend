@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
       cantidad: {
         type: Sequelize.STRING,
         allowNull: false,
+        isDelete: false
       }
     });
     return fuentePoa;

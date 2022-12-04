@@ -38,7 +38,7 @@ const get_all_departamentoid = async (req, res) => {
         if (!all_deptos) {
             return res.status(404).send({ message: 'No hay ningún elemento' });
         }
-        return res.status(200).json(all_deptos);
+        return res.status(200).json({all_deptos});
     } catch (error) {
         return res.status(500).json({ status: "Server Error: " + error });
     }

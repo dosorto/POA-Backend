@@ -17,5 +17,8 @@ module.exports = function(app) {
   app.put("/tarea/actualizar",controller.updateTarea);
   app.get("/tarea/get_all_by_id/:id", controller.AllTareas_by_id)
   app.get("/tarea/get_all_by_idActividad/:idActividad", controller.AllTarea_by_idActividad)
-  app.get("/tarea/get_all_presupuesto/:idActividad", controller.AllTarea_by_idActividad_presupuesto)
+  app.get("/tarea/get_all_presupuesto/:idActividad", controller.AllTarea_by_idActividad_presupuesto),
+  app.get("/tarea/suma/:idActividad", controller.sumaPresupuestos_Fuente11)
+  app.get("/tarea/suma_fuente12/:idActividad", controller.sumaPresupuestos_Fuente12)
+  app.get("/tarea/suma_fuente12B/:idActividad", controller.sumaPresupuestos_Fuente12B)
 }
