@@ -65,6 +65,8 @@ db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
 db.tareas_historico = require("./tareas_historico.model.js")(sequelize,Sequelize);
+db.fuentePoa = require("./fuentePoa.model.js")(sequelize,Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -309,16 +311,6 @@ db.poa.belongsTo(db.ue, {
 //Una actividad  tiene un resultado, un resultado tiene muchas actividades
 
 
-
-db.actividad.hasMany(db.ACencargados, {
-  foreignKey: { name: 'idActividad', allowNull: false }
-});
-db.ACencargados.belongsTo(db.actividad, {
-  foreignKey: { name: 'idActividad', allowNull: false }
-});
-
-
-
 db.poa.hasMany(db.actividad, {
   foreignKey: { name: 'idPoa', allowNull: false }
 });
@@ -326,6 +318,16 @@ db.actividad.belongsTo(db.poa, {
   foreignKey: { name: 'idPoa', allowNull: false }
 });
 
+
+
+/////////relacion actividad-institucion
+db.institucion.hasMany(db.actividad, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+db.actividad.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
 ///relacion actividad-depto///////////
 
 db.depto.hasMany(db.actividad, {
@@ -337,14 +339,14 @@ db.actividad.belongsTo(db.depto, {
 
 
 /////////relacion actividad-institucion
-db.institucion.hasMany(db.actividad, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.ue.hasMany(db.actividad, {
+  foreignKey: { name: 'idUE', allowNull: false }
 });
 
-db.actividad.belongsTo(db.institucion, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.actividad.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
 });
-////////
+////////relacion encargados con empleados
 db.empleado.hasMany(db.ACencargados, {
   foreignKey: { name: 'idEmpleado', allowNull: false }
 });
@@ -448,13 +450,18 @@ db.indicadoresPoa.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 
-////////////// RELACIONES DE Indicadores POA Y Actividades /////////
+////////////// RELACIONES DE POA Y Fuente /////////
 //Un poa tiene muchas fuentes, una fuente tiene muchos poa
-db.poa.hasMany(db.fuentePoa, {
-  foreignKey: {name : 'idfuentePoa' , allowNull: false }
+
+db.poa.belongsToMany(db.fuente, {
+  through: db.fuentePoa,
+  foreignKey: "idfuente",
+  otherKey: "IdPoa"
 });
-db.fuentePoa.belongsTo(db.poa, {
-  foreignKey: { name: 'idfuentePoa', allowNull: false }
+db.fuente.belongsToMany(db.poa, {
+  through: db.fuentePoa,
+  foreignKey: "idfuente",
+  otherKey: "idPoa"
 });
 
 
