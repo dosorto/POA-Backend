@@ -38,10 +38,6 @@ db.objetivos = require("./objetivos.model.js")(sequelize, Sequelize);
 db.institucion = require("./institucion.model.js")(sequelize, Sequelize);
 db.resultado = require("./resultados.model.js")(sequelize, Sequelize);
 db.areas = require("./areas.model.js")(sequelize, Sequelize);
-<<<<<<< HEAD
-db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
-=======
->>>>>>> main
 
 ////Gestion POA
 db.objetogasto= require("./objetogasto.model.js")(sequelize, Sequelize);
