@@ -65,6 +65,8 @@ db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
 db.tareas_historico = require("./tareas_historico.model.js")(sequelize,Sequelize);
+db.fuentePoa = require("./fuentePoa.model.js")(sequelize,Sequelize);
+
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
 //// UN USUARIO PERTENECE A UN EMPLEADO, UN EMPLEADO TIENE UN USUARIO ////
@@ -448,13 +450,18 @@ db.indicadoresPoa.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 
-////////////// RELACIONES DE Indicadores POA Y Actividades /////////
+////////////// RELACIONES DE POA Y Fuente /////////
 //Un poa tiene muchas fuentes, una fuente tiene muchos poa
-db.poa.hasMany(db.fuentePoa, {
-  foreignKey: {name : 'idfuentePoa' , allowNull: false }
+
+db.poa.belongsToMany(db.fuente, {
+  through: db.fuentePoa,
+  foreignKey: "idfuente",
+  otherKey: "IdPoa"
 });
-db.fuentePoa.belongsTo(db.poa, {
-  foreignKey: { name: 'idfuentePoa', allowNull: false }
+db.fuente.belongsToMany(db.poa, {
+  through: db.fuentePoa,
+  foreignKey: "idfuente",
+  otherKey: "idPoa"
 });
 
 
