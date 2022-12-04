@@ -645,7 +645,8 @@ exports.initial = async () => {
             categoria: 'COORDINACION',
             idPoa: 1,
             idDepto: 1,
-            idInstitucion: 1
+            idInstitucion: 1,
+            idUE:1
         });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO

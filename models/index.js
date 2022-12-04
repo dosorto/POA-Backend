@@ -311,16 +311,6 @@ db.poa.belongsTo(db.ue, {
 //Una actividad  tiene un resultado, un resultado tiene muchas actividades
 
 
-
-db.actividad.hasMany(db.ACencargados, {
-  foreignKey: { name: 'idActividad', allowNull: false }
-});
-db.ACencargados.belongsTo(db.actividad, {
-  foreignKey: { name: 'idActividad', allowNull: false }
-});
-
-
-
 db.poa.hasMany(db.actividad, {
   foreignKey: { name: 'idPoa', allowNull: false }
 });
@@ -328,6 +318,16 @@ db.actividad.belongsTo(db.poa, {
   foreignKey: { name: 'idPoa', allowNull: false }
 });
 
+
+
+/////////relacion actividad-institucion
+db.institucion.hasMany(db.actividad, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+db.actividad.belongsTo(db.institucion, {
+  foreignKey: { name: 'idInstitucion', allowNull: false }
+});
 ///relacion actividad-depto///////////
 
 db.depto.hasMany(db.actividad, {
@@ -339,14 +339,14 @@ db.actividad.belongsTo(db.depto, {
 
 
 /////////relacion actividad-institucion
-db.institucion.hasMany(db.actividad, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.ue.hasMany(db.actividad, {
+  foreignKey: { name: 'idUE', allowNull: false }
 });
 
-db.actividad.belongsTo(db.institucion, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.actividad.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
 });
-////////
+////////relacion encargados con empleados
 db.empleado.hasMany(db.ACencargados, {
   foreignKey: { name: 'idEmpleado', allowNull: false }
 });
