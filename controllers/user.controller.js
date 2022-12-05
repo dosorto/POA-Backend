@@ -140,7 +140,7 @@ const allUser = async (req, res) => {
         model: db.empleado, include: [{ model: db.institucion }]
       }]
     })
-    return res.status(200).send({ allusers });
+    return res.status(200).send( allusers );
   } catch (error) {
     res.status(400).json({
       message: 'error al ingresar' + error
