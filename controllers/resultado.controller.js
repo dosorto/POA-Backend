@@ -165,11 +165,24 @@ const allResultado = async(req,res) => {
   }
   };
 
+  const get_Result = async (req, res) => {
+    try {
+        const resultado = await db.resultado.findOne({ where: { id: req.params.id } })
+        if (!resultado) {
+            return res.status(404).json({ message: 'No se encuentra el resultado' });
+        }
+        return res.status(200).json({ status: "Ok", resultado });
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
+    }
+}
+
   module.exports = {
     allResultado,
     newResultado,
     deleteResultado,
     updateResultado,
     getResultado,
-    AllResultado_by_idArea
+    AllResultado_by_idArea,
+    get_Result
   }

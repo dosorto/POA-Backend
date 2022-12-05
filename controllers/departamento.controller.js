@@ -9,8 +9,7 @@ const new_departamento = async (req, res) => {
         }
         await db.depto.create({
             name: req.body.name,
-            descripcion: req.body.descripcion,
-            idUE: ue.id
+            descripcion: req.body.descripcion
         });
         return res.status(200).json({ status: "Ok" });
     } catch (error) {
@@ -22,10 +21,7 @@ const new_departamento = async (req, res) => {
 const get_all_departamento = async (req, res) => {
     try {
         const all_depto = await db.depto.findAll({
-            where: { isDelete: false },
-            include: [{
-                model: db.ue,
-            }]
+            where: { isDelete: false }
         });
         if (!all_depto) {
             return res.status(404).send({ message: 'no hay ningun elemento' });
@@ -36,21 +32,13 @@ const get_all_departamento = async (req, res) => {
     }
 }
 //Funcion para obtener todas las departamento
-const get_all_departamento_UE = async (req, res) => {
+const get_all_departamentoid = async (req, res) => {
     try {
-        const all_deptos = await db.depto.findAll(
-            {
-                where: {
-                    isDelete: false,
-                    idUE: req.params.idUE
-                },
-                include: db.ue
-            }
-        );
+        const all_deptos = await db.depto.findByPk(req.params.id);
         if (!all_deptos) {
             return res.status(404).send({ message: 'No hay ningún elemento' });
         }
-        return res.status(200).json(all_deptos);
+        return res.status(200).json({all_deptos});
     } catch (error) {
         return res.status(500).json({ status: "Server Error: " + error });
     }
@@ -65,8 +53,7 @@ const update_departamento = async (req, res) => {
         }
         await db.depto.update({
             name: req.body.name,
-            descripcion: req.body.descripcion,
-            idUE: req.body.idUE
+            descripcion: req.body.descripcion
         }, { where: { id: req.body.id } })
         return res.status(200).send({ message: "ok" });
     } catch (error) {
@@ -103,5 +90,5 @@ module.exports = {
     get_all_departamento,
     disable_departamento,
     update_departamento,
-    get_all_departamento_UE
+    get_all_departamentoid
 }

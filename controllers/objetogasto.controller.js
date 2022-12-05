@@ -15,7 +15,9 @@ const AllObjeto = async(req,res) => {
           isDelete: false,
       },include:[{
         model: db.grupogasto,
-      }]
+      }],order: [
+        // will return `name`
+        ['identificador']]
     })
     res.status(200).json( allObjeto );
   } catch(error){
