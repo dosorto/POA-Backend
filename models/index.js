@@ -450,6 +450,14 @@ db.indicadoresPoa.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 
+db.actividad.hasMany(db.planificacion, {
+  foreignKey: {name : 'idActividad' , 
+  allowNull: false }
+});
+db.planificacion.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', 
+  allowNull: false }
+});
 ////////////// RELACIONES DE POA Y Fuente /////////
 //Un poa tiene muchas fuentes, una fuente tiene muchos poa
 
