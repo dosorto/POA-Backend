@@ -12,6 +12,7 @@ module.exports = function(app) {
   })
   app.post("/auth/login",controller.login);
   app.get("/auth/get-all",controller.allUser);
+  app.get("/auth/delete-user/:id",controller.deleteUser);
   app.post("/auth/create-user",controller.newUser);
   app.get("/auth/get/:id",controller.getUserById);
   app.post("/auth/update-user",controller.update_user);
