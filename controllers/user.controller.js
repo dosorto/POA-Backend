@@ -140,7 +140,7 @@ const allUser = async (req, res) => {
         model: db.empleado, include: [{ model: db.institucion }]
       }]
     })
-    return res.status(200).send({ allusers });
+    return res.status(200).send( allusers );
   } catch (error) {
     res.status(400).json({
       message: 'error al ingresar' + error
@@ -235,7 +235,46 @@ const getUserById = async (req, res) => {
   }
 };
 
+const deleteUser = async (req,res)=>{
+  try{
+  // const user = db.user.findByPk({
+  //   where: {
+  //     id : req.params.id
+  //   }
+  // })
 
+  // if(!user){
+  //   return res.status(404).send({
+  //     message: "usuario no existe"
+  //   });
+  // }
+  // if(user.isDelete){
+  //   return res.status(400).send({
+  //     message: "usuario ya ha sido eliminado"
+  //   });
+  // }
+  console.log("ANTES--------------------");
+  await db.user.update({
+    isDelete: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  
+  
+});
+console.log("despues--------------------");
+return res.status(200).send({
+  message: "usuario eliminado con éxito"
+});
+  }catch(error){
+    return res.status(500).send({
+      message: "Error de servidor: " + error
+    });
+  }
+
+
+}
 
 const forgotPassword = async (req, res) => {
   const message = 'check your email for a loink to reset your password';
@@ -338,27 +377,37 @@ const newPassword = async (req, res) => {
   res.json({ message: 'password cambiada correctamente' })
   };
 
-  const delete_user = async (req, res) => {
+  const changePassword = async (req, res) => {
     try {
-    const eliminarUsario = await db.user.update({
-    isDelete : true
-    }, {
-    where: {
-    id: req.body.id
-    }
-    });
-    if (eliminarUsuario) {
-    res.status(200).send({
-    message: "Usuario eliminado correctamente"
-    });
-    }
+      // obtener el usuario con el indice proporcionado
+      const user = await db.user.findByPk(req.body.id);
+      // validar que exista
+      if (!user) { return res.status(404).send({ message: "Usuario no encontrado" }) }
+  
+      // validar que la contrase;a anterior sea correcta
+      if (!bcrypt.compareSync(req.body.old_password, user.password)) {
+        return res.status(401).send({ message: "Contraseña equivocada" })
+      }
+      // varificar que la nueva contrase;a se haya confirmado
+      if (!(req.body.new_password === req.body.new_password_again)) {
+        return res.status(400).send({ message: "No coiciden ambos campos para nueva contraseña" })
+      }
+  
+      // actualizar contraseña
+      db.user.update(
+        { password: bcrypt.hashSync(req.body.new_password, 8) },
+        {
+          where: {
+            id: user.id
+          }
+        }
+      )
+  
+      return res.status(200).send({ usuario: user.username, isuser: user.id });
     } catch (error) {
-    console.log(error);
-    res.status(401).send({
-    message: "Error al eliminar Usuario: " + error.message
-    });
+      return res.status(500).send(error);
     }
-    }
+  };
 module.exports = {
   allUser,
   login,
@@ -369,5 +418,6 @@ module.exports = {
   update_user,
   forgotPassword,
   newPassword,
-  delete_user
+  changePassword,
+  deleteUser
 }

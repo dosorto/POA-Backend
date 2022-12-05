@@ -17,4 +17,6 @@ module.exports = function(app) {
   app.post("/resultados/crear",controller.newResultado);
   app.get("/resultados/deleteResultado/:id",controller.deleteResultado);
   app.put("/resultados/updateResultado",controller.updateResultado);
+  app.get("/resultados/getResult/:id",controller.get_Result);
+
 };
