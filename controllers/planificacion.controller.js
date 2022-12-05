@@ -4,18 +4,6 @@ const db = require("../models");
 //////////////////////////////////////////////////////////7
 const new_Planificacion = async (req, res) => {
   try {
-    const Planificacion = await db.planificacion.findOne({
-      where: {
-        trimestre: req.body.trimestre,
-        isDelete: false,
-      },
-    });
-
-    // Valida que la planificación exista y que este activa
-    if (Planificacion) {
-      return res.status(400).json({ message: "La planificación ya existe" });
-    }
-
     await db.planificacion.create({
       trimestre: req.body.trimestre,
       cantidad: req.body.cantidad,
@@ -80,50 +68,32 @@ const get_all_Planificacion = async (req, res) => {
 ////////////////////////////////////////////////////////////
 const update_Planificacion = async (req, res) => {
   try {
-    // Busca la planificacion con el id a actualizar para validar que exista.
-    const Planificacion = await db.planificacion.findOne({
-      where: {
-        id: req.body.id,
-        isDelete: false,
-      },
-    });
-    console.log(Planificacion);
-    // Valida el caso de que la planificacion a actualizar no exista.
-    if (Planificacion) {
-      const temporally = await db.planificacion.update(
-        {
-          trimestre: req.body.trimestre,
-          cantidad: req.body.cantidad,
-          fechaInicio: req.body.fechaInicio,
-          fechaFin: req.body.fechaFin,
-        },
-        {
-          where: {
-            id: req.body.id,
-            isDelete: false,
-          },
-        }
-      );
 
-      console.log(temporally);
-      // Valida que la planificacion se haya actualizado
-      if (temporally) {
+    if(!req.body.trimestre){
+        return res.status(400).json({message:'Debe enviar todos los datos'});
+    }
+
+    const temporally = await db.planificacion.update({
+        trimestre: req.body.trimestre,
+        cantidad: req.body.cantidad,
+        fechaInicio : req.body.fechaInicio,
+        fechaFin:req.body.fechaFin
+    }, {
+        where: {
+            id: req.body.id
+        }
+    });
+
+    if (temporally) {
         res.status(200).send({
-          message: "La planificación se ha actualizado con exito",
-        });
-      }
-    } else {
-      return res
-        .status(404)
-        .send({
-          message: "La planificacion a actualizar no existe",
-          Planificacion,
+            message: "Planificacion actualizada con exito",
+            dimension : temporally
         });
     }
-  } catch (error) {
+} catch (error) {
     console.log(error);
-    return res.status(500).json({ status: "Server Error: " + error });
-  }
+    return res.status(500).json({status:"Server Error: " + error});
+}
 };
 
 /////////////////////////////////////////////////////////////////
