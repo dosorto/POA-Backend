@@ -27,7 +27,7 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
-require("./routes/planificacion.routes")(app);
+
 
 
 //Esta pendiente del crud completo el presupuesto B)
@@ -39,7 +39,7 @@ require("./routes/grupogasto.routes")(app)
 require("./routes/unidadmedida.routes")(app)
 require("./routes/tareas_historico.routes")(app)
 ////////s
-require("./routes/planificacion.route")(app);
+require("./routes/planificacion.routes")(app);
 require("./routes/poa.routes")(app);
 require("./routes/departamento.routes")(app);
 require("./routes/actividad.routes")(app);
@@ -60,7 +60,7 @@ app.use(
 const db = require("./models/");
 // db.sequelize.sync();
 // force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({force: false}).then(() => {
   init.initial();
 });
 
