@@ -24,7 +24,8 @@ const newActividad = async (req, res) => {
             categoria: req.body.categoria,
             idPoa: req.body.idPoa,
             idDepto: poa.idDepto,
-            idInstitucion: poa.idInstitucion
+            idInstitucion: poa.idInstitucion,
+            idUE: poa.idUE
         });
 
         for (let i = 0; i < req.body.responsables.length; i++) {
