@@ -140,7 +140,7 @@ const allUser = async (req, res) => {
         model: db.empleado, include: [{ model: db.institucion }]
       }]
     })
-    return res.status(200).send({ allusers });
+    return res.status(200).send( allusers );
   } catch (error) {
     res.status(400).json({
       message: 'error al ingresar' + error
@@ -235,7 +235,46 @@ const getUserById = async (req, res) => {
   }
 };
 
+const deleteUser = async (req,res)=>{
+  try{
+  // const user = db.user.findByPk({
+  //   where: {
+  //     id : req.params.id
+  //   }
+  // })
 
+  // if(!user){
+  //   return res.status(404).send({
+  //     message: "usuario no existe"
+  //   });
+  // }
+  // if(user.isDelete){
+  //   return res.status(400).send({
+  //     message: "usuario ya ha sido eliminado"
+  //   });
+  // }
+  console.log("ANTES--------------------");
+  await db.user.update({
+    isDelete: true
+  }, {
+    where: {
+      id: req.params.id
+    }
+  
+  
+});
+console.log("despues--------------------");
+return res.status(200).send({
+  message: "usuario eliminado con éxito"
+});
+  }catch(error){
+    return res.status(500).send({
+      message: "Error de servidor: " + error
+    });
+  }
+
+
+}
 
 const forgotPassword = async (req, res) => {
   const message = 'check your email for a loink to reset your password';
@@ -379,5 +418,6 @@ module.exports = {
   update_user,
   forgotPassword,
   newPassword,
-  changePassword
+  changePassword,
+  deleteUser
 }
