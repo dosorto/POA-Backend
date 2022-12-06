@@ -19,7 +19,7 @@ const newActividad = async (req, res) => {
         const actividadCreada = await db.actividad.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
-            estado: req.body.estado,
+            estado: "FORMULACION",
             tipoActividad: req.body.tipoActividad,
             categoria: req.body.categoria,
             idPoa: req.body.idPoa,
@@ -77,9 +77,7 @@ const updateActividad = async (req, res) => {
         if (!req.body.descripcion) {
             return res.status(400).json({ message: 'Debe enviar todos los datos' });
         }
-        if (!req.body.estado) {
-            return res.status(400).json({ message: 'Debe enviar todos los datos' });
-        }
+      
         if (!req.body.tipoActividad) {
             return res.status(400).json({ message: 'Debe enviar todos los datos' });
         }
@@ -94,7 +92,6 @@ const updateActividad = async (req, res) => {
             {
                 nombre: req.body.nombre,
                 descripcion: req.body.descripcion,
-                estado: req.body.estado,
                 tipoActividad: req.body.tipoActividad,
                 categoria: req.body.categoria,
                 idPoa: req.body.idPoa
@@ -156,9 +153,11 @@ const get_all_actividad_by_idPoa = async (req, res) => {
                     isDelete: false,
                     idPoa: req.params.idPoa
                 },
-                include: db.poa
-            }
-        );
+                include: [{
+                    model: db.poa
+                }],order:[
+                    ['createdAt','DESC']]
+            })
         if (!all_actividad) {
             return res.status(404).send({ message: 'no hay ningun elemento' });
         }
