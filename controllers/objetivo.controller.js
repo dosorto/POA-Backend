@@ -38,7 +38,9 @@ const AllObjetivo = async(req,res) => {
         model: db.pei,
       },{
          model: db.dimension
-      }]
+      }],order: [
+        // will return `name`
+        ['createdAt','DESC']]
     })
     res.status(200).json( allObjetivo );
   } catch(error){

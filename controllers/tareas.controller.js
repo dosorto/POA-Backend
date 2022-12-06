@@ -193,7 +193,9 @@ const AllTarea_by_idActividad = async(req,res) => {
         idActividad: req.params.idActividad
     },
     include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
-  ]
+  ],order: [
+    // will return `name`
+    ['createdAt','DESC']]
  
     
   })
