@@ -112,7 +112,9 @@ const allindicadores = async(req,res) => {
       },
       include:[{
         model: db.actividad,
-      }]
+      }],order: [
+        // will return `createdAt`
+        ['createdAt','DESC']]
     })
     res.status(200).json( allIndicador );
   } catch(error){

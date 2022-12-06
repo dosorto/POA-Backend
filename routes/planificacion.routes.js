@@ -11,4 +11,6 @@ module.exports = function (app) {
   app.put("/planificacion/delete", controller.disable_Planificacion);
   app.put("/planificacion/update", controller.update_Planificacion);
   app.post("/planificacion/create", controller.new_Planificacion);
+  app.get("/planificacion/get_all_by_id_actividad/:idActividad", controller.get_all_planificaciones_by_idActividad);
+
 };
