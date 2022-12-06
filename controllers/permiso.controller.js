@@ -45,7 +45,7 @@ const get_allPermisos = async (req,res) =>{
         if(!permiso){
             return res.status(400).send("<h1>No existen permisos</h1>");
         }
-        return res.status(200).json({permiso});
+        return res.status(200).json(permiso);
     }catch(error){
         return res.status(400).json({status:"Bad Request", error:error});
     }
