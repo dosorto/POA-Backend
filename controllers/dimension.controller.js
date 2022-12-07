@@ -51,8 +51,11 @@ const get_all_dimension_by_idPei = async (req,res) =>{
         const all_dimension = await db.dimension.findAll(
            { where:{isDelete:false,
                     idPei : req.params.idPei},
-            include:db.PEI}
-        );
+                    include:[{
+                        model:db.pei,
+                      }],order:[[
+                        'createdAt','DESC']]
+                      })
         if(!all_dimension){
             return res.status(404).send({message:'no hay ningun elemento'});
         }
