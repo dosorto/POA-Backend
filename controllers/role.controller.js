@@ -23,7 +23,7 @@ const get_roles = async (req,res) =>{
         if(!roles){
             return res.status(400).send("<h1>No existe ni un empleado</h1>");
         }
-        return res.status(200).json({roles});
+        return res.status(200).json(roles);
     }catch(error){
         return res.status(400).json({status:"Bad Request", error:error});
     }

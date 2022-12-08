@@ -37,6 +37,8 @@ const allindicadores = async(req,res) => {
             nombre : req.body.nombre,
             descripcion : req.body.descripcion,
             cantidadPlanificada : req.body.cantidadPlanificada,
+            isCantidad : req.body.isCantidad,
+            isPorcentaje: req.body.isPorcentaje,
             idActividad: actividad.id
 
         })
@@ -110,7 +112,9 @@ const allindicadores = async(req,res) => {
       },
       include:[{
         model: db.actividad,
-      }]
+      }],order: [
+        // will return `createdAt`
+        ['createdAt','DESC']]
     })
     res.status(200).json( allIndicador );
   } catch(error){
@@ -120,10 +124,60 @@ const allindicadores = async(req,res) => {
   }
   };
 
+  const get_Depto = async (req, res) => {
+    try {
+        const departamento = await db.depto.findOne({ where: { id: req.params.id } })
+        if (!departamento) {
+            return res.status(404).json({ message: 'No se encuentra ese departamento' });
+        }
+        return res.status(200).json({ status: "Ok", departamento });
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
+    }
+}
+
+const get_indicador = async (req, res) => {
+  try {
+      const indicadores = await db.indicadoresPoa.findOne({ where: { id: req.params.id } })
+      if (!indicadores) {
+          return res.status(404).json({ message: 'No se encuentra ese departamento' });
+      }
+      return res.status(200).json({ status: "Ok", indicadores });
+  } catch (error) {
+      return res.status(500).json({ status: "Server Error: " + error });
+  }
+}
+
+
+const seguimiento = async (req, res) => {
+  try {
+    
+    const seguimientoIndicador = await db.indicadoresPoa.update({
+        cantidadPlanificada : req.body.cantidadPlanificada,
+        cantidadEjecutada: req.body.cantidadEjecutada,
+        promedioAlcanzado: req.body.promedioAlcanzado,
+    }, {
+        where: {id: req.body.id }
+    });
+    if (seguimientoIndicador) {
+        res.status(200).send({
+            message: "Seguimiento actualizado con éxito",
+            indicador : seguimientoIndicador
+        });
+    }
+} catch (error) {
+    console.log(error);
+    return res.status(500).json({status:"Server Error: " + error});
+}};
+
+
   module.exports = {
     allindicadores,
     newIndicador,
     deleteIndicador,
     updateIndicador,
-    AllIndicador_by_idActividad
+    AllIndicador_by_idActividad,
+    get_indicador,
+    get_Depto,
+    seguimiento
   }

@@ -38,7 +38,9 @@ const AllObjetivo = async(req,res) => {
         model: db.pei,
       },{
          model: db.dimension
-      }]
+      }],order: [
+        // will return `name`
+        ['createdAt','DESC']]
     })
     res.status(200).json( allObjetivo );
   } catch(error){
@@ -153,11 +155,24 @@ const updateObjetivo = async(req, res) =>{
 }
 };
 
+const get_Objetivo = async (req, res) => {
+  try {
+      const objetivo = await db.objetivos.findOne({ where: { id: req.params.id } })
+      if (!objetivo) {
+          return res.status(404).json({ message: 'No se encuentra el objetivo' });
+      }
+      return res.status(200).json({ status: "Ok", objetivo });
+  } catch (error) {
+      return res.status(500).json({ status: "Server Error: " + error });
+  }
+}
+
 module.exports = {
   AllObjetivo,
   eliminarObjetivo,
   newObjetivo,
   updateObjetivo,
   AllObjetivo_by_idDimension,
-  AllObjetivo_by_id
+  AllObjetivo_by_id,
+  get_Objetivo
 }

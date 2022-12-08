@@ -17,8 +17,18 @@ module.exports = (sequelize, Sequelize) =>{
             allowNull: true,
         },
         promedioAlcanzado: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DOUBLE,
             allowNull: true,
+        },
+        isCantidad:{
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isPorcentaje: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         isDelete: {
             type: Sequelize.BOOLEAN,

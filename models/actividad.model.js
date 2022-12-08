@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         categoria: {
-            type: Sequelize.ENUM('COORDINACION', 'JEFATURA'),
+            type: Sequelize.ENUM('COORDINACION', 'JEFATURA','ADMINISTRATIVA'),
             allowNull: false,
         },
 

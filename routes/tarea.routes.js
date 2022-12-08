@@ -10,11 +10,15 @@ module.exports = function(app) {
     );
     next();
   });
-  app.get("/tarea/prueba", controller.probando_like)
+  app.get("/tarea/prueba/:nombre", controller.probando_like)
   app.get("/tarea/get_all", controller.AllTareas);
   app.get("/tarea/eliminar/:id",controller.eliminarTarea);
   app.post("/tarea/crear",controller.newTarea);
   app.put("/tarea/actualizar",controller.updateTarea);
   app.get("/tarea/get_all_by_id/:id", controller.AllTareas_by_id)
   app.get("/tarea/get_all_by_idActividad/:idActividad", controller.AllTarea_by_idActividad)
+  app.get("/tarea/get_all_presupuesto/:idActividad", controller.AllTarea_by_idActividad_presupuesto),
+  app.get("/tarea/suma/:idActividad", controller.sumaPresupuestos_Fuente11)
+  app.get("/tarea/suma_fuente12/:idActividad", controller.sumaPresupuestos_Fuente12)
+  app.get("/tarea/suma_fuente12B/:idActividad", controller.sumaPresupuestos_Fuente12B)
 }

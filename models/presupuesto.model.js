@@ -1,15 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
     const presupuesto = sequelize.define("presupuesto", {
-        cantidad: {
+       idP:{   
             type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true // Automatically gets converted to SERIAL for postgres
+          },
+        cantidad: {
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         costounitario: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         total: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.DECIMAL(10, 2),
             allowNull: false
         },
         isDelete: {
