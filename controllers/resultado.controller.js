@@ -155,7 +155,9 @@ const allResultado = async(req,res) => {
           model:db.dimension,
         },{
           model:db.pei,
-        }]
+        }],order: [
+          // will return `name`
+          ['createdAt','DESC']]
     })
     res.status(200).json( allResultado );
   } catch(error){

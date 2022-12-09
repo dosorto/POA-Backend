@@ -9,6 +9,7 @@ const new_Planificacion = async (req, res) => {
       cantidad: req.body.cantidad,
       fechaInicio: req.body.fechaInicio,
       fechaFin: req.body.fechaFin,
+      idActividad: req.body.idActividad
     });
 
     return res.status(200).json({ status: "Ok" });
@@ -124,10 +125,28 @@ const disable_Planificacion = async (req, res) => {
   }
 };
 
+const get_all_planificaciones_by_idActividad = async (req,res) =>{
+  try{
+      const all_planificacion = await db.planificacion.findAll(
+         { where:{isDelete:false,
+                  idActividad : req.params.idActividad},
+          include:db.actividad}
+      );
+      if(!all_planificacion){
+          return res.status(404).send({message:'no hay ningun elemento'});
+      }
+      return res.status(200).json(all_planificacion);
+  }catch(error){
+      return res.status(500).json({status:"Server Error: " + error});
+  }
+}
+
+
 module.exports = {
   new_Planificacion,
   get_all_Planificacion,
   disable_Planificacion,
   update_Planificacion,
   get_Planificacion,
+  get_all_planificaciones_by_idActividad
 };
