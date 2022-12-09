@@ -441,6 +441,26 @@ db.tarea.belongsTo(db.actividad, {
   foreignKey: { name: 'idActividad', allowNull: false }
 });
 
+//////////////////////////RELACIONES DE POA Y Tareas-------
+//Una Tarea tiene un POA, un POA tiene muchas tareas
+
+
+db.poa.hasMany(db.tarea, {
+  foreignKey: { name: 'idPoa', allowNull: false }
+});
+db.tarea.belongsTo(db.poa, {
+  foreignKey: { name: 'idPoa', allowNull: false }
+});
+
+///Tareas y departamento
+db.depto.hasMany(db.tarea, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+db.tarea.belongsTo(db.depto, {
+  foreignKey: { name: 'idDepto', allowNull: false }
+});
+
+
 ////////////// RELACIONES DE Indicadores POA Y Actividades /////////
 //Un indicador tiene una actividad, una actividad tiene muchos indicadores
 db.actividad.hasMany(db.indicadoresPoa, {
@@ -471,6 +491,7 @@ db.fuente.belongsToMany(db.poa, {
   foreignKey: "idfuente",
   otherKey: "idPoa"
 });
+
 
 
 module.exports = db;

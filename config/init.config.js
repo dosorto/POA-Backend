@@ -880,12 +880,16 @@ exports.initial = async () => {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Diesel",
             isPresupuesto: true,
-            idActividad: 1
+            idActividad: 1,
+            idPoa:1,
+            idDepto:1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
-            idActividad: 1
+            idActividad: 1,
+            idPoa:1,
+            idDepto:1
         }]);
         await db.presupuesto.bulkCreate([{
             cantidad: 10,
