@@ -21,4 +21,5 @@ module.exports = function(app) {
   app.get("/tarea/suma/:idActividad", controller.sumaPresupuestos_Fuente11)
   app.get("/tarea/suma_fuente12/:idActividad", controller.sumaPresupuestos_Fuente12)
   app.get("/tarea/suma_fuente12B/:idActividad", controller.sumaPresupuestos_Fuente12B)
+  app.get("/tarea/suma_11/:id", controller.suma11)
 }
