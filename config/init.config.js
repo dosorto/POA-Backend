@@ -619,11 +619,13 @@ exports.initial = async () => {
 
         await db.depto.bulkCreate([{
             name: "Facultad de Ingeniería en Sistemas",
-            descripcion: "Ingeniería en Sistemas",
+            descripcion: "Ingeniería",
+            idUE:1
         },
         {
             name: "Facultad de Ingeniería Acuicola",
             descripcion: "Ingeniería",
+            idUE:1
         }]);
 
         await db.poa.create({
@@ -635,7 +637,7 @@ exports.initial = async () => {
             isActive: 1,
             idDepto: 1,
             idUE: 1,
-            idInstitucion: 1
+            idInstitucion: 1,
         });
         await db.actividad.create({
             nombre: 'Arreglo 1',

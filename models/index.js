@@ -30,6 +30,8 @@ db.role = require("./role.model.js")(sequelize, Sequelize);
 db.empleado = require("./empleado.model.js")(sequelize, Sequelize);
 db.permiso = require("./permiso.model.js")(sequelize, Sequelize);
 db.roles_permiso = require("./roles_permiso.model")(sequelize, Sequelize);
+db.empleado_depto = require("./empleado_depto.model")(sequelize, Sequelize);
+db.encargadoPOA = require("./encargadoPOA.model")(sequelize, Sequelize);
 
 db.pei = require("./pei.model.js")(sequelize, Sequelize);
 db.dimension = require("./dimension.model.js")(sequelize, Sequelize);
@@ -136,6 +138,14 @@ db.ue.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
 });
 
+//////// RELACIÓN DE UNO A MUCHOS ////////
+//// UNA Unidad ejecutora TIENE MUCHOS Departamentos(1:N) ////
+db.ue.hasMany(db.depto, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+db.depto.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
 
 
 ////////////////////////////////////////////
@@ -178,6 +188,31 @@ db.role.belongsToMany(db.permiso, {
   otherKey: "idPermiso"
 });
 
+// Relacion transaccional empleado depto
+
+db.empleado.belongsToMany(db.depto, {
+  through: db.empleado_depto,
+  foreignKey: "idDepto",
+  otherKey: "idEmpleado"
+});
+db.depto.belongsToMany(db.empleado, {
+  through: db.empleado_depto,
+  foreignKey: "idDepto",
+  otherKey: "idEmpleado"
+});
+
+// Relacion Transaccional encargado POA
+
+db.empleado.belongsToMany(db.poa, {
+  through: db.encargadoPOA,
+  foreignKey: "idPoa",
+  otherKey: "idEmpleado"
+});
+db.poa.belongsToMany(db.empleado, {
+  through: db.encargadoPOA,
+  foreignKey: "idPoa",
+  otherKey: "idEmpleado"
+});
 
 
 
