@@ -198,15 +198,18 @@ const get_Area = async (req, res) => {
   }
 }
 
-const get_all_area_by_idObjetivo = async (req, res) => {
-  try {
-    const all_area = await db.areas.findAll(
-      {
-        where: {
-          isDelete: false,
-          idObjetivos: req.params.idObjetivos
-        },
-        include: db.objetivos
+const get_all_area_by_idObjetivo = async (req,res) =>{
+  try{
+      const all_area = await db.areas.findAll(
+         { where:{isDelete:false,
+                  idObjetivos : req.params.idObjetivos},
+          include:[{
+            model:db.objetivos,
+          }],order:[[
+            'createdAt','DESC']]
+          })
+      if(!all_area){
+          return res.status(404).send({message:'no hay ningun elemento'});
       }
     );
     if (!all_area) {
