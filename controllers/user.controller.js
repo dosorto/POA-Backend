@@ -19,7 +19,11 @@ const login = async (req, res) => {
       include: [{
         model: db.role,
       }, {
-        model: db.empleado, include:[{model:db.institucion}]
+        model: db.empleado, include:[{
+            model:db.ue, include:[{
+                model:db.institucion
+              }]
+          }]
       }]
     });
 
@@ -44,7 +48,7 @@ const login = async (req, res) => {
     const token = jwt.sign({
       idUsuario: user.id,
       idEmpleado: user.empleado.id,
-      idInstitucion: user.empleado.Institucion.id
+      idUE: user.empleado.idUnidadEjecutora
     },
 
       config.secret, {

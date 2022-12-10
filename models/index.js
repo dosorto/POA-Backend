@@ -102,11 +102,11 @@ db.dimension.belongsTo(db.pei, {
 
 /////// RELACIÓN DE UNO A MUCHOS /////////
 //// UN EMPLEADO PERTENECE A UNA INSTITUCION, UNA INSTITUCION TIENE MUCHOS EMPLEADOS ////
-db.institucion.hasMany(db.empleado, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.ue.hasMany(db.empleado, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
-db.empleado.belongsTo(db.institucion, {
-  foreignKey: { name: 'idInstitucion', allowNull: false }
+db.empleado.belongsTo(db.ue, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
 //////// RELACIÓN DE UNO A MUCHOS ////////
 //// UNA INSTITUCION TIENE MUCHOS pei(1:N) ////
@@ -134,6 +134,13 @@ db.institucion.hasMany(db.ue, {
 });
 db.ue.belongsTo(db.institucion, {
   foreignKey: { name: 'idInstitucion', allowNull: false }
+});
+
+db.ue.hasMany(db.depto, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
+});
+db.depto.belongsTo(db.ue, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
 
 

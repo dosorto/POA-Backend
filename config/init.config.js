@@ -19,16 +19,16 @@ exports.initial = async () => {
 
         await db.institucion.bulkCreate([
             {
-                nombre: 'CURLP',
-                descripcion: 'Centro regional'
+                nombre: 'UNAH',
+                descripcion: 'Universidad Nacional Autónoma de Honduras'
             },
             {
-                nombre: 'CUROC',
-                descripcion: 'Centro regional'
+                nombre: 'HGS',
+                descripcion: 'Hospital General del Sur'
             },
             {
-                nombre: 'CURLA',
-                descripcion: 'Centro regional'
+                nombre: 'SAG',
+                descripcion: 'Secretaría de Agricultura y Ganadería'
             }
         ])
 
@@ -529,7 +529,22 @@ exports.initial = async () => {
                 idPei: 1
             }
         ])
+        await db.ue.create({
+            name: "CURLP",
+            descripcion: "Centro Universitario Regional del Litoral Pacífico - UNAH",
+            idInstitucion: 1
+        });
 
+        await db.depto.bulkCreate([{
+            name: "Coordinación Ingeniería en Sistemas",
+            descripcion: "Ingeniería en Sistemas",
+            idUnidadEjecutora: 1
+        },
+        {
+            name: "DEGT",
+            descripcion: "Dirección Ejecutiva de Gestión de Tecnología",
+            idUnidadEjecutora: 1
+        }]);
         await db.empleado.create({
             id: 1,
             dni: "02012",
@@ -539,7 +554,7 @@ exports.initial = async () => {
             telefono: "123",
             fechaNacimiento: '1995-08-07',
             sexo: "M",
-            idInstitucion: 1
+            idUnidadEjecutora: 1
         });
 
         await db.user.create({
@@ -609,21 +624,6 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 4
-        }]);
-
-        await db.ue.create({
-            name: "Dirección",
-            descripcion: "General",
-            idInstitucion: 1
-        });
-
-        await db.depto.bulkCreate([{
-            name: "Facultad de Ingeniería en Sistemas",
-            descripcion: "Ingeniería en Sistemas",
-        },
-        {
-            name: "Facultad de Ingeniería Acuicola",
-            descripcion: "Ingeniería",
         }]);
 
         await db.poa.create({
