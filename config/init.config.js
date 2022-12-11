@@ -1603,6 +1603,16 @@ exports.initial = async () => {
             idfuente:1
         })
 
+        db.encargadoPOA.create({
+            idEmpleado: 1,
+            idPoa: 1
+        })
+
+        db.empleado_depto.create({
+            idEmpleado: 1,
+            idDepto: 1
+        })
+
     } catch (error) {
         console.log(error);
     }

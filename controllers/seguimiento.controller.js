@@ -2,13 +2,14 @@ const db = require("../models/");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const encargadoPOA = db.encargadoPOA;
+const { seguimiento } = require("./indicadoresPoa.controller");
+const seguimiento = db.seguimiento;
 
-const creaEncargadoPOA = async (req = request, res) => {
+const ingresaSeguimiento= async (req = request, res) => {
     const lista = req.body.lista;
     console.log(req.body.lista);
     try {
-        const EPOA = await encargadoPOA.bulkCreate(lista);
+        const seguimiento = await seguimiento.bulkCreate(lista);
         return res.status(200).json({
             message: "Encargado de POA creado con exito",
             data: EPOA,
@@ -22,6 +23,7 @@ const creaEncargadoPOA = async (req = request, res) => {
     }
 }
 
+
 module.exports = {
-    creaEncargadoPOA
+    ingresaSeguimiento
   }
