@@ -626,7 +626,7 @@ exports.initial = async () => {
             idPermiso: 4
         }]);
 
-        await db.poa.create({
+        await db.poa.bulkCreate([{
             name: "POA 2020",
             anio: '2021-01-01',
             fuente11: "22000",
@@ -636,7 +636,18 @@ exports.initial = async () => {
             idDepto: 1,
             idUE: 1,
             idInstitucion: 1,
-        });
+        },
+        {
+            name: "POA 2021",
+            anio: '2021-01-01',
+            fuente11: "22000",
+            fuente12: "30000",
+            fuente12B: "23000",
+            isActive: 1,
+            idDepto: 2,
+            idUE: 1,
+            idInstitucion: 1,
+        }]);
         await db.actividad.create({
             nombre: 'Arreglo 1',
             descripcion: 'prueba',
@@ -646,7 +657,7 @@ exports.initial = async () => {
             idPoa: 1,
             idDepto: 1,
             idInstitucion: 1,
-            idUE:1
+            idUE: 1
         });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO
@@ -881,15 +892,15 @@ exports.initial = async () => {
             descripcion: "Utilizacion de Diesel",
             isPresupuesto: true,
             idActividad: 1,
-            idPoa:1,
-            idDepto:1
+            idPoa: 1,
+            idDepto: 1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
             idActividad: 1,
-            idPoa:1,
-            idDepto:1
+            idPoa: 1,
+            idDepto: 1
         }]);
         await db.presupuesto.bulkCreate([{
             cantidad: 10,
@@ -1598,20 +1609,28 @@ exports.initial = async () => {
         });
 
         db.fuentePoa.create({
-            cantidad:"175000",
-            idPoa:1,
-            idfuente:1
+            cantidad: "175000",
+            idPoa: 1,
+            idfuente: 1
         })
 
-        db.encargadoPOA.create({
+        db.encargadoPOA.bulkCreate([{
             idEmpleado: 1,
             idPoa: 1
-        })
+        },
+        {
+            idEmpleado: 1,
+            idPoa: 2
+        }]);
 
-        db.empleado_depto.create({
+        db.empleado_depto.bulkCreate([{
             idEmpleado: 1,
             idDepto: 1
-        })
+        },
+        {
+            idEmpleado: 1,
+            idDepto: 2
+        }]);
 
     } catch (error) {
         console.log(error);
