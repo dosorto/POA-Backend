@@ -7,10 +7,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer")
 
+
 // controlador para el inicio de sesion
 const login = async (req, res) => {
   //return res.status(200);
   try {
+    // obtener usuario de la bd
     const user = await User.findOne({
       where: {
         username: req.body.username,
@@ -19,22 +21,52 @@ const login = async (req, res) => {
       include: [{
         model: db.role,
       }, {
+<<<<<<< HEAD
         model: db.empleado, include:[{model:db.institucion}]
+=======
+        model: db.empleado, include:[{
+            model:db.ue, include:[{
+                model:db.institucion
+              }]
+          }]
+>>>>>>> main
       }]
     });
 
+    // 404 si no hay usuario con el id proporcionado
     if (!user) {
       return res.status(404).send({
         message: "User Not found."
       });
     }
+<<<<<<< HEAD
     
+=======
+     
+    // bloque de codigo para obtener la lista de permisos
+    const id_permisos = await db.roles_permiso.findAll({
+      where: {
+        idRol: user.role.id
+      }
+    })
+    const permisos = []
+    for (let i = 0; i < id_permisos.length; i++) {
+      const permiso_individual = await db.permiso.findOne({ where: { id: id_permisos[i].idPermiso } });
+      permisos.push(permiso_individual.Permiso);
+    }
+    
+    // validar contrase;a
+>>>>>>> main
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
       user.password
     );
     
+<<<<<<< HEAD
 
+=======
+    // error al no coincidir contrase;a
+>>>>>>> main
     if (!passwordIsValid) {
       return res.status(401).send({
         message: "Warning! Invalid Password!",
@@ -44,7 +76,7 @@ const login = async (req, res) => {
     const token = jwt.sign({
       idUsuario: user.id,
       idEmpleado: user.empleado.id,
-      idInstitucion: user.empleado.Institucion.id
+      idUE: user.empleado.idUnidadEjecutora
     },
 
       config.secret, {
@@ -56,6 +88,7 @@ const login = async (req, res) => {
       usuario: user.username,
       empleado: user.empleado,
       rol: user.role,//,
+      permisos:permisos,
       //sesion:ses,
       token: token
     }
