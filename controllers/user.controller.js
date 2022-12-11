@@ -22,13 +22,19 @@ const login = async (req, res) => {
         model: db.role,
       }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
         model: db.empleado, include:[{model:db.institucion}]
 =======
+=======
+>>>>>>> main
         model: db.empleado, include:[{
             model:db.ue, include:[{
                 model:db.institucion
               }]
           }]
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
       }]
     });
@@ -40,7 +46,24 @@ const login = async (req, res) => {
       });
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+     
+    // bloque de codigo para obtener la lista de permisos
+    const id_permisos = await db.roles_permiso.findAll({
+      where: {
+        idRol: user.role.id
+      }
+    })
+    const permisos = []
+    for (let i = 0; i < id_permisos.length; i++) {
+      const permiso_individual = await db.permiso.findOne({ where: { id: id_permisos[i].idPermiso } });
+      permisos.push(permiso_individual.Permiso);
+    }
+    
+    // validar contrase;a
+>>>>>>> main
 =======
      
     // bloque de codigo para obtener la lista de permisos
@@ -63,7 +86,11 @@ const login = async (req, res) => {
     );
     
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    // error al no coincidir contrase;a
+>>>>>>> main
 =======
     // error al no coincidir contrase;a
 >>>>>>> main

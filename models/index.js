@@ -139,7 +139,10 @@ db.ue.belongsTo(db.institucion, {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> main
 db.ue.hasMany(db.depto, {
   foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
@@ -147,6 +150,9 @@ db.depto.belongsTo(db.ue, {
   foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
 
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
 
 

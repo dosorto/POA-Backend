@@ -20,6 +20,7 @@ exports.initial = async () => {
         await db.institucion.bulkCreate([
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 nombre: 'CURLP',
                 descripcion: 'Centro regional'
             },
@@ -532,6 +533,8 @@ exports.initial = async () => {
         ])
 
 =======
+=======
+>>>>>>> main
                 nombre: 'UNAH',
                 descripcion: 'Universidad Nacional Autónoma de Honduras'
             },
@@ -1058,6 +1061,9 @@ exports.initial = async () => {
             descripcion: "Dirección Ejecutiva de Gestión de Tecnología",
             idUnidadEjecutora: 1
         }]);
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
         await db.empleado.create({
             id: 1,
@@ -1141,6 +1147,7 @@ exports.initial = async () => {
         }]);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         await db.ue.create({
             name: "Dirección",
             descripcion: "General",
@@ -1158,6 +1165,8 @@ exports.initial = async () => {
 
 =======
 >>>>>>> main
+=======
+>>>>>>> main
         await db.poa.create({
             name: "POA 2020",
             anio: '2021-01-01',
@@ -1168,7 +1177,11 @@ exports.initial = async () => {
             idDepto: 1,
             idUE: 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
             idInstitucion: 1
+=======
+            idInstitucion: 1,
+>>>>>>> main
 =======
             idInstitucion: 1,
 >>>>>>> main

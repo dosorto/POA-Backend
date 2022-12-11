@@ -1,5 +1,9 @@
 const db = require("../models");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+const { Op, DataTypes, Model, and, or } = require("sequelize");
+>>>>>>> main
 =======
 const { Op, DataTypes, Model, and, or } = require("sequelize");
 >>>>>>> main
@@ -42,12 +46,17 @@ const get_all_poa_by_idDepto = async (req, res) => {
                 //     ,include:                       
                 //     {model:db.tarea,include:[{model:db.presupuesto,include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //   ]}]} 
                 
                 
                 
             }
         
+=======
+                //   ]}]}  
+            }
+>>>>>>> main
 =======
                 //   ]}]}  
             }
@@ -85,7 +94,10 @@ const AllTarea_by_depto_poa = async(req,res) => {
   }
   };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> main
 
   const suma_Fuente11 = async(req,res) => {
     try{
@@ -279,6 +291,9 @@ const AllTarea_by_depto_poa = async(req,res) => {
       })
     }
   }
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
   
 
@@ -286,8 +301,11 @@ module.exports = {
     get_all_departamento,
     get_all_poa_by_idDepto,
 <<<<<<< HEAD
+<<<<<<< HEAD
     AllTarea_by_depto_poa
 =======
+=======
+>>>>>>> main
     AllTarea_by_depto_poa,
     suma_Fuente11,
     suma_Fuente12,
@@ -299,5 +317,8 @@ module.exports = {
     Actvidades_estadoR,
     Actvidades_estadoA,
     Actvidades_estadoREC
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
 }
