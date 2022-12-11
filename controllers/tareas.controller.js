@@ -55,7 +55,9 @@ const AllTareas = async(req,res) => {
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             isPresupuesto: req.body.isPresupuesto,
-            idActividad: actividad.id
+            idActividad: actividad.id,
+            idPoa:actividad.idPoa,
+            idDepto:actividad.idDepto
         });
         if(tareaCreada.isPresupuesto==true){
           const objeto= await db.objetogasto.findByPk(req.body.idobjeto)
@@ -193,7 +195,9 @@ const AllTarea_by_idActividad = async(req,res) => {
         idActividad: req.params.idActividad
     },
     include:[{model:db.actividad},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
-  ]
+  ],order: [
+    // will return `name`
+    ['createdAt','DESC']]
  
     
   })
@@ -204,6 +208,32 @@ const AllTarea_by_idActividad = async(req,res) => {
     })
 }
 };
+
+const suma11= async(req,res)=>{
+  try{
+    // const actividad = await db.actividad.findByPk(req.body.idActividad);
+     const suma11 =  await db.poa.findOne({
+       where: {
+           id: req.params.id
+           },
+           include:[{model:db.actividad,include:[                       
+            {model:db.tarea,
+              where:{
+                isPresupuesto:true
+              },
+              include:[{model:db.presupuesto,include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente,      
+            }
+          ]}]} 
+        ]
+        }]
+   })
+     res.status(200).json( suma11 );
+   }catch(error){
+     res.status(400).json({
+       message:'error al ingresar' + error
+     })
+   }
+}
 
 const sumaPresupuestos_Fuente11 = async(req,res) => {
   try{
@@ -351,5 +381,6 @@ module.exports = {
   AllTarea_by_idActividad_presupuesto,
   sumaPresupuestos_Fuente11,
   sumaPresupuestos_Fuente12,
-  sumaPresupuestos_Fuente12B
+  sumaPresupuestos_Fuente12B,
+  suma11
 }
