@@ -20,6 +20,13 @@ module.exports = (sequelize, Sequelize) => {
       grupo: {
         type: Sequelize.TEXT,
         allowNull: false
+      },idunidad: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+      unidad: {
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
