@@ -159,7 +159,10 @@ const misPOAs = async (req, res) => {
         )
         const Poas = []
         for (let i = 0; i < idPoas.length; i++) {
-            Poas.push(await db.poa.findOne({ where: { id: idPoas[i].idPoa } }))
+            const poaencontrado = await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto}});
+            if (poaencontrado){
+                Poas.push(poaencontrado);
+            }
         }
         return res.status(200).json(Poas);
     } catch (error) {
