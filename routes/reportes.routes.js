@@ -22,4 +22,5 @@ module.exports = function(app) {
   app.get("/reportes/estado_Revision/:idPoa", controller.Actvidades_estadoR);
   app.get("/reportes/estado_Aprobada/:idPoa", controller.Actvidades_estadoA);
   app.get("/reportes/estado_Rechazada/:idPoa", controller.Actvidades_estadoREC);
+  app.get("/reportes/actividades/:idPoa", controller.Actvidades);
 };
