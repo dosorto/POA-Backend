@@ -47,6 +47,17 @@ const login = async (req, res) => {
       const permiso_individual = await db.permiso.findOne({ where: { id: id_permisos[i].idPermiso } });
       permisos.push(permiso_individual.Permiso);
     }
+    // bloque de codigo para obtener la lista de departamentos
+    const id_deptos = await db.empleado_depto.findAll({
+      where: {
+        idEmpleado: user.empleado.id
+      }
+    })
+    const deptos = []
+    for (let i = 0; i < id_deptos.length; i++) {
+      deptos.push(await db.depto.findOne({ where: { id: id_deptos[i].idDepto } }));
+      
+    }
     
     // validar contrase;a
     const passwordIsValid = bcrypt.compareSync(
@@ -77,6 +88,7 @@ const login = async (req, res) => {
       empleado: user.empleado,
       rol: user.role,//,
       permisos:permisos,
+      departamentos:deptos,
       //sesion:ses,
       token: token
     }
