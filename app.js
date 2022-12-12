@@ -29,8 +29,6 @@ require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 
 
-
-
 require("./routes/presupuesto.routes")(app)
 require("./routes/fuente.routes")(app)
 require("./routes/tarea.routes")(app)
@@ -48,7 +46,7 @@ require("./routes/departamento.routes")(app);
 require("./routes/actividad.routes")(app);
 require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
-
+require("./routes/encargadoPOA.routes")(app);
 //Esta pendiente del crud completo el presupuesto B)
 require("./routes/presupuesto.routes")(app)
 require("./routes/fuente.routes")(app)
