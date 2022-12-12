@@ -153,14 +153,16 @@ const misPOAs = async (req, res) => {
         const idPoas = await db.encargadoPOA.findAll(
             {
                 where: {
-                    idEmpleado: req.params.idEmpleado,
-                    idPoa: req.params.idPoa
+                    idEmpleado: req.params.idEmpleado
                 }
             }
         )
         const Poas = []
         for (let i = 0; i < idPoas.length; i++) {
-            Poas.push(await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto}}))
+            const poaencontrado = await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto}});
+            if (poaencontrado){
+                Poas.push(poaencontrado);
+            }
         }
         return res.status(200).json(Poas);
     } catch (error) {
