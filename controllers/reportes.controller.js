@@ -176,6 +176,24 @@ const AllTarea_by_depto_poa = async(req,res) => {
     }
   }
 
+
+
+  const Actvidades = async(req,res) => {
+    try{
+      //const actividad = await db.actividad.findByPk(req.body.idActividad);
+      const act_estado =  await db.actividad.findAll({
+        where: {
+            isDelete: false,
+            idPoa: req.params.idPoa
+            },
+            })
+      res.status(200).json( act_estado );
+    }catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+    }
+  }
   const Actvidades_estadoF = async(req,res) => {
     try{
       //const actividad = await db.actividad.findByPk(req.body.idActividad);
@@ -280,5 +298,6 @@ module.exports = {
     Actvidades_estadoRF,
     Actvidades_estadoR,
     Actvidades_estadoA,
-    Actvidades_estadoREC
+    Actvidades_estadoREC,
+    Actvidades
 }
