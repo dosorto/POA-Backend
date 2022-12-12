@@ -41,9 +41,9 @@ const updatePOA = async (req, res) => {
     try {
         const POA = await db.poa.findByPk(req.body.id);
         if (!POA) {
-            return res.status(404).send({ message: 'POA not found' })
+            return res.status(401).send({ message: 'POA not found' })
         }
-        await db.poa.update({ name: req.body.name, anio: req.body.anio, fuente11: req.body.fuente11, fuente12: req.body.fuente12, fuente12B: req.body.fuente12B, isActive: req.body.isActive,idDepto: req.body.idDepto, idUE: req.body.idUE, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
+        await db.poa.update({ name: req.body.name, anio: req.body.anio, fuente11: req.body.fuente11, fuente12: req.body.fuente12, fuente12B: req.body.fuente12B, isActive: req.body.isActive, idDepto: req.body.idDepto, idUE: req.body.idUE, idInstitucion: req.body.idInstitucion }, { where: { id: req.body.id } })
         return res.status(200).send({ message: "ok" });
     } catch (error) {
         res.status(500).json({
@@ -108,7 +108,7 @@ const get_POA = async (req, res) => {
             }, { model: db.ue }],
         });
         if (!all_poa) {
-            return res.status(404).send({ message: 'no hay ningun elemento' });
+            return res.status(401).send({ message: 'no hay ningun elemento' });
         }
         return res.status(200).json(all_poa);
     } catch (error) {
@@ -129,13 +129,47 @@ const get_all_poa_by_idDepto = async (req, res) => {
             }
         );
         if (!all_poas) {
-            return res.status(404).send({ message: 'No hay ningún elemento' });
+            return res.status(401).send({ message: 'No hay ningún elemento' });
         }
         return res.status(200).json(all_poas);
     } catch (error) {
         return res.status(500).json({ status: "Server Error: " + error });
     }
 }
+
+const misPOAs = async (req, res) => {
+    try {
+        const verificaruser = await db.empleado_depto.findAll(
+            {
+                where: {
+                    idEmpleado: req.params.idEmpleado,
+                    idDepto: req.params.idDepto
+                }
+            }
+        );
+        if (!verificaruser) {
+            return res.status(401).send({ message: 'No hay ningún elemento' });
+        }
+        const idPoas = await db.encargadoPOA.findAll(
+            {
+                where: {
+                    idEmpleado: req.params.idEmpleado
+                }
+            }
+        )
+        const Poas = []
+        for (let i = 0; i < idPoas.length; i++) {
+            const poaencontrado = await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto}});
+            if (poaencontrado){
+                Poas.push(poaencontrado);
+            }
+        }
+        return res.status(200).json(Poas);
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
+    }
+}
+
 
 // Obetener POA por Unidad Ejecutora
 const get_all_poa_by_idUE = async (req, res) => {
@@ -180,5 +214,6 @@ module.exports = {
     get_all_poa_by_idDepto,
     get_all_poa_by_idUE,
     get_poa,
-    active_POA
+    active_POA,
+    misPOAs
 }
