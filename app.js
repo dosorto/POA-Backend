@@ -49,6 +49,7 @@ require("./routes/actividad.routes")(app);
 require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
 require("./routes/encargadoPOA.routes")(app);
+require("./routes/seguimiento.routes")(app);
 
 app.use(
   cookieSession({
