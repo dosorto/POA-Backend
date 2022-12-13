@@ -27,10 +27,25 @@ require("./routes/dimension.routes")(app);
 require("./routes/institucion.routes")(app);
 require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> main
+
+
+require("./routes/presupuesto.routes")(app)
+require("./routes/fuente.routes")(app)
+require("./routes/tarea.routes")(app)
+require("./routes/objetogasto.routes")(app)
+require("./routes/grupogasto.routes")(app)
+require("./routes/unidadmedida.routes")(app)
+require("./routes/tareas_historico.routes")(app)
+
+require("./routes/reportes.routes")(app)
+
+////////s
+require("./routes/planificacion.routes")(app);
+require("./routes/poa.routes")(app);
+require("./routes/departamento.routes")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
+require("./routes/indicadoresPOA.routes")(app);
 
 
 
@@ -52,32 +67,7 @@ require("./routes/departamento.routes")(app);
 require("./routes/actividad.routes")(app);
 require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
-<<<<<<< HEAD
-=======
->>>>>>> main
 
-
-
-
-require("./routes/presupuesto.routes")(app)
-require("./routes/fuente.routes")(app)
-require("./routes/tarea.routes")(app)
-require("./routes/objetogasto.routes")(app)
-require("./routes/grupogasto.routes")(app)
-require("./routes/unidadmedida.routes")(app)
-require("./routes/tareas_historico.routes")(app)
-
-require("./routes/reportes.routes")(app)
-
-////////s
-require("./routes/planificacion.routes")(app);
-require("./routes/poa.routes")(app);
-require("./routes/departamento.routes")(app);
-require("./routes/actividad.routes")(app);
-require("./routes/actividadEncargado.routes")(app);
-require("./routes/indicadoresPOA.routes")(app);
-=======
->>>>>>> main
 require("./routes/encargadoPOA.routes")(app);
 
 app.use(
