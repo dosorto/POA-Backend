@@ -575,7 +575,12 @@ db.revision.belongsTo(db.tarea, {
   foreignKey: { name: 'idTarea', allowNull: false }
 });
 
-
+db.resultado.hasMany(db.actividad, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
+db.actividad.belongsTo(db.resultado, {
+  foreignKey: { name: 'idResultado', allowNull: false}
+});
 
 
 module.exports = db;

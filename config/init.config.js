@@ -657,7 +657,8 @@ exports.initial = async () => {
             idPoa: 1,
             idDepto: 1,
             idInstitucion: 1,
-            idUE: 1
+            idUE: 1,
+            idResultado:1
         });
         await db.actividad.create({
             nombre: 'Reparación de equipos en lab',
@@ -668,7 +669,8 @@ exports.initial = async () => {
             idPoa: 1,
             idDepto: 1,
             idInstitucion: 1,
-            idUE: 1
+            idUE: 1,
+            idResultado:1
         });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO

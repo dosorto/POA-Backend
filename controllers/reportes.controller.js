@@ -58,7 +58,7 @@ const AllTarea_by_depto_poa = async(req,res) => {
           idPoa: req.params.idPoa,
           idDepto: req.params.idDepto
       },
-      include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},{model:db.poa},{model:db.depto},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+      include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.resultado, include:[{model:db.areas},{model:db.objetivos},{model:db.dimension},{model:db.pei}]},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},{model:db.poa},{model:db.depto},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
     ],order: [
       // will return `name`
       ['createdAt','DESC']]
