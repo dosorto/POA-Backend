@@ -3,9 +3,6 @@ module.exports = (sequelize, Sequelize) => {
         url: {
             type: Sequelize.TEXT
         },
-        porcentajeIndicador: {
-            type: Sequelize.STRING
-        },
         isDelete: {
             type: Sequelize.BOOLEAN,
             allowNull: false,

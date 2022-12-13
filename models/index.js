@@ -68,6 +68,8 @@ db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 db.indicadoresPoa = require("./indicadores_poa.model.js")(sequelize, Sequelize);
 db.tareas_historico = require("./tareas_historico.model.js")(sequelize,Sequelize);
 db.fuentePoa = require("./fuentePoa.model.js")(sequelize,Sequelize);
+db.seguimiento = require("./seguimiento.model.js")(sequelize,Sequelize);
+db.medioVerificacion = require("./medioVerificacion.model.js")(sequelize,Sequelize);
 
 ///////////////////////////////index.user.js//////////////////////////////
 /////// RELACIÓN DE UNO A UNO /////////
@@ -525,6 +527,36 @@ db.fuente.belongsToMany(db.poa, {
   foreignKey: "idfuente",
   otherKey: "idPoa"
 });
+////////////// RELACIONES DE Indicadores POA Y Actividades /////////
+//Un tarea tiene un seguimiento, una actividad tiene muchos indicadores
+db.medioVerificacion.hasMany(db.seguimiento, {
+  foreignKey: {name : 'idMedVer' , allowNull: false }
+});
+db.seguimiento.belongsTo(db.medioVerificacion, {
+  foreignKey: { name: 'idMedVer', allowNull: false }
+});
+
+db.tarea.hasMany(db.seguimiento, {
+  foreignKey: {name : 'idtarea' , allowNull: false }
+});
+db.seguimiento.belongsTo(db.tarea, {
+  foreignKey: { name: 'idtarea', allowNull: false }
+});
+
+db.actividad.hasMany(db.seguimiento, {
+  foreignKey: {name : 'idActividad' , allowNull: false }
+});
+db.seguimiento.belongsTo(db.actividad, {
+  foreignKey: { name: 'idActividad', allowNull: false }
+});
+
+db.planificacion.hasMany(db.seguimiento, {
+  foreignKey: {name : 'idPlanificacion' , allowNull: false }
+});
+db.seguimiento.belongsTo(db.planificacion, {
+  foreignKey: { name: 'idPlanificacion', allowNull: false }
+});
+
 
 
 

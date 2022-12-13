@@ -10,5 +10,5 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE
         }
     });
-    return encargadoPOA;
+    return seguimiento;
   };
