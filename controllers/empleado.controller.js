@@ -48,7 +48,7 @@ const get_empleados = async (req,res) =>{
                 isDelete: false,
               },
               include: [{
-                model: db.institucion,
+                model: db.ue,
               }]
         });
         if(!empleados){
