@@ -649,8 +649,19 @@ exports.initial = async () => {
             idInstitucion: 1,
         }]);
         await db.actividad.create({
-            nombre: 'Arreglo 1',
-            descripcion: 'prueba',
+            nombre: 'Gira vocacional',
+            descripcion: 'gira para dar a conocer la carrera en la ciudad',
+            estado: 'FORMULACION',
+            tipoActividad: 'ACADEMICA',
+            categoria: 'COORDINACION',
+            idPoa: 1,
+            idDepto: 1,
+            idInstitucion: 1,
+            idUE: 1
+        });
+        await db.actividad.create({
+            nombre: 'Reparación de equipos en lab',
+            descripcion: 'reparar los equipos dañados en el lab de Is',
             estado: 'FORMULACION',
             tipoActividad: 'ACADEMICA',
             categoria: 'COORDINACION',
@@ -903,6 +914,21 @@ exports.initial = async () => {
             idActividad: 1,
             idPoa: 1,
             idDepto: 1
+        },
+        {
+            nombre: "Compra de Consumibles para limpieza",
+            descripcion: "aire comprimido, pasta termica y limpiacontactos",
+            isPresupuesto: true,
+            idActividad: 2,
+            idPoa: 1,
+            idDepto: 1
+        }, {
+            nombre: "Compra de Combustible",
+            descripcion: "Utilizacion de Gasolina",
+            isPresupuesto: true,
+            idActividad: 2,
+            idPoa: 1,
+            idDepto: 1
         }]);
         await db.presupuesto.bulkCreate([{
             cantidad: 10,
@@ -920,6 +946,26 @@ exports.initial = async () => {
             idgrupo: 1,
             idobjeto: 1,
             idtarea: 2,
+            idfuente: 1,
+            idunidad: 1
+        },
+        {
+            cantidad: 10,
+            costounitario: 40,
+            total: 800,
+            idgrupo: 1,
+            idobjeto: 1,
+            idtarea: 3,
+            idfuente: 1,
+            idunidad: 1
+        },
+        {
+            cantidad: 1,
+            costounitario: 40,
+            total: 800,
+            idgrupo: 1,
+            idobjeto: 1,
+            idtarea: 4,
             idfuente: 1,
             idunidad: 1
         }]);
@@ -1782,10 +1828,12 @@ exports.initial = async () => {
 
         });
 
-        db.fuentePoa.create({
-            cantidad: "175000",
-            idPoa: 1,
-            idfuente: 1
+        db.ue_presupuesto.create({
+            anio: '2022',
+            fuente11: 220000,
+            fuente12:500000,
+            fuente12B: 120000,
+            idUnidadEjecutora:1
         })
 
         db.encargadoPOA.bulkCreate([{

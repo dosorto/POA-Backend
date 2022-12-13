@@ -49,8 +49,12 @@ db.tarea = require("./tareas.model.js")(sequelize, Sequelize);
 db.fuente = require("./fuente.model.js")(sequelize, Sequelize);
 db.unidadmedida = require("./unidadmedida.model.js")(sequelize, Sequelize);
 db.fuentePoa = require("./fuentePoa.model.js")(sequelize,Sequelize)
+db.ue_presupuesto = require("./ue_presupuesto.model.js")(sequelize,Sequelize)
 // planificacion
 db.planificacion = require("./planificacion.model")(sequelize, Sequelize);
+
+//revision de tareas
+db.revision = require("./revision.model")(sequelize, Sequelize);
 
 ////////////////MODULO POA///////////////////////////
 db.ue = require("./unidadesejec-poa.model.js")(sequelize, Sequelize);
@@ -110,6 +114,13 @@ db.ue.hasMany(db.empleado, {
   foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
 db.empleado.belongsTo(db.ue, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
+});
+
+db.ue.hasMany(db.ue_presupuesto, {
+  foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
+});
+db.ue_presupuesto.belongsTo(db.ue, {
   foreignKey: { name: 'idUnidadEjecutora', allowNull: false }
 });
 //////// RELACIÓN DE UNO A MUCHOS ////////
@@ -555,6 +566,13 @@ db.planificacion.hasMany(db.seguimiento, {
 });
 db.seguimiento.belongsTo(db.planificacion, {
   foreignKey: { name: 'idPlanificacion', allowNull: false }
+});
+
+db.tarea.hasMany(db.revision, {
+  foreignKey: {name : 'idTarea' , allowNull: false }
+});
+db.revision.belongsTo(db.tarea, {
+  foreignKey: { name: 'idTarea', allowNull: false }
 });
 
 
