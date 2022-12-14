@@ -242,11 +242,10 @@ const sumaPresupuestos_Fuente11 = async(req,res) => {
       
       where: {
           isDelete: false,
-          isPresupuesto: true
+          isPresupuesto: true,
+          idPoa:req.params.idPoa
           },
-      include:[{model:db.actividad,include:[{model:db.poa,
-        where:{
-          id: req.params.idActividad}}]},{model:db.presupuesto,where:{
+      include:[{model:db.actividad,include:[{model:db.poa}]},{model:db.presupuesto,where:{
         idfuente:{[Op.eq]: 1 }}, 
         include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente,      
         }
@@ -269,11 +268,10 @@ const sumaPresupuestos_Fuente12 = async(req,res) => {
       
       where: {
           isDelete: false,
-          isPresupuesto: true
+          isPresupuesto: true,
+          idPoa:req.params.idPoa
           },
-      include:[{model:db.actividad,include:[{model:db.poa,
-        where:{
-          id: req.params.idActividad}}]},{model:db.presupuesto,where:{
+      include:[{model:db.actividad,include:[{model:db.poa}]},{model:db.presupuesto,where:{
         idfuente:{[Op.eq]: 2 }}, 
         include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente,      
         }
@@ -295,11 +293,10 @@ const sumaPresupuestos_Fuente12B = async(req,res) => {
       
       where: {
           isDelete: false,
-          isPresupuesto: true
+          isPresupuesto: true,
+          idPoa:req.params.idPoa
           },
-      include:[{model:db.actividad,include:[{model:db.poa,
-        where:{
-          id: req.params.idActividad}}]},{model:db.presupuesto,where:{
+      include:[{model:db.actividad,include:[{model:db.poa}]},{model:db.presupuesto,where:{
         idfuente:{[Op.eq]: 3 }}, 
         include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente,      
         }

@@ -10,7 +10,7 @@ const creaEncargadoPOA = async (req = request, res) => {
     try {
         const EPOA = await encargadoPOA.bulkCreate(lista);
         return res.status(200).json({
-            message: "Empleado_Departamento creado con exito",
+            message: "Encargado de POA creado con exito",
             data: EPOA,
             
         });
