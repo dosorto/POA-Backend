@@ -18,5 +18,7 @@ module.exports = function(app) {
   app.get("/resultados/deleteResultado/:id",controller.deleteResultado);
   app.put("/resultados/updateResultado",controller.updateResultado);
   app.get("/resultados/getResult/:id",controller.get_Result);
+  app.get("/resultados/getResultado_by_idPei/:idPei",controller.AllResultado_by_idPei);
+  
 
 };

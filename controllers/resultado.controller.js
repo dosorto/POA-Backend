@@ -167,6 +167,34 @@ const allResultado = async(req,res) => {
   }
   };
 
+
+  const AllResultado_by_idPei = async(req,res) => { 
+    try{ 
+      const allResultado =  await db.resultado.findAll({
+      where: {
+          isDelete: false,
+          idPei: req.params.idPei
+      },
+      include:[{
+        model: db.areas,
+      },{
+          model:db.objetivos ,
+        },{
+          model:db.dimension,
+        }
+      ],order: [
+          // will return `name`
+          ['createdAt','DESC']]
+    })
+    res.status(200).json( allResultado );
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+  };
+
+
   const get_Result = async (req, res) => {
     try {
         const resultado = await db.resultado.findOne({ where: { id: req.params.id } })
@@ -186,5 +214,6 @@ const allResultado = async(req,res) => {
     updateResultado,
     getResultado,
     AllResultado_by_idArea,
-    get_Result
+    get_Result,
+    AllResultado_by_idPei
   }

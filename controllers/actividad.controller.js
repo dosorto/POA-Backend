@@ -2,7 +2,7 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
-const { resultado } = require("../models");
+const { resultado, pei } = require("../models");
 // controlador para crear una nueva ctividad
 
 
@@ -16,6 +16,10 @@ const newActividad = async (req, res) => {
         if (!poa) {
             return res.status(404).json({ message: 'poa incorrecto' });
         }
+        const pei = await db.poa.findOne({ where: { id: req.body.idPoa } })
+        if (!poa) {
+            return res.status(404).json({ message: 'poa incorrecto' });
+        }
         const actividadCreada = await db.actividad.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
@@ -25,7 +29,8 @@ const newActividad = async (req, res) => {
             idPoa: req.body.idPoa,
             idDepto: poa.idDepto,
             idInstitucion: poa.idInstitucion,
-            idUE: poa.idUE
+            idUE: poa.idUE,
+            idResultado:req.body.idResultado
         });
 
         for (let i = 0; i < req.body.responsables.length; i++) {

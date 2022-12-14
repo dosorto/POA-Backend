@@ -40,7 +40,6 @@ require("./routes/unidadmedida.routes")(app)
 require("./routes/tareas_historico.routes")(app)
 
 require("./routes/reportes.routes")(app)
-
 ////////s
 require("./routes/planificacion.routes")(app);
 require("./routes/poa.routes")(app);
@@ -50,6 +49,8 @@ require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
 require("./routes/encargadoPOA.routes")(app);
 require("./routes/seguimiento.routes")(app);
+
+require("./routes/revision.routes")(app)
 
 app.use(
   cookieSession({
