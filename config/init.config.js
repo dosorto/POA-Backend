@@ -908,14 +908,16 @@ exports.initial = async () => {
             isPresupuesto: true,
             idActividad: 1,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
             idActividad: 1,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         },
         {
             nombre: "Compra de Consumibles para limpieza",
@@ -923,14 +925,16 @@ exports.initial = async () => {
             isPresupuesto: true,
             idActividad: 2,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
             idActividad: 2,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }]);
         await db.presupuesto.bulkCreate([{
             cantidad: 10,

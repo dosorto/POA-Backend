@@ -57,7 +57,8 @@ const AllTareas = async(req,res) => {
             isPresupuesto: req.body.isPresupuesto,
             idActividad: actividad.id,
             idPoa:actividad.idPoa,
-            idDepto:actividad.idDepto
+            idDepto:actividad.idDepto,
+            idUE: actividad.idUE
         });
         if(tareaCreada.isPresupuesto==true){
           const objeto= await db.objetogasto.findByPk(req.body.idobjeto)
