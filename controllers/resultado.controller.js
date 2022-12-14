@@ -207,6 +207,38 @@ const allResultado = async(req,res) => {
     }
 }
 
+
+const allResultadoActive = async(req,res) => { 
+  try{ 
+    const pei = await db.pei.findAll({
+      where: {
+        id:db.resultado.idPei,
+        isActive : true,
+      }
+    })
+    const allResultado =  await db.resultado.findAll({
+    where: {
+        isDelete: false,
+        
+    },
+    include:[{
+      model: db.areas,
+    },{
+        model:db.objetivos ,
+      },{
+        model:db.dimension,
+      },{
+        model:db.pei,
+      }]
+  })
+    return res.status(200).json( allResultado );
+} catch(error){
+    res.status(400).json({
+      message:'error en la petición' + error
+    })
+}
+};
+
   module.exports = {
     allResultado,
     newResultado,
