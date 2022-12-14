@@ -138,8 +138,12 @@ const get_all_actividades = async (req, res) => {
                 },
                 include: [{
                     model: db.poa,
+                },{
+                    model: db.resultado
                 }]
             }
+
+
         );
         if (!all_actividades) {
             return res.status(404).send({ message: 'no hay ningun elemento' });
@@ -172,11 +176,30 @@ const get_all_actividad_by_idPoa = async (req, res) => {
     }
 }
 
+
+const probando_like = async(req,res) => { 
+  try{ 
+    const resultado = await db.resultado.findOne({
+      where: {
+        nombre: {
+          [Op.substring]: req.params.nombre,
+        }
+    }
+    });
+  res.status(200).json( {status:"Ok",resultado} );
+} catch(error){
+    res.status(400).json({
+      message:'error al mostrar' + error
+    })
+}
+};
+
 module.exports = {
     newActividad,
     get_all_actividad_by_idPoa,
     get_actividad,
     updateActividad,
     delete_actividad,
-    get_all_actividades
+    get_all_actividades,
+    probando_like
 }
