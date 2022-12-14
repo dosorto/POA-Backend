@@ -159,8 +159,8 @@ const misPOAs = async (req, res) => {
         )
         const Poas = []
         for (let i = 0; i < idPoas.length; i++) {
-            const poaencontrado = await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto}});
-            if (poaencontrado){
+            const poaencontrado = await db.poa.findOne({ where: { id: idPoas[i].idPoa, idDepto: req.params.idDepto } });
+            if (poaencontrado) {
                 Poas.push(poaencontrado);
             }
         }
@@ -205,6 +205,32 @@ const get_poa = async (req, res) => {
     }
 }
 
+//Filtrar Actividades por POA y obtener tareas y actividades para seguimiento
+const get_all_actividades_by_idPoa = async (req, res) => {
+    try {
+        const all_actividad = await db.actividad.findAll(
+            {
+                where: {
+                    isDelete: false,
+                    idPoa: req.params.idPoa
+                },
+                include: [{                                  
+                    model: db.tarea},{
+                    model: db.indicadoresPoa
+                }], order: [
+                    ['createdAt', 'DESC']]
+            })
+        if (!all_actividad) {
+            return res.status(404).send({ message: 'no hay ningun elemento' });
+        }
+        return res.status(200).json(all_actividad);
+    } catch (error) {
+        return res.status(500).json({ status: "Server Error: " + error });
+    }
+}
+
+
+
 module.exports = {
 
     new_POA,
@@ -215,5 +241,6 @@ module.exports = {
     get_all_poa_by_idUE,
     get_poa,
     active_POA,
-    misPOAs
+    misPOAs,
+    get_all_actividades_by_idPoa
 }
