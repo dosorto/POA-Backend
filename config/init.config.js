@@ -627,8 +627,8 @@ exports.initial = async () => {
         }]);
 
         await db.poa.bulkCreate([{
-            name: "POA 2020",
-            anio: '2021-01-01',
+            name: "POA 2021-IS",
+            anio: '2021',
             fuente11: "22000",
             fuente12: "30000",
             fuente12B: "23000",
@@ -638,8 +638,8 @@ exports.initial = async () => {
             idInstitucion: 1,
         },
         {
-            name: "POA 2021",
-            anio: '2021-01-01',
+            name: "POA 2021-DGET",
+            anio: '2021',
             fuente11: "22000",
             fuente12: "30000",
             fuente12B: "23000",
@@ -908,14 +908,16 @@ exports.initial = async () => {
             isPresupuesto: true,
             idActividad: 1,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
             idActividad: 1,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         },
         {
             nombre: "Compra de Consumibles para limpieza",
@@ -923,14 +925,16 @@ exports.initial = async () => {
             isPresupuesto: true,
             idActividad: 2,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }, {
             nombre: "Compra de Combustible",
             descripcion: "Utilizacion de Gasolina",
             isPresupuesto: true,
             idActividad: 2,
             idPoa: 1,
-            idDepto: 1
+            idDepto: 1,
+            idUE: 1
         }]);
         await db.presupuesto.bulkCreate([{
             cantidad: 10,
@@ -1855,6 +1859,43 @@ exports.initial = async () => {
             idEmpleado: 1,
             idDepto: 2
         }]);
+
+        db.planificacion.bulkCreate([{
+            trimestre: "Primer Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-01-01',
+            fechaFin: '2021-03-31',
+            idActividad:1
+        },
+        {
+            trimestre: "Segundo Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-01-04',
+            fechaFin: '2021-06-30',
+            idActividad:1
+        },
+        {
+            trimestre: "Tercer Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-07-01',
+            fechaFin: '2021-09-30',
+            idActividad:1
+
+        },
+        {
+            trimestre: "Cuarto Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-10-01',
+            fechaFin: '2021-12-31',
+            idActividad:1
+
+        }]);
+
+        db.ACencargados.bulkCreate([{
+            descripcion: "Encargado de Actividades",
+            idEmpleado: 1,
+            idActividad: 1,
+        }])
 
     } catch (error) {
         console.log(error);
