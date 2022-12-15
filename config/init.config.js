@@ -627,8 +627,8 @@ exports.initial = async () => {
         }]);
 
         await db.poa.bulkCreate([{
-            name: "POA 2020",
-            anio: '2021-01-01',
+            name: "POA 2021-IS",
+            anio: '2021',
             fuente11: "22000",
             fuente12: "30000",
             fuente12B: "23000",
@@ -638,8 +638,8 @@ exports.initial = async () => {
             idInstitucion: 1,
         },
         {
-            name: "POA 2021",
-            anio: '2021-01-01',
+            name: "POA 2021-DGET",
+            anio: '2021',
             fuente11: "22000",
             fuente12: "30000",
             fuente12B: "23000",
