@@ -34,7 +34,7 @@ const delete_actividadEncargado = async (req, res) => {
             isDelete: true
         }, {
             where: {
-                id: req.body.id
+                id: req.params.id
             }
         });
         if (delete_actividad) {
