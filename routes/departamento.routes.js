@@ -9,11 +9,11 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/departamento/get_all", controller.get_all_departamento);
-  app.get("/departamento/get/:id",controller.get_all_departamentoid);
-  app.put("/departamento/delete",controller.disable_departamento);
-  app.put("/departamento/update",controller.update_departamento);
-  app.post("/departamento/create",controller.new_departamento);
+  app.get("/depto/get_all/:idUnidadEjecutora", controller.get_all_deptos);
+  app.get("/depto/get/:id",controller.get_depto);
+  app.put("/depto/delete",controller.disable_depto);
+  app.put("/depto/update",controller.update_depto);
+  app.post("/depto/create",controller.new_depto);
 };
 
 

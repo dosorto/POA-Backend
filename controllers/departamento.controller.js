@@ -1,94 +1,99 @@
 const db = require("../models");
 
 //Funcion para crear una nueva Institucion
-const new_departamento = async (req, res) => {
-    try {
-        const ue = await db.ue.findOne({ where: { id: req.body.idUE } })
-        if (!ue) {
-            return res.status(400).json({ message: 'Departamento incorrecto' });
+const new_depto = async (req,res) =>{
+    try{
+        const depto = await db.depto.findOne({where:{name:req.body.nombre}})
+        if(depto){
+            return res.status(400).json({message:'Nombre de Departamento ya utilizado'});
         }
         await db.depto.create({
-            name: req.body.name,
-            descripcion: req.body.descripcion
+            name: req.body.nombre,
+            descripcion: req.body.descripcion,
+            idUnidadEjecutora:req.body.idUnidadEjecutora
         });
-        return res.status(200).json({ status: "Ok" });
-    } catch (error) {
-        return res.status(500).json({ status: "Server Error: " + error });
+        return res.status(200).json({status:"Ok"});
+    } catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 // Funcion para obtener una unica departamento
-const get_all_departamento = async (req, res) => {
-    try {
-        const all_depto = await db.depto.findAll({
-            where: { isDelete: false }
+const get_all_deptos = async (req,res) =>{
+    try{
+        const all_deptos = await db.depto.findAll({
+            where:{isDelete:false,
+                idUnidadEjecutora:req.params.idUnidadEjecutora}
         });
-        if (!all_depto) {
-            return res.status(404).send({ message: 'no hay ningun elemento' });
+        if(!all_deptos){
+            return res.status(404).send({message:'no hay ningun elemento'});
         }
-        return res.status(200).json(all_depto);
-    } catch (error) {
-        return res.status(500).json({ status: "Server Error: " + error });
+        return res.status(200).json(all_deptos);
+    }catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 //Funcion para obtener todas las departamento
-const get_all_departamentoid = async (req, res) => {
-    try {
-        const all_deptos = await db.depto.findByPk(req.params.id);
-        if (!all_deptos) {
-            return res.status(404).send({ message: 'No hay ningún elemento' });
+const get_depto= async (req,res) =>{
+    try{
+        const depto = await db.depto.findByPk(req.params.id)
+        if(!depto){
+            return res.status(404).json({message:'No se encuentra ese Departamento'});
         }
-        return res.status(200).json({all_deptos});
-    } catch (error) {
-        return res.status(500).json({ status: "Server Error: " + error });
+        return res.status(200).json(depto);
+    } catch(error){
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 // Funcion para actualizar un departamento
-const update_departamento = async (req, res) => {
+const update_depto = async (req, res) => {
     try {
-        const depto = await db.depto.findByPk(req.body.id);
-        if (!depto) {
-            return res.status(404).send({ message: 'Departamento not found' })
-        }
-        await db.depto.update({
-            name: req.body.name,
+        const temporally = await db.depto.update({
+            name: req.body.nombre,
             descripcion: req.body.descripcion
-        }, { where: { id: req.body.id } })
-        return res.status(200).send({ message: "ok" });
+        }, {
+            where: {
+                id: req.body.id
+            }
+        });
+        if (temporally) {
+            res.status(200).send({
+                message: "Departamento actualizado con exito"
+            });
+        }
     } catch (error) {
-        res.status(500).json({
-            message: 'error al actualizar ' + error
-        })
+        console.log(error);
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 //Funcion para deshabilitar una departamento
 
-const disable_departamento = async (req, res) => {
+const disable_depto = async (req, res) => {
     try {
         const temporally = await db.depto.update({
-            isDelete: true
+            isDelete : true
         }, {
             where: {
-                name: req.body.name
+                id: req.body.id
             }
         });
         if (temporally) {
             res.status(200).send({
-                message: "Departamento eliminado con exito"
+                message: "Departamento eliminada con exito"
             });
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ status: "Server Error: " + error });
+        return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 module.exports = {
-    new_departamento,
-    get_all_departamento,
-    disable_departamento,
-    update_departamento,
-    get_all_departamentoid
+    new_depto,
+    get_all_deptos,
+    get_depto,
+    update_depto,
+    disable_depto
 }

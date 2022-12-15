@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const ue_presupuesto = sequelize.define("ue_presupuesto", {
       anio: {
-        type: Sequelize.DATEONLY,
+        type: Sequelize.STRING(4),
         allowNull: false,
       },
       fuente11: {
