@@ -1,15 +1,16 @@
 const db = require("../models");
 
 //Funcion para crear una nueva Institucion
-const new_institucion = async (req,res) =>{
+const new_ue = async (req,res) =>{
     try{
-        const Institucion = await db.institucion.findOne({where:{nombre:req.body.nombre}})
-        if(Institucion){
-            return res.status(400).json({message:'Nombre de institucion ya utilizado'});
+        const ejecutora = await db.ue.findOne({where:{name:req.body.nombre}})
+        if(ejecutora){
+            return res.status(400).json({message:'Nombre de Unidad ya utilizado'});
         }
-        await db.institucion.create({
-            nombre: req.body.nombre,
-            descripcion: req.body.descripcion
+        await db.ue.create({
+            name: req.body.nombre,
+            descripcion: req.body.descripcion,
+            idInstitucion:req.body.idInstitucion
         });
         return res.status(200).json({status:"Ok"});
     } catch(error){
@@ -18,37 +19,38 @@ const new_institucion = async (req,res) =>{
 }
 
 // Funcion para obtener una unica Institucion
-const get_institucion= async (req,res) =>{
+const get_ue= async (req,res) =>{
     try{
-        const Institucion = await db.institucion.findByPk(req.params.id)
-        if(!Institucion){
+        const ejecutora = await db.ue.findByPk(req.params.id)
+        if(!ejecutora){
             return res.status(404).json({message:'No se encuentra esa Institucion'});
         }
-        return res.status(200).json({status:"Ok",Institucion});
+        return res.status(200).json(ejecutora);
     } catch(error){
         return res.status(500).json({status:"Server Error: " + error});
     }
 }
 //Funcion para obtener todas las Instituciones
-const get_all_institucion = async (req,res) =>{
+const get_all_ue = async (req,res) =>{
     try{
-        const all_Institucion = await db.institucion.findAll({
-            where:{isDelete:false}
+        const all_Ejecutora = await db.ue.findAll({
+            where:{isDelete:false,
+            idInstitucion:req.params.idInstitucion}
         });
-        if(!all_Institucion){
+        if(!all_Ejecutora){
             return res.status(404).send({message:'no hay ningun elemento'});
         }
-        return res.status(200).json(all_Institucion);
+        return res.status(200).json(all_Ejecutora);
     }catch(error){
         return res.status(500).json({status:"Server Error: " + error});
     }
 }
 
 // Funcion para actualizar una Institucion
-const update_institucion = async (req, res) => {
+const update_ue = async (req, res) => {
     try {
-        const temporally = await db.institucion.update({
-            nombre: req.body.nombre,
+        const temporally = await db.ue.update({
+            name: req.body.nombre,
             descripcion: req.body.descripcion
         }, {
             where: {
@@ -57,7 +59,7 @@ const update_institucion = async (req, res) => {
         });
         if (temporally) {
             res.status(200).send({
-                message: "Dimension actualizada con exito"
+                message: "Ejecutora actualizada con exito"
             });
         }
     } catch (error) {
@@ -68,9 +70,9 @@ const update_institucion = async (req, res) => {
 
 //Funcion para deshabilitar una Institucion
 
-const disable_institucion = async (req, res) => {
+const disable_ue = async (req, res) => {
     try {
-        const temporally = await db.institucion.update({
+        const temporally = await db.ue.update({
             isDelete : true
         }, {
             where: {
@@ -79,7 +81,7 @@ const disable_institucion = async (req, res) => {
         });
         if (temporally) {
             res.status(200).send({
-                message: "Institucion eliminada con exito"
+                message: "Ejecutora eliminada con exito"
             });
         }
     } catch (error) {
@@ -89,9 +91,9 @@ const disable_institucion = async (req, res) => {
 }
 
 module.exports = {
-    new_institucion,
-    get_all_institucion,
-    disable_institucion,
-    update_institucion,
-    get_institucion
+    new_ue,
+    get_ue,
+    get_all_ue,
+    update_ue,
+    disable_ue
   }
