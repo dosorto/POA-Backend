@@ -64,6 +64,7 @@ require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
 
 require("./routes/revision.routes")(app)
+require("./routes/ue_presupuesto.routes")(app)
 
 app.use(
   cookieSession({

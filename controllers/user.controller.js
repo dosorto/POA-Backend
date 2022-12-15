@@ -170,7 +170,9 @@ const allUser = async (req, res) => {
       include: [{
         model: db.role,
       }, {
-        model: db.empleado, include: [{ model: db.institucion }]
+        model: db.empleado, include: [{ model: db.ue, include:[{
+          model:db.institucion
+        }] }]
       }]
     })
     return res.status(200).send( allusers );

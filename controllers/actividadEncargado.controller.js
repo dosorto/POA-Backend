@@ -3,6 +3,7 @@ const config = require("../config/auth.config");
 const { request, response } = require('express');
 const { Op, DataTypes, Model } = require("sequelize");
 const { resultado } = require("../models");
+const { EqualOperator } = require("typeorm");
 // controlador para crear una nueva ctividad
 
 
@@ -133,6 +134,23 @@ const get_all_actividad_by_idResultado = async (req, res) => {
         return res.status(500).json({ status: "Server Error: " + error });
     }
 }
+const get_encargados_de_actividad = async (req, res) => {
+    try{
+        const encargados = await db.ACencargados.findAll({
+            where:{
+                idActividad:req.params.idActividad,
+                isDelete:false
+            }
+        })
+        const empleados = [];
+        for (let i = 0; i < encargados.length; i++) {
+            empleados.push(await db.empleado.findByPk(encargados[i].idEmpleado))
+        }
+        return res.status(200).send(empleados)
+    }catch(e){
+        return res.status(500).json({ status: "Server Error: " + e });
+    }
+}
 
 module.exports = {
     newActividadEncargado,
@@ -140,5 +158,6 @@ module.exports = {
     get_actividadEncargado,
     updateActividadEncargado,
     delete_actividadEncargado,
-    get_all_actividadesEncargado
+    get_all_actividadesEncargado,
+    get_encargados_de_actividad
 }

@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       anio: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(4),
         allowNull: false,
       },
       fuente11: {

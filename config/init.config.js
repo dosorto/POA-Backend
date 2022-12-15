@@ -556,6 +556,17 @@ exports.initial = async () => {
             sexo: "M",
             idUnidadEjecutora: 1
         });
+        await db.empleado.create({
+            id: 2,
+            dni: "020133",
+            nombre: "Juan ",
+            apellido: "Rodriguez",
+            direccion: "La libertad",
+            telefono: "123",
+            fechaNacimiento: '1995-08-07',
+            sexo: "M",
+            idUnidadEjecutora: 1
+        });
 
         await db.user.create({
             email: "cjso0323@gmail.com",
@@ -627,8 +638,8 @@ exports.initial = async () => {
         }]);
 
         await db.poa.bulkCreate([{
-            name: "POA 2021-IS",
-            anio: '2021',
+            name: "POA 2022",
+            anio: '2022',
             fuente11: "22000",
             fuente12: "30000",
             fuente12B: "23000",
@@ -638,7 +649,7 @@ exports.initial = async () => {
             idInstitucion: 1,
         },
         {
-            name: "POA 2021-DGET",
+            name: "POA 2021",
             anio: '2021',
             fuente11: "22000",
             fuente12: "30000",
@@ -671,6 +682,14 @@ exports.initial = async () => {
             idInstitucion: 1,
             idUE: 1,
             idResultado:1
+        });
+        await db.ACencargados.create({
+            idActividad: 1,
+            idEmpleado: 1
+        });
+        await db.ACencargados.create({
+            idActividad: 2,
+            idEmpleado: 1
         });
         /// Tareas desde aqui
         /// CATALOGO DE OBJETO DEL GASTO
