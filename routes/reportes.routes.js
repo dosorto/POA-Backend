@@ -23,4 +23,10 @@ module.exports = function(app) {
   app.get("/reportes/estado_Aprobada/:idPoa", controller.Actvidades_estadoA);
   app.get("/reportes/estado_Rechazada/:idPoa", controller.Actvidades_estadoREC);
   app.get("/reportes/actividades/:idPoa", controller.Actvidades);
+  app.get("/reportes/get_all_depto_poa1/:idUE/:anio",controller.AllTarea_by_depto_poa1);
+  app.get("/reportes/fuente11A/:idUE/:anio",controller.AllTarea_by_depto_poa_Fuente11);
+  app.get("/reportes/fuente12A/:idUE/:anio",controller.AllTarea_by_depto_poa_Fuente12);
+  app.get("/reportes/fuente12BA/:idUE/:anio",controller.AllTarea_by_depto_poa_Fuente12B);
+  app.get("/reportes/get_poas_UE/:idUE",controller.get_all_poa_by_idUE);
+  app.get("/reportes/get_all_ue",controller.get_all_UE);
 };

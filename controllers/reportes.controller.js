@@ -285,6 +285,158 @@ const AllTarea_by_depto_poa = async(req,res) => {
   }
   
 
+  const AllTarea_by_depto_poa1 = async(req,res) => { 
+    try{ 
+      const allTarea =  await db.tarea.findAll({
+      where: {
+          isDelete: false,
+          //El id de la unidad ejecutora solo crea la relacion
+          idUE:req.params.idUE
+      },
+      include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.resultado, include:[{model:db.areas},{model:db.objetivos},{model:db.dimension},{model:db.pei}]},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},
+      {model:db.poa,
+        //Este es el where para filtrar por año es de tipo string año
+        where:{ anio:{[Op.eq]: req.params.anio },
+        isActive:true
+      }},{model:db.depto},{model:db.presupuesto, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+    ],order: [
+      // will return name
+      ['createdAt','DESC']]
+   
+      
+    })
+    res.status(200).json( allTarea );
+  } catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+  }
+};
+
+const AllTarea_by_depto_poa_Fuente11 = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        //El id de la unidad ejecutora solo crea la relacion
+        idUE:req.params.idUE
+    },
+    include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.resultado, include:[{model:db.areas},{model:db.objetivos},{model:db.dimension},{model:db.pei}]},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},
+    {model:db.poa,
+      //Este es el where para filtrar por año es de tipo string año
+      where:{ anio:{[Op.eq]: req.params.anio },
+      isActive:true
+    }},{model:db.depto},{model:db.presupuesto,
+      //este valor 1 es Fuente 11, el 2 es de Fuente 12, el 3 es de Fuente 12B
+      where:{ idfuente:{[Op.eq]: 1 } }, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ],order: [
+    // will return name
+    ['createdAt','DESC']]
+ 
+    
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
+const AllTarea_by_depto_poa_Fuente12 = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        //El id de la unidad ejecutora solo crea la relacion
+        idUE:req.params.idUE
+    },
+    include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.resultado, include:[{model:db.areas},{model:db.objetivos},{model:db.dimension},{model:db.pei}]},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},
+    {model:db.poa,
+      //Este es el where para filtrar por año es de tipo string año
+      where:{ anio:{[Op.eq]: req.params.anio },
+      isActive:true
+    }},{model:db.depto},{model:db.presupuesto,
+      //este valor 1 es Fuente 11, el 2 es de Fuente 12, el 3 es de Fuente 12B
+      where:{ idfuente:{[Op.eq]: 2 } }, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ],order: [
+    // will return name
+    ['createdAt','DESC']]
+ 
+    
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
+const AllTarea_by_depto_poa_Fuente12B = async(req,res) => { 
+  try{ 
+    const allTarea =  await db.tarea.findAll({
+    where: {
+        isDelete: false,
+        //El id de la unidad ejecutora solo crea la relacion
+        idUE:req.params.idUE
+    },
+    include:[{model:db.actividad,include:[{model:db.indicadoresPoa},{model:db.resultado, include:[{model:db.areas},{model:db.objetivos},{model:db.dimension},{model:db.pei}]},{model:db.planificacion},{model:db.ACencargados,include:[{model:db.empleado}]}]},
+    {model:db.poa,
+      //Este es el where para filtrar por año es de tipo string año
+      where:{ anio:{[Op.eq]: req.params.anio },
+      isActive:true
+    }},{model:db.depto},{model:db.presupuesto,
+      //este valor 1 es Fuente 11, el 2 es de Fuente 12, el 3 es de Fuente 12B
+      where:{ idfuente:{[Op.eq]: 3 } }, include:[{model:db.grupogasto},{model: db.objetogasto},{model:db.unidadmedida},{model:db.fuente}]}
+  ],order: [
+    // will return name
+    ['createdAt','DESC']]
+ 
+    
+  })
+  res.status(200).json( allTarea );
+} catch(error){
+    res.status(400).json({
+      message:'error al ingresar' + error
+    })
+}
+};
+
+const get_all_poa_by_idUE = async (req, res) => {
+  try {
+      const all_ues = await db.poa.findAll(
+          {
+              where: {
+                  isDelete: false,
+                  idUE: req.params.idUE
+              },
+              include: db.ue
+          }
+      );
+      if (!all_ues) {
+          return res.status(404).send({ message: 'No hay ningún elemento' });
+      }
+      return res.status(200).json(all_ues);
+  } catch (error) {
+      return res.status(500).json({ status: "Server Error: " + error });
+  }
+}
+
+const get_all_UE = async (req, res) => {
+  try {
+      const all_ue = await db.ue.findAll({
+          where: { isDelete: false }
+      });
+      if (!all_ue) {
+          return res.status(404).send({ message: 'no hay ningun elemento' });
+      }
+      return res.status(200).json(all_ue);
+  } catch (error) {
+      return res.status(500).json({ status: "Server Error: " + error });
+  }
+}
+
 module.exports = {
     get_all_departamento,
     get_all_poa_by_idDepto,
@@ -299,5 +451,11 @@ module.exports = {
     Actvidades_estadoR,
     Actvidades_estadoA,
     Actvidades_estadoREC,
-    Actvidades
+    Actvidades,
+    AllTarea_by_depto_poa1,
+    AllTarea_by_depto_poa_Fuente11,
+    AllTarea_by_depto_poa_Fuente12,
+    AllTarea_by_depto_poa_Fuente12B,
+    get_all_poa_by_idUE,
+    get_all_UE
 }

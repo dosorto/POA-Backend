@@ -507,6 +507,12 @@ db.tarea.belongsTo(db.depto, {
   foreignKey: { name: 'idDepto', allowNull: false }
 });
 
+db.ue.hasMany(db.tarea, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
+db.tarea.belongsTo(db.ue, {
+  foreignKey: { name: 'idUE', allowNull: false }
+});
 
 ////////////// RELACIONES DE Indicadores POA Y Actividades /////////
 //Un indicador tiene una actividad, una actividad tiene muchos indicadores

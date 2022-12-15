@@ -29,8 +29,6 @@ require("./routes/objetivo.routes")(app);
 require("./routes/area.routes")(app);
 
 
-
-
 require("./routes/presupuesto.routes")(app)
 require("./routes/fuente.routes")(app)
 require("./routes/tarea.routes")(app)
@@ -49,6 +47,21 @@ require("./routes/actividadEncargado.routes")(app);
 require("./routes/indicadoresPOA.routes")(app);
 require("./routes/encargadoPOA.routes")(app);
 require("./routes/seguimiento.routes")(app);
+//Esta pendiente del crud completo el presupuesto B)
+require("./routes/presupuesto.routes")(app)
+require("./routes/fuente.routes")(app)
+require("./routes/tarea.routes")(app)
+require("./routes/objetogasto.routes")(app)
+require("./routes/grupogasto.routes")(app)
+require("./routes/unidadmedida.routes")(app)
+require("./routes/tareas_historico.routes")(app)
+////////s
+require("./routes/planificacion.routes")(app);
+require("./routes/poa.routes")(app);
+require("./routes/departamento.routes")(app);
+require("./routes/actividad.routes")(app);
+require("./routes/actividadEncargado.routes")(app);
+require("./routes/indicadoresPOA.routes")(app);
 
 require("./routes/revision.routes")(app)
 
