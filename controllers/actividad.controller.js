@@ -99,7 +99,8 @@ const updateActividad = async (req, res) => {
                 descripcion: req.body.descripcion,
                 tipoActividad: req.body.tipoActividad,
                 categoria: req.body.categoria,
-                idPoa: req.body.idPoa
+                idPoa: req.body.idPoa,
+                idResultado:req.body.idResultado
             },
             { where: { id: req.body.id } });
 
