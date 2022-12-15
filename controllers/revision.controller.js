@@ -16,7 +16,52 @@ const allRevision_by_idTarea = async (req, res) => {
         })
     }
 };
-
+const actividadesByEstado = async(req,res) => {
+    try{
+      //const actividad = await db.actividad.findByPk(req.body.idActividad);
+      const act_formulacion =  await db.actividad.findAll({
+        where: {
+            isDelete: false,
+            idPoa: req.params.idPoa,
+            estado:'FORMULACION'
+            },
+            })
+        const act_reformulacion =  await db.actividad.findAll({
+                where: {
+                    isDelete: false,
+                    idPoa: req.params.idPoa,
+                    estado:'REFORMULACION'
+                    },
+                    })
+        const act_revision =  await db.actividad.findAll({
+                where: {
+                    isDelete: false,
+                    idPoa: req.params.idPoa,
+                    estado:'REVISION'
+                    },
+                    })
+        const act_aprobado =  await db.actividad.findAll({
+                where: {
+                    isDelete: false,
+                    idPoa: req.params.idPoa,
+                    estado:'APROBADO'
+                    },
+                    })
+                    
+        const act_rechazado =  await db.actividad.findAll({
+                where: {
+                    isDelete: false,
+                    idPoa: req.params.idPoa,
+                    estado:'RECHAZADO'
+                    },
+                    })
+      res.status(200).json( {act_formulacion,act_reformulacion,act_revision,act_aprobado,act_rechazado} );
+    }catch(error){
+      res.status(400).json({
+        message:'error al ingresar' + error
+      })
+    }
+  }
 
 
 const newRevision = async (req, res) => {
@@ -143,5 +188,6 @@ module.exports = {
     allRevision_by_idTarea,
     newRevision,
     updateRevision,
-    deleteRevision
+    deleteRevision,
+    actividadesByEstado
 }

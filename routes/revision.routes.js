@@ -13,4 +13,5 @@ module.exports = function(app) {
   app.post("/revision/update",controller.updateRevision);
   app.get("/revision/delete/:id",controller.deleteRevision);
   app.get("/revision/get_all/:idTarea",controller.allRevision_by_idTarea);
+  app.get("/revision/actividadesByEstado/:idPoa",controller.actividadesByEstado);
 };
