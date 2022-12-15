@@ -635,6 +635,18 @@ exports.initial = async () => {
         {
             idRol: 1,
             idPermiso: 4
+        },
+        {
+            idRol: 1,
+            idPermiso: 5
+        },
+        {
+            idRol: 1,
+            idPermiso: 6
+        },
+        {
+            idRol: 1,
+            idPermiso: 7
         }]);
 
         await db.poa.bulkCreate([{
