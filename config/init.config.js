@@ -1860,6 +1860,43 @@ exports.initial = async () => {
             idDepto: 2
         }]);
 
+        db.planificacion.bulkCreate([{
+            trimestre: "Primer Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-01-01',
+            fechaFin: '2021-03-31',
+            idActividad:1
+        },
+        {
+            trimestre: "Segundo Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-01-04',
+            fechaFin: '2021-06-30',
+            idActividad:1
+        },
+        {
+            trimestre: "Tercer Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-07-01',
+            fechaFin: '2021-09-30',
+            idActividad:1
+
+        },
+        {
+            trimestre: "Cuarto Trimestre",
+            cantidad: 25,
+            fechaInicio: '2021-10-01',
+            fechaFin: '2021-12-31',
+            idActividad:1
+
+        }]);
+
+        db.ACencargados.bulkCreate([{
+            descripcion: "Encargado de Actividades",
+            idEmpleado: 1,
+            idActividad: 1,
+        }])
+
     } catch (error) {
         console.log(error);
     }
